@@ -1,5 +1,5 @@
 {
-  "source_commit": "519a77c12bbb056adf60968075ba21df1ce9e1f9",
+  "source_commit": "786965347046a2218bdb12086334bf28ea65739c",
   "test": {
     "forecast_rows": 3755,
     "missing_closing_triples": 1,
@@ -131,7 +131,7 @@
     "roi": null,
     "deflated_sharpe": {
       "probability": null,
-      "trials": 13,
+      "trials": 15,
       "reason": "insufficient variation"
     },
     "power": {

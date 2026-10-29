@@ -42,5 +42,7 @@
     "source_retrieved_at": "2026-10-29T13:09:25.225168+00:00",
     "source_sha256": "d00a85f6cde02ea1ead98316341713ae671ce0c3451b9ae23451cf00fd5d3179",
     "note": "Schedule projection only; no odds or forecast acquired; kickoff may change."
-  }
+  },
+  "active_registration_commit": "56ee1c6d790a369cb4bb80d59d587b29cf671dd5",
+  "last_checked_runtime_commit": "786965347046a2218bdb12086334bf28ea65739c"
 }
