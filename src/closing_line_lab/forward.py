@@ -1,25 +1,16 @@
-import json
 import subprocess
 from datetime import timedelta
-from email.utils import parsedate_to_datetime
 
 import numpy as np
-import pandas as pd
 
-from .common import ROOT, digest, file_sha, now_utc, strategy, timestamp, write_json
-from .data import (
-    cached_download,
-    current_season,
-    download_history,
-    load_matches,
-    normalize,
-    require_permission,
-    season_code,
-)
+from .artifact import ARTIFACT, predict
+from .common import ROOT, digest, now_utc, read_json, strategy, timestamp, write_json
 from .ledger import LEDGER, REPO, append_event, read_ledger, replay_account, verify
 from .metrics import clv, devig
-from .models import SIDES, OffsetBlend, make_features, probability_matrix
-from .research import assert_frozen, choose_bet, git, load_features
+from .odds import BudgetExhausted, OddsClient, forward_config, quote
+from .research import assert_frozen, choose_bet, git
+
+STATE = ROOT / "data/forward_state.json"
 
 
 def frozen_runtime():
@@ -27,203 +18,213 @@ def frozen_runtime():
     return {**strategy(), **selection["candidate"]}
 
 
-def training_features(history, cfg):
-    past = history[(history.season < current_season()) & history.outcome.notna()]
-    fingerprint = digest(past[["match_id", "source_sha"]].to_dict("records"))
-    cache = ROOT / "data/processed/forward_training.csv.gz"
-    metadata = cache.with_suffix(".json")
-    if (
-        cache.exists()
-        and metadata.exists()
-        and json.loads(metadata.read_text())["fingerprint"] == fingerprint
-    ):
-        return load_features(cache).merge(past, on="match_id", validate="one_to_one")
-    targets = past[past.season >= cfg["first_season"] + 3]
-    features = make_features(past, targets, cfg)
-    features.to_csv(cache, index=False, compression={"method": "gzip", "mtime": 0})
-    write_json(metadata, {"fingerprint": fingerprint, "features_sha": file_sha(cache)})
-    return features.merge(past, on="match_id", validate="one_to_one")
+def record_forecast(event, observed, entry, cfg, fc, artifact):
+    league = fc["sports"][event["sport_key"]]
+    try:
+        probabilities = predict(
+            artifact, league, event["home_team"], event["away_team"], observed["prices"], cfg
+        )
+    except ValueError as error:
+        if "Unknown team alias" in str(error):
+            return False
+        raise
+    account = replay_account(read_ledger())
+    bet = choose_bet(probabilities, observed["effective_prices"], cfg)
+    if bet:
+        stake = min(
+            bet["stake_fraction"] * account["equity_at_cost"],
+            account["cash"],
+            max(0, cfg["open_exposure_cap"] * account["equity_at_cost"] - account["open_stakes"]),
+        )
+        if stake <= 1e-10:
+            bet = None
+        else:
+            bet.update(stake_units=stake, raw_odds=observed["prices"][bet["side_index"]])
+    decision = now_utc()
+    append_event(
+        {
+            "kind": "forecast",
+            "match_id": event["id"],
+            "league": league,
+            "sport": event["sport_key"],
+            "home": event["home_team"],
+            "away": event["away_team"],
+            "kickoff_utc": timestamp(event["commence_time"]).isoformat(),
+            "decision_at": decision.isoformat(),
+            "recorded_at": now_utc().isoformat(),
+            "quote_retrieved_at": observed["retrieved_at"],
+            "source_last_modified": observed["updated_at"],
+            "quote_type": "the_odds_api_decision_snapshot",
+            "feature_max_available": artifact["feature_max_available"],
+            "probabilities": probabilities.tolist(),
+            "prices": observed["effective_prices"],
+            "raw_prices": observed["prices"],
+            "odds_source": observed["bookmaker"],
+            "exchange_commission": observed["commission"],
+            "closing_source": "last pre-kickoff snapshot; Betfair EU then Pinnacle",
+            "bet": bet,
+            "stake_cap_units": cfg["stake_cap"] * account["equity_at_cost"],
+            "strategy_sha": digest(strategy()),
+            "model_artifact_sha": artifact["artifact_sha"],
+            "runtime_commit": git("rev-parse", "HEAD"),
+            "registration_commit": git("rev-list", "-n", "1", "forward-v1"),
+            "fixture_sha": entry["sha256"],
+            "decision_gap_minutes": (timestamp(event["commence_time"]) - decision).total_seconds()
+            / 60,
+        }
+    )
+    return True
 
 
 def forecast():
-    require_permission(training=True, publishing=True)
-    cfg = frozen_runtime()
+    cfg, fc = frozen_runtime(), forward_config()
+    if not ARTIFACT.exists():
+        return {"status": "AWAITING_LOCAL_PARAMETER_EXPORT", "new_forecasts": 0}
     if not timestamp(cfg["forward_start"]) <= now_utc() < timestamp(cfg["forward_end"]):
         return {"status": "OUTSIDE_REGISTERED_WINDOW", "new_forecasts": 0}
     records = read_ledger()
     if records:
         verify()
-    download_history()
-    history = load_matches()
-    path, entry = cached_download("fixtures.csv", refresh=True)
-    observed = timestamp(entry["retrieved_at"])
-    decision = now_utc()
-    if entry["last_modified"] is None:
-        raise ValueError("Fixture age unknown: Last-Modified header required")
-    modified = parsedate_to_datetime(entry["last_modified"])
-    if not timedelta(0) <= decision - modified <= timedelta(hours=cfg["max_lead_hours"]):
-        raise ValueError("Fixture source is stale or future-dated")
-    fixtures = normalize(path, entry["sha256"])
-    existing = {x["match_id"] for x in records if x["kind"] == "forecast"}
-    fixtures = fixtures[fixtures["div"].isin(cfg["leagues"]) & fixtures.time_known]
-    fixtures = fixtures[~fixtures.match_id.isin(existing)]
-    lead = fixtures.kickoff_utc - decision
-    fixtures = fixtures[
-        (lead >= pd.Timedelta(minutes=cfg["min_lead_minutes"]))
-        & (lead <= pd.Timedelta(hours=cfg["max_lead_hours"]))
-    ].copy()
-    if fixtures.empty:
-        return {
-            "status": "NO_ELIGIBLE_FIXTURES",
-            "new_forecasts": 0,
-            "fixture_sha": entry["sha256"],
-        }
-    fixtures["decision_at"] = pd.Timestamp(decision)
-    features = make_features(history, fixtures, cfg)
-    if features.empty:
-        raise ValueError("No fixtures have adequate model history and complete quote triples")
-    if cfg["model"] == "blend":
-        training = training_features(history, cfg)
-        cutoff = pd.Timestamp(year=current_season(), month=7, day=1, tz="UTC")
-        eligible = training[training.available_at < cutoff]
-        if len(eligible) < cfg["blend_min_matches"]:
-            raise ValueError("Insufficient blend training matches")
-        fitted = OffsetBlend(cfg["blend_ridge"]).fit(eligible, cutoff)
-        probabilities = fitted.predict(features)
-        blend_sha = digest(
-            {
-                "theta": fitted.theta.tolist(),
-                "cutoff": cutoff.isoformat(),
-                "training_rows": sorted(eligible.match_id),
-            }
-        )
-    else:
-        probabilities = probability_matrix(features, cfg["model"])
-        blend_sha = None
-    account = replay_account(records)
-    count, new_bets = 0, 0
-    for feature, probabilities_row in zip(features.itertuples(), probabilities, strict=True):
-        fixture = fixtures[fixtures.match_id == feature.match_id].iloc[0]
-        if now_utc() + timedelta(minutes=cfg["min_lead_minutes"]) >= fixture.kickoff_utc:
+    artifact, client = read_json(ARTIFACT), OddsClient()
+    forecasts = {r["match_id"]: r for r in records if r["kind"] == "forecast"}
+    counts = {"new_forecasts": 0, "new_closing_snapshots": 0, "unknown_teams": 0}
+    budget_limited = False
+    for sport in fc["sports"]:
+        events, _ = client.get(sport, "events")
+        due = set()
+        for event in events:
+            lead = (timestamp(event["commence_time"]) - now_utc()).total_seconds() / 60
+            if (
+                event["id"] not in forecasts
+                and fc["decision_min_hours"] * 60 <= lead <= fc["decision_max_hours"] * 60
+            ) or (
+                event["id"] in forecasts
+                and fc["publish_buffer_minutes"] < lead <= fc["closing_max_minutes"]
+            ):
+                due.add(event["id"])
+        if not due:
             continue
-        prices = np.array([fixture[cfg["odds_source"] + s] for s in SIDES])
-        bet = choose_bet(probabilities_row, prices, cfg)
-        cap_units = cfg["stake_cap"] * account["equity_at_cost"]
-        if bet is not None:
-            stake = min(
-                bet["stake_fraction"] * account["equity_at_cost"],
-                account["cash"],
-                max(
-                    0, cfg["open_exposure_cap"] * account["equity_at_cost"] - account["open_stakes"]
-                ),
-            )
-            if stake <= 1e-10:
-                bet = None
-            else:
-                bet["stake_units"] = stake
-                account["cash"] -= stake
-                account["open_stakes"] += stake
-                new_bets += 1
-        append_event(
-            {
-                "kind": "forecast",
-                "match_id": feature.match_id,
-                "league": fixture["div"],
-                "season": int(fixture.season),
-                "home": fixture.home,
-                "away": fixture.away,
-                "kickoff_utc": fixture.kickoff_utc.isoformat(),
-                "decision_at": decision.isoformat(),
-                "recorded_at": now_utc().isoformat(),
-                "quote_retrieved_at": observed.isoformat(),
-                "source_last_modified": modified.isoformat(),
-                "quote_type": "indicative_pre_closing_snapshot",
-                "feature_max_available": feature.feature_max_available.isoformat(),
-                "probabilities": probabilities_row.tolist(),
-                "prices": prices.tolist(),
-                "odds_source": cfg["odds_source"],
-                "closing_source": cfg["closing_source"],
-                "bet": bet,
-                "stake_cap_units": cap_units,
-                "strategy_sha": digest(strategy()),
-                "blend_sha": blend_sha,
-                "runtime_commit": git("rev-parse", "HEAD"),
-                "registration_commit": git("rev-list", "-n", "1", "forward-v1"),
-                "feature_sha": digest({k: str(v) for k, v in feature._asdict().items()}),
-                "history_sha": file_sha(ROOT / "data/processed/matches.csv.gz"),
-                "fixture_sha": entry["sha256"],
-            }
-        )
-        count += 1
-    return {"status": "RECORDED_UNPUBLISHED", "new_forecasts": count, "new_bets": new_bets}
+        try:
+            priced, entry = client.get(sport, "odds")
+        except BudgetExhausted:
+            budget_limited = True
+            continue
+        for event in sorted(priced, key=lambda e: (e["commence_time"], e["id"])):
+            if event["id"] not in due:
+                continue
+            lead = (timestamp(event["commence_time"]) - now_utc()).total_seconds() / 60
+            if event["id"] not in forecasts:
+                if not fc["decision_min_hours"] * 60 <= lead <= fc["decision_max_hours"] * 60:
+                    continue
+                observed = quote(event, fc["decision_book_priority"], entry["retrieved_at"], fc)
+                if observed:
+                    ok = record_forecast(event, observed, entry, cfg, fc, artifact)
+                    counts["new_forecasts"] += int(ok)
+                    counts["unknown_teams"] += int(not ok)
+            elif fc["publish_buffer_minutes"] < lead <= fc["closing_max_minutes"]:
+                original = forecasts[event["id"]]
+                if timestamp(original["kickoff_utc"]) != timestamp(event["commence_time"]):
+                    continue
+                observed = quote(event, fc["benchmark_priority"], entry["retrieved_at"], fc)
+                if observed:
+                    same = quote(event, [original["odds_source"]], entry["retrieved_at"], fc)
+                    append_event(
+                        {
+                            "kind": "closing_snapshot",
+                            "match_id": event["id"],
+                            "forecast_hash": original["hash"],
+                            "kickoff_utc": original["kickoff_utc"],
+                            "recorded_at": now_utc().isoformat(),
+                            **observed,
+                            "same_book_prices": same["prices"] if same else None,
+                            "snapshot_gap_minutes": (
+                                timestamp(event["commence_time"]) - timestamp(entry["retrieved_at"])
+                            ).total_seconds()
+                            / 60,
+                            "source_sha": entry["sha256"],
+                        }
+                    )
+                    counts["new_closing_snapshots"] += 1
+    return {"status": "BUDGET_LIMITED" if budget_limited else "CAPTURED", **counts}
 
 
 def settle():
-    require_permission(publishing=True)
     frozen_runtime()
-    records = read_ledger()
+    fc, records = forward_config(), read_ledger()
+    forecasts = {r["match_id"]: r for r in records if r["kind"] == "forecast"}
     settled = {r["match_id"] for r in records if r["kind"] == "settlement"}
     pending = [
         r
-        for r in records
-        if r["kind"] == "forecast"
-        and r["match_id"] not in settled
-        and timestamp(r["kickoff_utc"]) + timedelta(hours=12) < now_utc()
+        for mid, r in forecasts.items()
+        if mid not in settled and timestamp(r["kickoff_utc"]) + timedelta(hours=3) < now_utc()
     ]
-    if not pending:
-        return {"status": "NO_SETTLED_MATCHES", "new_settlements": 0}
+    if not pending or now_utc().hour < fc["score_hour_utc"]:
+        return {"status": "NO_RESULTS_DUE", "new_settlements": 0}
     verify()
-    seasons = {(r["season"], r["league"]) for r in pending}
-    pieces = []
-    for season, league in sorted(seasons):
-        path, entry = cached_download(f"mmz4281/{season_code(season)}/{league}.csv", refresh=True)
-        pieces.append(normalize(path, entry["sha256"], season))
-    results = pd.concat(pieces, ignore_index=True).set_index("match_id", verify_integrity=True)
-    count = 0
-    for forecast in pending:
-        match_id = forecast["match_id"]
-        if match_id not in results.index:
+    state = read_json(STATE) if STATE.exists() else {"score_dates": {}}
+    client, count = OddsClient(), 0
+    closes = {r["match_id"]: r for r in records if r["kind"] == "closing_snapshot"}
+    for sport in sorted({r["sport"] for r in pending}):
+        today = now_utc().date().isoformat()
+        if state["score_dates"].get(sport) == today:
             continue
-        row = results.loc[match_id]
-        if pd.isna(row.outcome) or row.available_at >= now_utc():
+        try:
+            results, entry = client.get(sport, "scores")
+        except BudgetExhausted:
             continue
-        changed = row.kickoff_utc != pd.Timestamp(forecast["kickoff_utc"])
-        close_prices = np.array([row[forecast["closing_source"] + s] for s in SIDES])
-        # Missing closing odds stay pending and remain visible in the report.
-        if not changed and (not np.isfinite(close_prices).all() or (close_prices <= 1).any()):
-            continue
-        bet = forecast["bet"]
-        profit, log_clv, fair_clv, same_book = 0.0, None, None, None
-        if bet is not None and not changed:
-            won = int(row.outcome) == bet["side_index"]
-            profit = bet["stake_units"] * (bet["odds"] - 1) if won else -bet["stake_units"]
-            log_clv = clv(bet["odds"], close_prices[bet["side_index"]])
-            fair_clv = float(np.log(bet["odds"] * devig(close_prices)[bet["side_index"]]))
-            paired = row["B365C" + bet["side"]]
-            same_book = clv(bet["odds"], paired) if np.isfinite(paired) and paired > 1 else None
-        append_event(
-            {
-                "kind": "settlement",
-                "match_id": match_id,
-                "forecast_hash": forecast["hash"],
-                "recorded_at": now_utc().isoformat(),
-                "status": "VOID_SCHEDULE_CHANGED" if changed else "SETTLED",
-                "result_kickoff_utc": row.kickoff_utc.isoformat(),
-                "outcome": int(row.outcome),
-                "closing_prices": None if changed else close_prices.tolist(),
-                "profit_units": float(profit),
-                "log_clv": log_clv,
-                "fair_log_clv": fair_clv,
-                "same_book_log_clv": same_book,
-                "result_source_sha": row.source_sha,
-            }
-        )
-        count += 1
+        state["score_dates"][sport] = today
+        write_json(STATE, state)
+        for result in results:
+            mid = result["id"]
+            if mid not in forecasts or mid in settled or not result.get("completed"):
+                continue
+            original = forecasts[mid]
+            changed = timestamp(result["commence_time"]) != timestamp(original["kickoff_utc"])
+            points = {s["name"]: int(s["score"]) for s in result.get("scores") or []}
+            if original["home"] not in points or original["away"] not in points:
+                continue
+            h, a = points[original["home"]], points[original["away"]]
+            outcome = 0 if h > a else 1 if h == a else 2
+            closing = closes.get(mid) if not changed else None
+            bet = original["bet"]
+            profit, raw_clv, fair_clv, same_book = 0.0, None, None, None
+            if bet and not changed:
+                profit = bet["stake_units"] * (
+                    bet["odds"] - 1 if outcome == bet["side_index"] else -1
+                )
+                if closing:
+                    side = bet["side_index"]
+                    raw_clv = clv(bet["raw_odds"], closing["prices"][side])
+                    fair_clv = float(np.log(bet["raw_odds"] * devig(closing["prices"])[side]))
+                    if closing["same_book_prices"]:
+                        same_book = clv(bet["raw_odds"], closing["same_book_prices"][side])
+            append_event(
+                {
+                    "kind": "settlement",
+                    "match_id": mid,
+                    "forecast_hash": original["hash"],
+                    "recorded_at": now_utc().isoformat(),
+                    "status": "VOID_SCHEDULE_CHANGED" if changed else "SETTLED",
+                    "result_kickoff_utc": timestamp(result["commence_time"]).isoformat(),
+                    "outcome": outcome,
+                    "closing_prices": closing["prices"] if closing else None,
+                    "closing_snapshot_hash": closing["hash"] if closing else None,
+                    "closing_bookmaker": closing["bookmaker"] if closing else None,
+                    "closing_gap_minutes": closing["snapshot_gap_minutes"] if closing else None,
+                    "profit_units": float(profit),
+                    "log_clv": raw_clv,
+                    "fair_log_clv": fair_clv,
+                    "same_book_log_clv": same_book,
+                    "result_source_sha": entry["sha256"],
+                }
+            )
+            settled.add(mid)
+            count += 1
     return {"status": "SCORED", "new_settlements": count}
 
 
 def publish(settlements_only=False):
-    require_permission(publishing=True)
+    frozen_runtime()
     if git("branch", "--show-current") != "main":
         raise RuntimeError("Publish requires main")
     subprocess.run(["git", "fetch", "origin", "main"], check=True, cwd=ROOT)
@@ -240,7 +241,7 @@ def publish(settlements_only=False):
     new = records[len(committed) :]
     if settlements_only and any(r["kind"] == "forecast" for r in new):
         raise ValueError("Settlement publication includes a forecast")
-    forecast_rows = [r for r in new if r["kind"] == "forecast"]
+    forecast_rows = [r for r in new if r["kind"] in ("forecast", "closing_snapshot")]
 
     def check_deadline():
         if any(
@@ -249,7 +250,14 @@ def publish(settlements_only=False):
             raise ValueError("Too late to publish this forecast batch")
 
     check_deadline()
-    paths = ["data/ledger.jsonl", "data/manifest.jsonl", "results", "README.md"]
+    paths = [
+        "data/ledger.jsonl",
+        "data/api_manifest.jsonl",
+        "data/api_usage.json",
+        "data/forward_state.json",
+        "results",
+        "README.md",
+    ]
     paths = [p for p in paths if (ROOT / p).exists()]
     subprocess.run(["git", "add", "--", *paths], check=True, cwd=ROOT)
     # Required pre-commit check. Match only tracked content; never print matched secrets.
@@ -286,6 +294,6 @@ def publish(settlements_only=False):
         )
     return {
         "status": "PUSHED",
-        "new_forecasts": len(forecast_rows),
+        "new_pre_kickoff_events": len(forecast_rows),
         "commit": git("rev-parse", "HEAD"),
     }

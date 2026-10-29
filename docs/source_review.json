@@ -1,11 +1,11 @@
 {
   "reviewed_on": "2026-10-29",
   "provider": "football-data.co.uk",
-  "permission_status": "UNRESOLVED",
+  "permission_status": "OWNER_LOCAL_PRIVATE_RESEARCH_DECISION",
   "data_url": "https://football-data.co.uk/data.php",
   "schema_url": "https://football-data.co.uk/notes.txt",
   "fixtures_notes_url": "https://football-data.co.uk/matches.php",
-  "bulk_data_downloaded": false,
+  "bulk_data_downloaded": true,
   "pinnacle_stale_since": "2025-07-23",
   "pre_closing_is_not_opening": true,
   "terms_are_not_an_open_data_license": true,
@@ -18,5 +18,10 @@
     "349f24de957d98b3272f623e",
     "8c386056bd09cbfd334ac31c"
   ],
-  "holdout_exception": "Two 2025/26 E0 schema-preview rows were displayed before protocol freeze. No fitting/selection used them. They are prospectively excluded from primary held-out metrics."
+  "holdout_exception": "Two 2025/26 E0 schema-preview rows were displayed before protocol freeze. No fitting/selection used them. They are prospectively excluded from primary held-out metrics.",
+  "hosted_football_data_access": false,
+  "football_data_redistribution": false,
+  "owner_decision_date": "2026-10-29",
+  "forward_provider": "The Odds API",
+  "forward_terms": "https://the-odds-api.com/terms-and-conditions.html"
 }

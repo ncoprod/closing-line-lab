@@ -13,3 +13,4 @@ results/*_bets.csv
 .DS_Store
 .env
 .env.*
+data/api_raw/

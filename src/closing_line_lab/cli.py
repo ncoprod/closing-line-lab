@@ -8,7 +8,16 @@ from .data import PermissionMissing
 def main():
     parser = argparse.ArgumentParser(description="Paper-only football research")
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ["download", "select", "verify", "report", "forward", "score", "actions-evidence"]:
+    for name in [
+        "download",
+        "select",
+        "verify",
+        "report",
+        "forward",
+        "score",
+        "actions-evidence",
+        "prepare-forward",
+    ]:
         sub.add_parser(name)
     for name in ["features", "backtest"]:
         command = sub.add_parser(name)
@@ -17,7 +26,11 @@ def main():
     publish.add_argument("--settlements-only", action="store_true")
     args = parser.parse_args()
     try:
-        if args.command == "download":
+        if args.command == "prepare-forward":
+            from .artifact import prepare
+
+            result = prepare()
+        elif args.command == "download":
             from .data import download_history
 
             result = download_history()

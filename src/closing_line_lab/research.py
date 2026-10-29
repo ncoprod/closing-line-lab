@@ -370,6 +370,8 @@ def assert_frozen():
             if path.name not in ("report.py", "cli.py")
         ],
         "config/strategy.json",
+        "config/forward.json",
+        "config/team_aliases.json",
     )
     if changed:
         raise RuntimeError("Model or bet rule changed since pre-registration")

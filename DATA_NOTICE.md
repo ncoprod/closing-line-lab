@@ -1,53 +1,55 @@
 # Data notice
 
-Football results and odds are credited to [football-data.co.uk](https://football-data.co.uk/).
-The MIT licence covers this repository's code, not third-party match data or odds.
+The MIT licence covers our code, not match data or odds. Credit:
+[football-data.co.uk](https://football-data.co.uk/) and [The Odds API](https://the-odds-api.com/).
+Neither source is an open-data licence. No non-commercial third-party model is used.
 
-## Terms review — 29 October 2026
+## Local historical research — owner decision, 29 October 2026
 
-The current [data page](https://football-data.co.uk/data.php) restricts use to private
-individuals and excludes commercial or automated data-training products. No open-data
-licence or permission to redistribute is established. This research involves automated
-model fitting and a future public repository; attribution alone does not settle permission.
-Collection, training and publication of provider data are therefore disabled pending
-documented permission covering the intended use. This is an observed source constraint.
+The [football-data terms](https://football-data.co.uk/data.php) state that data is
+“intended for private individuals only”. They restrict commercial uses and automated
+training products. The owner authorized one local download for his private, non-commercial
+research; this records his use decision, not separate written permission from the provider.
 
-No provider dataset is included. Small synthetic fixtures used in tests are generated
-locally and are never reported as research results. Initial terms/schema checks inspected
-the provider's documentation and a few CSV header/sample lines; these are not a backtest.
+The downloader requests only the ten specified league/season CSVs sequentially, pausing
+one second between new downloads. Existing hashed files are reused and refresh is disabled.
+The latest partial season is downloaded once to fit the initial forward model, never polled.
+`data/raw/`, `data/processed/` and row-level historical predictions/bets remain gitignored.
+**Never force-add those files.** GitHub Actions explicitly cannot call this downloader or
+train on football-data rows. No football-data file is cached on hosted runners.
 
-`config/data_permission.json` records collection, training, ledger publication and bulk
-redistribution separately. Publishing team names and indicative quotes in a private GitHub
-ledger still needs a permission scope that covers hosted publication. Training permission
-alone cannot enable the forward publisher. Row-level research prediction/bet files are
-ignored by default, because they also contain provider data; aggregate results remain separate.
-An actual permission reference belongs in its `evidence` field; merely changing a boolean
-does not establish permission. Do not commit private correspondence or personal data.
+Only `data/manifest.jsonl` (URLs, retrieval times, byte sizes, SHA-256 hashes), aggregate
+metrics/coverage, figures and fitted coefficients are committed. Other researchers run the
+script themselves. Upstream CSVs can change; matching the manifest requires privately
+retaining the original local cache. Aggregate outputs alone do not permit exact public replay.
 
-When permitted, `make download` uses the documented season CSV and fixtures endpoints.
-Raw responses are cached by SHA-256 in ignored `data/raw/`; `data/manifest.jsonl` records
-the URL, retrieval time, hash, size and Last-Modified header. Processed data is ignored
-unless redistribution is explicitly allowed. If allowed, commit the exact processed
-snapshot with `git add -f data/processed/` so a mutable upstream URL is not the only replay
-path. If not allowed, reproducibility is conditional on access to the original snapshot;
-the repository must state that limitation. A changed source response gets a new hash.
-Only when permitted, also archive row-level files with `git add -f results/*_predictions.csv.gz
-results/*_bets.csv`; these are never automatically staged by a broad `git add .`.
+Non-C CSV odds are pre-closing snapshots, without verified opening or availability times.
+Known-time results use a conservative 12-hour availability lag; date-only rows use 36 hours.
+Dates/times follow Europe/London including DST. These assumptions cannot prove historical
+execution. AvgC is the historical closing reference; B365C and de-vigged CLV are sensitivities.
+The provider's Pinnacle stale-feed warning since 2025-07-23 excludes its PS/PSC columns from
+modeling and benchmark selection. That warning concerns this provider's feed.
 
-## Interpretation
+## Forward research — The Odds API
 
-- Odds without `C` are **pre-closing snapshots**, not timestamped opening prices.
-  The [fixtures page](https://football-data.co.uk/matches.php) describes Friday/Tuesday
-  collection. A retrieval timestamp cannot prove a quote remained executable at retrieval.
-- `AvgC` is the primary closing reference. `B365C` is a same-book sensitivity check.
-  BFE/BFEC, Max/MaxC and PS/PSC fields are retained when present; missing prices stay missing.
-- The provider warns Pinnacle's feed has been systematically stale since 23 July 2025.
-  Pinnacle fields are excluded from modeling and the primary benchmark.
-- Times are interpreted as Europe/London, including DST. Historical files without a
-  kickoff time use midnight for a conservative feature cutoff and a 36-hour result lag;
-  these cannot qualify as timed forward forecasts. Known times use a 12-hour result lag.
-  Actual historical result publication times are unavailable, so this is an assumption.
-- Historical CLV and P&L are snapshot-based proxies. Forward paper quotes also remain
-  indicative: no bookmaker access, exchange depth, liquidity or execution is verified.
+The [terms](https://the-odds-api.com/terms-and-conditions.html), updated 2026-08-31, allow
+storage, research, analytics, derived values and model training. They prohibit redistribution
+as a standalone raw-data product. This repository publishes a research model, selected
+forecast/paper-trade audit records and analysis, not a general odds feed. Complete responses
+are stored in ignored `data/api_raw/`; hosted responses are ephemeral, identified by the
+committed `data/api_manifest.jsonl`. Privately retain raw responses for exact source replay.
 
-Optional ClubElo is **not used**; its HTTP endpoint is not contacted.
+The key is an environment/Actions secret, excluded from URLs in manifests and from errors.
+No accounts are created by the project. The client uses only events, odds and scores GET
+endpoints. The 400-credit local cap plus a 100-credit provider reserve protects the 500-credit
+free allocation, including conservative reservations for failed requests. Actual quota
+headers are recorded. Pricing and terms can change; review them before a later protocol.
+
+Betfair EU is the preferred closing benchmark, Pinnacle the fixed fallback. Pinnacle's API
+listing notes possible public-website delays. Quotes older than 30 minutes are rejected; a measured source-clock lead of at most five seconds is tolerated and recorded.
+The benchmark is the last *observed pre-kickoff snapshot*, not a literal exchange close;
+snapshot retrieval and source-update gaps are both retained. These indicative prices do
+not establish exchange depth, executable stakes or real-world profitability.
+
+Synthetic test objects and the attributed, trimmed documentation transport example are
+never research observations. ClubElo and the earlier football-forecast-lab code are not used.

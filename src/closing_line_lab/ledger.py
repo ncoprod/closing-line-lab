@@ -1,5 +1,6 @@
 import json
 import subprocess
+from datetime import timedelta
 from pathlib import Path
 
 import numpy as np
@@ -52,7 +53,7 @@ def append_event(payload, path=LEDGER):
 def verify_records(records, receipts):
     """A receipt binds server creation time to the exact ledger hashes at its head SHA."""
     check_chain(records)
-    forecasts, settlements = {}, set()
+    forecasts, settlements, closes = {}, set(), {}
     for record in records:
         match_id = record["match_id"]
         if record["kind"] == "forecast":
@@ -90,6 +91,36 @@ def verify_records(records, receipts):
             ]
             if not evidence:
                 raise ValueError(f"No pre-kickoff GitHub server receipt: {match_id}")
+        elif record["kind"] == "closing_snapshot":
+            if match_id not in forecasts or match_id in settlements:
+                raise ValueError("Orphan or post-settlement closing snapshot")
+            original = forecasts[match_id]
+            if record["forecast_hash"] != original["hash"]:
+                raise ValueError("Closing snapshot points to a different forecast")
+            kickoff = timestamp(original["kickoff_utc"])
+            observed, recorded = timestamp(record["retrieved_at"]), timestamp(record["recorded_at"])
+            if not (
+                timestamp(record["updated_at"]) <= observed + timedelta(seconds=5)
+                and observed <= recorded < kickoff
+            ):
+                raise ValueError("Closing snapshot was not collected before kickoff")
+            if timestamp(record["kickoff_utc"]) != kickoff:
+                raise ValueError("Closing snapshot kickoff changed")
+            prices = np.asarray(record["prices"], float)
+            if prices.shape != (3,) or not np.isfinite(prices).all() or (prices <= 1).any():
+                raise ValueError("Invalid closing snapshot prices")
+            gap = (kickoff - observed).total_seconds() / 60
+            if not np.isclose(record["snapshot_gap_minutes"], gap):
+                raise ValueError("Closing snapshot gap does not replay")
+            if not any(
+                record["hash"] in r["ledger_hashes"]
+                and recorded <= timestamp(r["created_at"]) < kickoff
+                for r in receipts
+            ):
+                raise ValueError("No pre-kickoff GitHub server receipt for closing snapshot")
+            if match_id in closes and observed < timestamp(closes[match_id]["retrieved_at"]):
+                raise ValueError("Closing snapshots are out of order")
+            closes[match_id] = record
         elif record["kind"] == "settlement":
             if match_id not in forecasts or match_id in settlements:
                 raise ValueError("Orphan or duplicate settlement")
@@ -105,15 +136,30 @@ def verify_records(records, receipts):
             if record["status"] == "SETTLED":
                 if record["result_kickoff_utc"] != forecast["kickoff_utc"]:
                     raise ValueError("Changed kickoff must be voided")
-                closing = np.asarray(record["closing_prices"], dtype=float)
-                if closing.shape != (3,) or (closing <= 1).any() or not np.isfinite(closing).all():
-                    raise ValueError("Invalid settlement closing prices")
+                closing = record["closing_prices"]
+                if closing is not None:
+                    closing = np.asarray(closing, dtype=float)
+                    if (
+                        closing.shape != (3,)
+                        or (closing <= 1).any()
+                        or not np.isfinite(closing).all()
+                    ):
+                        raise ValueError("Invalid settlement closing prices")
+                if "closing_snapshot_hash" in record:
+                    latest = closes.get(match_id)
+                    if record["closing_snapshot_hash"] != (latest["hash"] if latest else None):
+                        raise ValueError("Settlement must use the last pre-kickoff snapshot")
+                    if latest and closing.tolist() != latest["prices"]:
+                        raise ValueError("Settlement changed closing prices")
                 if record["outcome"] not in (0, 1, 2):
                     raise ValueError("Invalid result")
                 if bet:
                     won = bet["side_index"] == record["outcome"]
                     expected_profit = bet["stake_units"] * (bet["odds"] - 1 if won else -1)
-                    expected_clv = float(np.log(bet["odds"] / closing[bet["side_index"]]))
+                    if closing is not None:
+                        expected_clv = float(
+                            np.log(bet.get("raw_odds", bet["odds"]) / closing[bet["side_index"]])
+                        )
             if not np.isclose(record["profit_units"], expected_profit):
                 raise ValueError("Settlement profit does not replay")
             if (expected_clv is None and record["log_clv"] is not None) or (
@@ -199,7 +245,7 @@ def replay_account(records):
                 stake = record["bet"]["stake_units"]
                 cash -= stake
                 pending[match_id] = stake
-        else:
+        elif record["kind"] == "settlement":
             if match_id not in forecasts:
                 raise ValueError("Orphan account settlement")
             stake = pending.pop(match_id, 0)

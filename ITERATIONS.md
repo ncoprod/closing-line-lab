@@ -51,3 +51,18 @@ separately in `results/actions_evidence.json`.
 Holdout correction: two test-season rows appeared during the initial schema preview.
 They were not used to fit or select a model. Their IDs were prospectively excluded from
 primary test metrics before any research fit; the full season is not claimed to be blinded.
+
+## Iteration 2 — 2026-10-29: owner-approved data split and real baseline
+
+The owner superseded the earlier source gate: one local private research download,
+no historical row publication, and The Odds API for hosted forward collection. No new
+permission is being inferred from a boolean. The 150 league/season files are cached once
+with SHA-256 identities; interrupted downloads resume without re-fetching existing files.
+One Windows-encoded CSV stopped normalization; a tested decoding fallback fixed it.
+No historical row is staged. Validation features now exist; metrics are not yet inspected.
+
+Focused change: separate local training from official API collection and export model
+parameters for hosted inference. The API client was checked against an attributed docs
+sample and live responses, with quota headers, freshness checks and a strict budget.
+This iteration and all eight declared validation candidates count as trials. The held-out
+season remains unevaluated; its two predeclared exclusions remain in force.

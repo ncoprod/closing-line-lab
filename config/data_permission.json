@@ -1,10 +1,10 @@
 {
   "provider": "football-data.co.uk",
-  "automated_collection": false,
-  "model_training": false,
-  "ledger_publication": false,
+  "local_private_research": true,
+  "model_training": true,
   "redistribution": false,
-  "evidence": null,
+  "ledger_publication": false,
+  "evidence": "Owner decision 2026-10-29: one local download for private non-commercial research; raw and processed rows never committed or fetched on Actions.",
   "reviewed_at": "2026-10-29",
   "terms_url": "https://football-data.co.uk/data.php"
 }

@@ -1,108 +1,78 @@
 # Reproduce and operate
 
-No bookmaker credentials, API key, account, bet-placement endpoint or payment integration
-exists. Only GitHub authentication is used to publish/audit paper records.
+Paper only. No account creation, bet-placement endpoint or payments exist. Python 3.12/uv:
+`make install`, `make check test`, `make verify`. Tests use synthetic data and a trimmed,
+attributed API documentation example. Tests never download historical provider data.
 
-```sh
-make install
-make check test
-make verify
-uv run cll report
-```
+## Local research
 
-With no forecasts `make verify` returns `NO_FORECASTS`, not proof of a working forward run.
-All tests use local synthetic fixtures; none quietly downloads restricted provider data.
+Read DATA_NOTICE.md. `make download` is the owner's authorized one-off private download:
+ten leagues, 2012/13 through the current partial season, sequential with a one-second delay.
+Cache/processed rows and row-level historical predictions/bets stay local and ignored.
+Refresh is disabled, including for the partial current season. Never force-add these files.
+If a cache is lost, a mutable URL may no longer reproduce the manifest; privately retain it.
 
-## Obtain source permission first
+1. `make features`: chronological monthly Dixon–Coles, as-of Elo and pre-closing market
+   features for training/validation only. Inspect aggregate `results/data_quality.json`.
+2. Commit the declared candidates/code/protocol before `make backtest`. Every evaluation
+   and iteration is appended to `results/trials.jsonl`. Read every candidate report.
+3. `make select`: deterministic validation log-loss selection, higher threshold on ties.
+   If the target fails, two focused training/validation changes maximum, then explain the gap.
+4. Finalize PREREGISTRATION.md, commit/push, create and push annotated `forward-v1`.
+   Never move this tag. It freezes scientific code, config, selection and validation hash.
+5. `uv run cll features --stage test` and `uv run cll backtest --stage test`, once.
+   The latter refuses to overwrite results. Never tune using these metrics.
+6. `uv run cll prepare-forward`: once, locally, after the frozen test evaluation. Export
+   fitted coefficients/ratings only. DC/Elo use results available at export; blend uses
+   pre-test labels only. Parameters stay fixed throughout v1. No hosted retraining.
+7. Commit/push the parameter artifact before any forward forecast, then dispatch paper.yml.
 
-Read DATA_NOTICE.md and obtain permission that covers automated research, training,
-GitHub-hosted collection and any intended redistribution. Record a non-sensitive reference
-and exact scope in `config/data_permission.json`. Collection and training are separate
-flags; keep redistribution false unless permitted. Do not interpret booleans as a licence.
-Set `ledger_publication` only when the permission covers hosted forecast quotes and match
-metadata. This is distinct from permission to redistribute entire historical CSV files.
-The scheduled workflow checks the gate before installing dependencies or calling the source.
+Long commands log to ignored `runs/` and resume at completed file/stage boundaries. Keep
+BLAS at one thread on the shared machine. These fits do not require heavy-ML locks.
 
-## Research sequence
+## Hosted collection
 
-Long jobs should be started in the background with ignored logs, e.g.:
+The owner supplies ODDS_API_KEY as a GitHub Actions secret. Never print it or put it in
+command arguments. The hourly `:17` UTC job first checks key, tag and model availability.
+It never downloads, restores or trains on football-data rows. Complete API responses are
+not committed. API hashes, sanitized endpoint parameters and quota headers are retained.
 
-```sh
-mkdir -p runs
-nohup uv run cll download > runs/download.log 2>&1 &
-```
+Free `/events` discovers EPL/Championship schedules. A league-wide EU/h2h `/odds` request
+is made only for a new decision at 23–25 hours or a recorded forecast at 15–75 minutes
+before kickoff. Quotes over 30 minutes old are rejected. Near-kickoff snapshots are added
+before kickoff too; scoring selects the last recorded one, never an after-match price.
+Book priority, exchange commission and all limits are in config/forward.json.
 
-Downloads are resumable at the file level using a content-addressed cache and manifest.
-The active season refreshes; completed seasons use the exact cached snapshot. If a raw
-cache has been lost and the remote file changed, the new hash is explicit; it is not an
-exact reproduction of the original experiment. Restore the archived snapshot for replay.
+`/scores?daysFrom=3` runs at most once per league/day after 07:00 UTC, only with unresolved
+matches older than three hours. Missing scores remain unresolved. Missing closes do not
+prevent P&L settlement; they prevent CLV/calibration scoring and are counted explicitly.
+Changed kickoffs are visibly voided. Cancellations are never assigned favorable results.
 
-1. `make download`: seasons 2012/13 through the current one, ten leagues. Inspect
-   `results/data_quality.json`. A missing requested league/season is an error, not a silent
-   exclusion. This may require a deliberate documented coverage revision before research.
-2. `make features`: generates only pre-test features, with monthly DC and chronological
-   Elo updates. Commit the fixed protocol/code before evaluating variants.
-3. `make backtest`: eight validation-only model/threshold combinations. Read all reports,
-   CLV missingness and diagnostics. Each trial is logged even if later optimization fails.
-4. `make select`: deterministic validation log-loss selection. Update the iteration log.
-   If the target fails, allow at most two focused validation changes, log every attempt,
-   then freeze and report the residual gap rather than mining further.
-5. If redistribution is permitted, `git add -f data/processed/` and archive the exact raw
-   snapshots as well, within the permission scope. Otherwise do not claim full public
-   data replay: privately retain snapshots and restore the GitHub Actions data cache.
-   Row-level prediction/bet files in `results/` are ignored too; force-add those only within
-   the permitted scope. Summary metrics do not substitute for an exact data replay archive.
-6. Finalize PREREGISTRATION.md with the measured selection, actual freeze date and result
-   paths. Change its status to FROZEN. Commit and push after the required secret scan.
-   Create the annotated tag only now: `git tag -a forward-v1 -m 'Freeze forward protocol v1'`
-   and `git push origin forward-v1`. Never move the tag or rewrite history.
-7. Open the held-out season once: `uv run cll features --stage test`, then
-   `uv run cll backtest --stage test`. The second command refuses to overwrite a test
-   result. Saved predictions permit deterministic analysis without choosing a new strategy.
-8. Prime `data/processed/forward_training.csv.gz` on the first permitted forward run.
-   GitHub Actions caches raw/derived data. A cold cache may need a separate preparation run
-   before the short forecast job; never let a slow fit excuse a late forecast.
-9. `gh workflow run paper.yml --ref main`; inspect logs. A successful `schedule` event is
-   separate from a manual dispatch. Refresh evidence with `uv run cll actions-evidence`.
+Hard caps: 400 reserved credits per UTC calendar month and provider remaining balance at
+least 100. Reserve costs before transmission, including ambiguous/failed requests. Provider
+billing resets can differ from calendar months; the remaining-balance guard handles that.
+Requests stop when either guard binds; coverage losses are reported, never backfilled.
+The two live odds smoke calls count against this same budget.
 
-The frozen runtime includes models, data transformations, betting rules, CLV, ledger and
-publication code. Documentation/report-only edits are possible; a scientific runtime
-change needs a new prospective protocol, not a patch to an existing claim.
+At 24 short jobs/day the 31-day baseline is 744 one-minute runner jobs. Dependency caches
+and only one job per trigger keep normal use below 2,000 minutes; audit runs and CI consume
+extra minutes. This is a planning estimate, not a measured billing guarantee. Review actual
+durations and remaining minutes. Schedules can be delayed or dropped. No lateness is hidden.
 
-## Ledger and publication
+## Publication and audit
 
-`cll forward` records first-observed pre-kickoff snapshots; `cll publish` accepts only
-append-only ledger changes on an up-to-date main, checks deadlines twice, scans for secrets,
-commits and pushes without force/rebase, then dispatches `audit.yml`.
+`cll forward` appends forecasts and closing observations. `cll publish` requires current
+main, an unchanged prior ledger prefix and at least 15 minutes remaining at commit and push.
+It runs the owner's required secret scan, pushes without force/rebase and dispatches audit.
+`cll score` appends results; `cll publish --settlements-only` cannot publish new forecasts.
 
-GitHub's dispatch run `created_at` plus `head_sha` supplies an external upper bound on
-when that exact ledger content existed. The verifier obtains runs from GitHub, reads each
-run's ledger blob by SHA and requires a matching hash before kickoff. A locally selected
-commit date never qualifies. `GITHUB_TOKEN` pushes do not trigger ordinary push workflows;
-the explicit audit dispatch is required. Allow Actions to write repository contents and
-dispatch workflows. The workflow token has only contents/actions scope, not bookmaker access.
+`make verify` replays the chain, prices, stakes, CLV, P&L and pre-kickoff timing. Each
+forecast and closing snapshot must occur in a ledger blob bound to a GitHub audit run's
+server-side created_at/head_sha before kickoff. Local author dates do not qualify.
+GITHUB_TOKEN pushes do not trigger push workflows, so the explicit audit dispatch matters.
+Retain run URLs/artifacts and independent clones. Owners can delete history/runs; this is
+tamper-evident, not trustless or immutable. Private evidence needs reviewer access.
 
-If a push stalls beyond kickoff, the record stays visible and verification fails. Do not
-delete it to restore a green badge. Recover by recording the incident and introducing a
-prospectively defined protocol amendment; no such amendment is silently automated.
-Missing closes remain pending. Replays must retain original forecasts and append settlements.
-
-This is tamper-evident research, not an immutable trustless archive. A repository owner can
-change workflows or delete history/runs. Retain external run URLs, artifact receipts and
-independent clones. Private-repository timestamps become inspectable by reviewers with
-access; they are not publicly auditable until the owner publishes the repo.
-
-## Budget
-
-Four cron triggers/day, two jobs when enabled, each with an eight-minute limit. Disabled
-permission-gate runs take one short job. Cached uv and data minimize normal execution;
-monthly cold-data research is not a cron job. The limits are failure bounds, not a promise
-to fit the free minutes quota: measure actual billable durations before enabling. If
-forecast+score averaged two runner minutes per trigger, the nominal monthly use would be
-240 minutes (30 days), excluding CI/audits. Hosted schedules are best effort and can be late.
-
-## Required pre-commit secret check
-
-Run the owner's exact `git grep -nE` check from the task before every commit, including
-research results. The publisher runs the equivalent pattern without logging matches.
-Do not put secrets in config, source, result files, manifests or logs. No env dump is needed.
+Refresh evidence with `uv run cll actions-evidence`. A manual dispatch is not a scheduled
+run; a readiness-gated schedule success is not proof of an actual forecast. Missing data,
+late publication and verifier failures stay visible and stop claimed timing verification.

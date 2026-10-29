@@ -1,7 +1,7 @@
 name: Paper research
 on:
   schedule:
-    - cron: '17 4,10,16,22 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,69 +13,42 @@ env:
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
 jobs:
-  forecast:
+  paper:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
-    outputs:
-      enabled: ${{ steps.permission.outputs.enabled }}
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - id: permission
+      - id: ready
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: |
           python - <<'PY'
-          import json, os
-          p = json.load(open('config/data_permission.json'))
-          enabled = all(p.get(k) for k in ['evidence', 'automated_collection', 'model_training', 'ledger_publication'])
+          import os, pathlib, subprocess
+          enabled = bool(os.environ.get('ODDS_API_KEY')) and pathlib.Path('config/fitted_model.json').exists()
+          enabled = enabled and bool(subprocess.check_output(['git', 'tag', '-l', 'forward-v1']).strip())
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write(f'enabled={str(enabled).lower()}\n')
-          print('Permission gate: ' + ('enabled' if enabled else 'BLOCKED_DATA_PERMISSION; no data requested'))
+          print('READY' if enabled else 'WAITING_FOR_KEY_OR_FROZEN_MODEL; no provider request')
           PY
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-        if: steps.permission.outputs.enabled == 'true'
+        if: steps.ready.outputs.enabled == 'true'
         with:
           enable-cache: true
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        if: steps.permission.outputs.enabled == 'true'
-        with:
-          path: |
-            data/raw
-            data/processed
-          key: research-data-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: research-data-${{ runner.os }}-
-      - if: steps.permission.outputs.enabled == 'true'
+      - if: steps.ready.outputs.enabled == 'true'
         run: uv sync --frozen
-      - if: steps.permission.outputs.enabled == 'true'
+      - if: steps.ready.outputs.enabled == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          uv run cll forward
-          uv run cll publish
-  score:
-    needs: forecast
-    if: needs.forecast.outputs.enabled == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-        with:
-          enable-cache: true
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            data/raw
-            data/processed
-          key: research-data-${{ runner.os }}-${{ github.run_id }}-score
-          restore-keys: research-data-${{ runner.os }}-
-      - run: uv sync --frozen
-      - env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           GH_TOKEN: ${{ github.token }}
         run: |
           git pull --ff-only origin main
-          uv run cll score
+          uv run cll forward
           uv run cll report
-          uv run cll publish --settlements-only
+          uv run cll publish
+          uv run cll score
+          if [ -n "$(git status --porcelain -- data)" ]; then
+            uv run cll report
+            uv run cll publish --settlements-only
+          fi

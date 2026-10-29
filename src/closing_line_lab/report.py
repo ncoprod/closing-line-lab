@@ -21,13 +21,14 @@ def forward_tables(records):
         if row["kind"] != "settlement" or row["status"] != "SETTLED":
             continue
         forecast = forecasts[row["match_id"]]
-        resolved.append(
-            {
-                "p": forecast["probabilities"],
-                "outcome": row["outcome"],
-                "closing": row["closing_prices"],
-            }
-        )
+        if row["closing_prices"] is not None:
+            resolved.append(
+                {
+                    "p": forecast["probabilities"],
+                    "outcome": row["outcome"],
+                    "closing": row["closing_prices"],
+                }
+            )
         if forecast["bet"] is not None:
             bets.append(
                 {
@@ -122,13 +123,21 @@ def generate():
         "settled_forecasts": len(resolved),
         "void_forecasts": sum(r["status"].startswith("VOID") for r in settlements),
         "pending_forecasts": len(forecasts) - len(settlements),
-        "clv": block_ci(bets.log_clv, bets.block, cfg["bootstrap_samples"], cfg["seed"])
+        "clv_missing": int(bets.log_clv.isna().sum()) if not bets.empty else 0,
+        "clv": block_ci(
+            bets.loc[bets.log_clv.notna(), "log_clv"],
+            bets.loc[bets.log_clv.notna(), "block"],
+            cfg["bootstrap_samples"],
+            cfg["seed"],
+        )
         if not bets.empty
         else block_ci([], []),
         "profit_units": float(bets.profit_units.sum()) if not bets.empty else 0.0,
         "roi": float(bets.profit_units.sum() / bets.stake_units.sum()) if not bets.empty else None,
         "account": replay_account(records),
-        "power": power_analysis(bets.log_clv, bets.block)
+        "power": power_analysis(
+            bets.loc[bets.log_clv.notna(), "log_clv"], bets.loc[bets.log_clv.notna(), "block"]
+        )
         if not bets.empty
         else power_analysis([], []),
     }
@@ -163,11 +172,7 @@ def generate():
     report["deflated_sharpe"] = deflated_sharpe(returns, trial_sharpes, trial_count)
     write_json(ROOT / "results/forward.json", report)
     figures(bets, resolved)
-    permission = read_json(ROOT / "config/data_permission.json")
-    enabled = all(
-        permission.get(k)
-        for k in ["automated_collection", "model_training", "ledger_publication", "evidence"]
-    )
+    enabled = (ROOT / "config/fitted_model.json").exists() and bool(git("tag", "-l", "forward-v1"))
     test_path = ROOT / "results/test.json"
     validation_path = ROOT / "results/validation.json"
     write_json(
@@ -195,7 +200,7 @@ def generate():
         },
     )
     status = {
-        "status": "PERMITTED" if enabled else "BLOCKED_DATA_PERMISSION",
+        "status": "FROZEN_MODEL_READY" if enabled else "PREPARING_MODEL",
         "real_data_matches": read_json(ROOT / "results/data_quality.json")["matches"]
         if (ROOT / "results/data_quality.json").exists()
         else 0,
@@ -206,10 +211,7 @@ def generate():
         "test_season": "EVALUATED_ONCE" if test_path.exists() else "UNEVALUATED",
         "reason": None
         if enabled
-        else (
-            "Provider permission for automated collection, training and "
-            "redistribution is not established."
-        ),
+        else ("Local research authorized; forward model export/freeze not yet complete."),
     }
     write_json(ROOT / "results/status.json", status)
     lines = [
@@ -279,7 +281,7 @@ def actions_evidence():
             r["event"] == "schedule" and r["conclusion"] == "success" for r in runs
         ),
         "note": (
-            "A permission-gated schedule success proves scheduling only; "
+            "A readiness-gated schedule success proves scheduling only; "
             "no data forecast was executed."
         ),
     }

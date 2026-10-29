@@ -2,6 +2,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import time
 import urllib.error
 import urllib.request
@@ -24,12 +25,14 @@ class PermissionMissing(RuntimeError):
 
 def require_permission(training=False, publishing=False):
     permission = read_json(PERMISSION)
-    if not permission.get("evidence") or not permission.get("automated_collection"):
-        raise PermissionMissing("Automated source access needs documented provider permission")
+    if os.environ.get("GITHUB_ACTIONS"):
+        raise PermissionMissing("football-data access/training is local research only")
+    if not permission.get("evidence") or not permission.get("local_private_research"):
+        raise PermissionMissing("Local private research needs the owner's documented decision")
     if training and not permission.get("model_training"):
         raise PermissionMissing("Model training is outside the documented permission")
-    if publishing and not permission.get("ledger_publication"):
-        raise PermissionMissing("Publishing provider quotes in the ledger needs permission")
+    if publishing:
+        raise PermissionMissing("football-data rows must never be published in the ledger")
 
 
 def cached_download(relative, refresh=False):
@@ -41,13 +44,16 @@ def cached_download(relative, refresh=False):
         else []
     )
     previous = [x for x in entries if x["url"] == url]
-    if previous and not refresh:
+    if refresh:
+        raise ValueError("One-off historical download: refresh is disabled")
+    if previous:
         entry = previous[-1]
         path = ROOT / entry["path"]
         if path.exists():
             if file_sha(path) != entry["sha256"]:
                 raise ValueError("Raw cache hash mismatch")
             return path, entry
+    time.sleep(1.0)
     request = urllib.request.Request(
         url, headers={"User-Agent": "closing-line-lab/0.1 personal research"}
     )
@@ -93,7 +99,12 @@ def current_season(at=None):
 
 def normalize(path, source_sha, season=None):
     # csv.DictReader tolerates historical files with surplus empty trailing columns.
-    rows = list(csv.DictReader(io.StringIO(Path(path).read_text(encoding="utf-8-sig"))))
+    raw = Path(path).read_bytes()
+    try:
+        decoded = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        decoded = raw.decode("cp1252")
+    rows = list(csv.DictReader(io.StringIO(decoded)))
     source = pd.DataFrame(rows)
     if source.empty:
         return pd.DataFrame()
@@ -184,9 +195,7 @@ def download_history():
     pieces = []
     for year in range(cfg["first_season"], current_season() + 1):
         for league in cfg["leagues"]:
-            path, entry = cached_download(
-                f"mmz4281/{season_code(year)}/{league}.csv", refresh=year == current_season()
-            )
+            path, entry = cached_download(f"mmz4281/{season_code(year)}/{league}.csv")
             pieces.append(normalize(path, entry["sha256"], year))
     frame = pd.concat(pieces, ignore_index=True).sort_values(["kickoff_utc", "match_id"])
     if frame.match_id.duplicated().any():

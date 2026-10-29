@@ -3,8 +3,8 @@
 **Paper-only research.** No bookmaker account, bet placement or money handling.
 
 <!-- RESULTS:START -->
-**0 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **BLOCKED_DATA_PERMISSION**. Validation: **NOT_RUN**. Test season: **UNEVALUATED**.
+**55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
+Data status: **PREPARING_MODEL**. Validation: **NOT_RUN**. Test season: **UNEVALUATED**.
 
 | Forward metric | Observed value |
 |---|---:|
@@ -25,30 +25,32 @@ More matches do not imply independent observations; inference clusters by calend
 
 ```mermaid
 flowchart LR
-  A[Permission + source review] --> B[Immutable CSV cache + SHA manifest]
+  A[Local private CSV download] --> B[Ignored cache + committed SHA manifest]
   B --> C[As-of Dixon-Coles + Elo + snapshot market]
   C --> D[Validation only: select and freeze]
   D --> E[Held-out test with declared exclusions]
-  D --> F[Pre-kickoff paper forecasts]
+  D --> J[Frozen parameter export]
+  K[The Odds API + credit guards] --> F[Pre-kickoff paper forecasts]
+  J --> F
   F --> G[Hash-chain ledger + GitHub receipt]
   G --> H[Closing prices + results]
   H --> I[CLV + calibration + P&L + power]
 ```
 
-The source now restricts automated data-training products and is **not open-licensed**.
-See [DATA_NOTICE.md](DATA_NOTICE.md). Permission is unresolved; no bulk data has been
-downloaded, and scheduled jobs must report the gate honestly. Source pre-closing quotes
-are not true opening quotes. Pinnacle data is excluded following the provider's stale-feed
-warning. All plots and metrics will distinguish historical proxies from forward observations.
+Historical football-data rows are downloaded once for the owner's private research and
+stay local. Only code, SHA manifests, fitted parameters and aggregate results are committed.
+Hosted forward collection uses The Odds API, whose terms permit programmatic research.
+See [DATA_NOTICE.md](DATA_NOTICE.md). Historical non-C prices are pre-closing snapshots,
+not verified opening quotes; the provider's stale Pinnacle fields are excluded.
 
 Python 3.12 and uv: `make install`, `make check test`, `make verify`.
 The implementation includes Dixon–Coles with exponential time decay, Elo, and a regularized
-multinomial logistic blend anchored to market probabilities. Results are **not yet measured**.
+multinomial logistic blend anchored to market probabilities. Validation feature generation has completed; candidate metrics are pending.
 
 ## Reproduce
 
 See the [runbook](docs/RUNBOOK.md), [draft protocol](PREREGISTRATION.md) and
-[iteration targets](ITERATIONS.md). After source permission is established:
+[iteration targets](ITERATIONS.md). The owner has authorized the local research split:
 
 ```sh
 make download                 # content-addressed cache and source audit
@@ -66,10 +68,16 @@ make report
 Until selection is measured and committed, `forward-v1` is intentionally absent. It would
 be misleading to call an unvalidated, unselected runtime a frozen research result.
 
-Scheduled Actions run four times daily. The forecast job publishes before kickoff and
-dispatches an independent ledger audit; the scoring job appends outcomes and closing
-prices. Source permission is checked first. A green gated run proves the schedule or
-workflow dispatch worked; it does **not** prove live data or paper forecasts work.
+Scheduled Actions run hourly at minute 17 UTC for EPL and Championship. Free fixture
+discovery triggers league-wide EU/h2h requests only around decisions (23–25 hours before
+kickoff) or closing snapshots (15–75 minutes). **The closing line means the last observed
+pre-kickoff snapshot**, with bookmaker, source age and actual gap retained. Betfair EU is
+preferred; Pinnacle is the fixed fallback. A 400-credit cap and 100-credit provider reserve
+protect the 500-credit plan. Missing windows/budget-limited coverage are never backfilled.
+Recent results cost two credits per league; at most one request per league/day when needed.
+Forward parameters are exported locally after freezing and stay fixed for v1. No hosted
+football-data download, historical row cache or retraining occurs. See the protocol for
+source shifts, model drift, commission and the Actions-minute planning assumptions.
 
 ## Provenance
 
@@ -85,14 +93,14 @@ workflow dispatch worked; it does **not** prove live data or paper forecasts wor
 
 ## Limits and interpretation
 
-- No real-data fit, held-out score, economic edge or live timing claim is established yet.
+- No held-out score, economic edge or live forecast timing claim is established yet.
   Empty plots show missing observations; they are not a zero-return experiment.
 - Two schema-previewed test fixtures are prospectively excluded from primary held-out
   metrics. No fitting or model selection used them; the full season is not fully blinded.
   Exact identifiers and the exception are recorded in `docs/source_review.json`.
 - CSV prices are periodically captured snapshots. Historical decision times and result
   availability are proxies. Forward snapshots also do not prove an executable bookmaker
-  price. No exchange commission, liquidity, account limits or slippage is modeled.
+  price. Forward exchange paper P&L deducts 2% of winnings; liquidity, limits and slippage are unmodeled.
 - Raw CLV across B365 and AvgC can reflect different margins. De-vigged CLV and same-book
   closing CLV are secondary checks. Positive CLV alone cannot establish profitable execution.
 - Date clustering reduces effective sample size. Bootstrap intervals, power calculations,

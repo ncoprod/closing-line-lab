@@ -1,10 +1,10 @@
 {
-  "status": "BLOCKED_DATA_PERMISSION",
-  "real_data_matches": 0,
+  "status": "PREPARING_MODEL",
+  "real_data_matches": 55476,
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
   "backtest": "NOT_RUN",
   "test_season": "UNEVALUATED",
-  "reason": "Provider permission for automated collection, training and redistribution is not established."
+  "reason": "Local research authorized; forward model export/freeze not yet complete."
 }

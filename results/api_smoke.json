@@ -1,0 +1,88 @@
+{
+  "status": "LIVE_EVENTS_AND_ODDS_OK",
+  "requests": [
+    {
+      "sport": "soccer_epl",
+      "events": 21,
+      "credits_last": 0,
+      "credits_remaining": 500,
+      "source_sha": "a4feb05a2fc9f5399478e4b8086f18d366b195278fb6b58bfc385d878ca0c128"
+    },
+    {
+      "sport": "soccer_efl_champ",
+      "events": 24,
+      "credits_last": 0,
+      "credits_remaining": 500,
+      "source_sha": "d00a85f6cde02ea1ead98316341713ae671ce0c3451b9ae23451cf00fd5d3179"
+    }
+  ],
+  "odds_requests": [
+    {
+      "sport": "soccer_epl",
+      "events": 21,
+      "bookmakers": [
+        "betanysports",
+        "betclic_fr",
+        "betfair_ex_eu",
+        "betonlineag",
+        "betsson",
+        "codere_it",
+        "coolbet",
+        "gtbets",
+        "leovegas_se",
+        "marathonbet",
+        "matchbook",
+        "mybookieag",
+        "nordicbet",
+        "onexbet",
+        "pinnacle",
+        "pmu_fr",
+        "sport888",
+        "tipico_de",
+        "unibet_fr",
+        "unibet_nl",
+        "unibet_se",
+        "williamhill",
+        "winamax_de",
+        "winamax_fr"
+      ],
+      "fresh_benchmark_events": 21,
+      "credits_last": 1,
+      "credits_remaining": 499,
+      "source_sha": "5291e03a9b9f50ee94c79ee86c06b2925fef282069a32f1671cebafb50e722e0"
+    },
+    {
+      "sport": "soccer_efl_champ",
+      "events": 24,
+      "bookmakers": [
+        "betclic_fr",
+        "betfair_ex_eu",
+        "betonlineag",
+        "betsson",
+        "codere_it",
+        "coolbet",
+        "gtbets",
+        "leovegas_se",
+        "marathonbet",
+        "matchbook",
+        "nordicbet",
+        "onexbet",
+        "pinnacle",
+        "pmu_fr",
+        "sport888",
+        "tipico_de",
+        "unibet_fr",
+        "unibet_nl",
+        "unibet_se",
+        "williamhill",
+        "winamax_de",
+        "winamax_fr"
+      ],
+      "fresh_benchmark_events": 23,
+      "credits_last": 1,
+      "credits_remaining": 498,
+      "source_sha": "d60c534654ed62ed71588446fdeeef2bc630ed78f8137a2656c8215fc524f060"
+    }
+  ],
+  "source_clock_tolerance_seconds": 5
+}

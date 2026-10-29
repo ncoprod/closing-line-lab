@@ -5,7 +5,7 @@ or code from `football-forecast-lab` is used. Models are independently implement
 
 | Component | Licence / terms | Attribution and handling |
 |---|---|---|
-| football-data.co.uk results and odds | Proprietary source restrictions; no open-data licence established | Credit football-data.co.uk; collection/training/redistribution disabled pending permission. See DATA_NOTICE.md. |
+| football-data.co.uk results and odds | Proprietary source restrictions; no open-data licence established | Credit football-data.co.uk; one local private research download authorized by the owner; no raw/processed row redistribution or hosted collection. See DATA_NOTICE.md. |
 | Dixon–Coles, Elo, offset multinomial logistic blend | Mathematical methods; implementations here MIT | Cite Dixon & Coles (1997); no external model code or weights copied. |
 | NumPy | BSD-3-Clause; bundled notices include 0BSD, MIT, Zlib, CC0-1.0 | [Upstream LICENSE](https://github.com/numpy/numpy/blob/main/LICENSE.txt); installed distribution retains bundled notices. |
 | pandas | BSD-3-Clause | [Upstream LICENSE](https://github.com/pandas-dev/pandas/blob/main/LICENSE). |
@@ -43,3 +43,11 @@ Automation actions (upstream MIT licences verified on 2026-10-29):
 - actions/cache: [MIT](https://github.com/actions/cache/blob/main/LICENSE). The workflow pins a commit SHA.
 - actions/upload-artifact: [MIT](https://github.com/actions/upload-artifact/blob/main/LICENSE). The workflow pins a commit SHA.
 - astral-sh/setup-uv: [MIT](https://github.com/astral-sh/setup-uv/blob/main/LICENSE). The workflow pins a commit SHA.
+
+## The Odds API
+
+Market data and the trimmed documentation transport example are provided by The Odds API
+Pty Ltd under its [terms](https://the-odds-api.com/terms-and-conditions.html), reviewed
+2026-10-29 (updated 2026-08-31). No MIT or open-data licence is asserted. Research, storage
+and derived analytics are permitted; standalone data-feed redistribution is prohibited.
+Credit is given voluntarily; see DATA_NOTICE.md and tests/fixtures/NOTICE.md.

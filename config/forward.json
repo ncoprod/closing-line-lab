@@ -1,0 +1,27 @@
+{
+  "sports": {
+    "soccer_epl": "E0",
+    "soccer_efl_champ": "E1"
+  },
+  "monthly_credit_cap": 400,
+  "provider_monthly_credits": 500,
+  "provider_reserve": 100,
+  "decision_min_hours": 23,
+  "decision_max_hours": 25,
+  "closing_max_minutes": 75,
+  "publish_buffer_minutes": 15,
+  "quote_max_age_minutes": 30,
+  "benchmark_priority": [
+    "betfair_ex_eu",
+    "pinnacle"
+  ],
+  "decision_book_priority": [
+    "pinnacle",
+    "betfair_ex_eu"
+  ],
+  "exchange_commission": 0.02,
+  "score_hour_utc": 7,
+  "regions": "eu",
+  "markets": "h2h",
+  "max_clock_skew_seconds": 5
+}

@@ -18,7 +18,7 @@ def test_permission_gate_precedes_network(monkeypatch, tmp_path):
 def test_training_permission_does_not_authorize_ledger_publication(monkeypatch, tmp_path):
     permission = tmp_path / "permission.json"
     permission.write_text(
-        '{"automated_collection":true,"model_training":true,"evidence":"synthetic"}'
+        '{"local_private_research":true,"model_training":true,"evidence":"synthetic"}'
     )
     monkeypatch.setattr(data, "PERMISSION", permission)
     data.require_permission(training=True)
@@ -51,3 +51,17 @@ def test_no_time_and_duplicates(tmp_path):
     path.write_text(path.read_text() + line)
     with pytest.raises(ValueError, match="Duplicate"):
         data.normalize(path, "synthetic")
+
+
+def test_hosted_runner_cannot_access_football_data(monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    with pytest.raises(data.PermissionMissing, match="local research"):
+        data.require_permission(training=True)
+
+
+def test_historical_windows_encoding(tmp_path):
+    path = tmp_path / "old.csv"
+    path.write_bytes(
+        "Div,Date,HomeTeam,AwayTeam,FTHG,FTAG\nF1,01/02/2012,Évian,B,1,0\n".encode("cp1252")
+    )
+    assert data.normalize(path, "synthetic").home.iloc[0] == "Évian"
