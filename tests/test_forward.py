@@ -6,8 +6,10 @@ import pytest
 from closing_line_lab import forward, ledger, odds
 
 
-def test_synthetic_api_forecast_close_settlement_receipts(tmp_path, monkeypatch, cfg):
-    started = datetime(2026, 10, 30, 14, 0, tzinfo=UTC)
+@pytest.mark.parametrize(
+    "started", [datetime(2026, 10, 30, 14, tzinfo=UTC), datetime(2027, 1, 28, 23, tzinfo=UTC)]
+)
+def test_synthetic_api_forecast_close_settlement_receipts(tmp_path, monkeypatch, cfg, started):
     kickoff = started + timedelta(hours=24)
     path = tmp_path / "ledger.jsonl"
     artifact = tmp_path / "model.json"

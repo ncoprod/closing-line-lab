@@ -75,3 +75,35 @@ def test_daily_returns_keep_inactive_boundary_days():
     assert len(result) == 5
     assert result.iloc[0] == result.iloc[-1] == 0
     assert result.iloc[2] == pytest.approx(0.01)
+
+
+def test_unresolved_bet_remains_open_and_does_not_free_bankroll(history, cfg):
+    frame = history.iloc[:12].copy()
+    frame["decision_at"] = frame.kickoff_utc - pd.Timedelta(days=1)
+    frame[["pH", "pD", "pA"]] = [0.99, 0.005, 0.005]
+    frame["outcome"] = np.nan
+    bets = simulate(frame, cfg)
+    assert len(bets) == 10
+    assert bets.stake_units.sum() == pytest.approx(10)
+    assert bets.profit_units.isna().all()
+    assert bets.settled_at.isna().all()
+    assert bets.side_won.isna().all()
+    assert bets.log_clv.isna().all()
+    summary = research.summarize_bets(bets, cfg)
+    assert summary["pending_bets"] == 10
+    assert summary["bets"] == 0
+    assert summary["open_stake_units"] == pytest.approx(10)
+    assert summary["profit_units"] == 0
+    assert summary["roi"] is None
+
+
+def test_price_and_label_missingness_are_distinct(history, cfg):
+    frame = history.iloc[:12].copy()
+    frame["decision_at"] = frame.kickoff_utc - pd.Timedelta(days=1)
+    frame[["pH", "pD", "pA"]] = [0.7, 0.2, 0.1]
+    frame.loc[frame.index[0], "AvgCH"] = np.nan
+    frame.loc[frame.index[1], "outcome"] = np.nan
+    result, _ = evaluate(frame, cfg)
+    assert result["missing_closing_triples"] == result["missing_results"] == 1
+    assert result["unscorable_rows"] == 2
+    assert result["model"]["matches"] == 10

@@ -133,6 +133,32 @@ def verify_records(records, receipts):
             forecast = forecasts[match_id]
             bet = forecast["bet"]
             expected_profit, expected_clv = 0.0, None
+            if "closing_snapshot_hash" not in record:
+                raise ValueError("Settlement requires an explicit closing snapshot link")
+            latest = closes.get(match_id) if record["status"] == "SETTLED" else None
+            if record["closing_snapshot_hash"] != (latest["hash"] if latest else None):
+                raise ValueError("Settlement must use the last pre-kickoff snapshot")
+            closing = record["closing_prices"]
+            if latest is None:
+                if any(
+                    record.get(k) is not None
+                    for k in (
+                        "closing_prices",
+                        "closing_bookmaker",
+                        "closing_gap_minutes",
+                        "log_clv",
+                        "fair_log_clv",
+                        "same_book_log_clv",
+                    )
+                ):
+                    raise ValueError("Closing values require a receipted closing snapshot")
+            else:
+                if closing != latest["prices"]:
+                    raise ValueError("Settlement changed closing prices")
+                if record.get("closing_bookmaker") != latest["bookmaker"] or not np.isclose(
+                    record.get("closing_gap_minutes", np.nan), latest["snapshot_gap_minutes"]
+                ):
+                    raise ValueError("Settlement changed closing metadata")
             if record["status"] == "SETTLED":
                 if record["result_kickoff_utc"] != forecast["kickoff_utc"]:
                     raise ValueError("Changed kickoff must be voided")
@@ -145,12 +171,6 @@ def verify_records(records, receipts):
                         or not np.isfinite(closing).all()
                     ):
                         raise ValueError("Invalid settlement closing prices")
-                if "closing_snapshot_hash" in record:
-                    latest = closes.get(match_id)
-                    if record["closing_snapshot_hash"] != (latest["hash"] if latest else None):
-                        raise ValueError("Settlement must use the last pre-kickoff snapshot")
-                    if latest and closing.tolist() != latest["prices"]:
-                        raise ValueError("Settlement changed closing prices")
                 if record["outcome"] not in (0, 1, 2):
                     raise ValueError("Invalid result")
                 if bet:
@@ -160,6 +180,25 @@ def verify_records(records, receipts):
                         expected_clv = float(
                             np.log(bet.get("raw_odds", bet["odds"]) / closing[bet["side_index"]])
                         )
+                expected_fair, expected_same = None, None
+                if bet and latest:
+                    from .metrics import devig
+
+                    side = bet["side_index"]
+                    taken = bet.get("raw_odds", bet["odds"])
+                    expected_fair = float(np.log(taken * devig(latest["prices"])[side]))
+                    if latest.get("same_book_prices") is not None:
+                        expected_same = float(np.log(taken / latest["same_book_prices"][side]))
+                for name, expected in [
+                    ("fair_log_clv", expected_fair),
+                    ("same_book_log_clv", expected_same),
+                ]:
+                    actual = record.get(name)
+                    if (expected is None and actual is not None) or (
+                        expected is not None
+                        and (actual is None or not np.isclose(actual, expected))
+                    ):
+                        raise ValueError("Secondary CLV does not replay")
             if not np.isclose(record["profit_units"], expected_profit):
                 raise ValueError("Settlement profit does not replay")
             if (expected_clv is None and record["log_clv"] is not None) or (

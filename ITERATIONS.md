@@ -168,3 +168,14 @@ iteration is conservatively trial 16. The automatic-run target remains unmet; cr
 enabled. No scientifically justified model change remains after the calibration target.
 The first projected decision window opens at 19:00 UTC, so no real forecast receipt can
 yet be claimed. The full forward analysis remains prospective.
+
+## Independent review correction, batch 1
+
+Findings 1, 4, 5 and 8 are accepted. Require a receipted latest closing snapshot and
+replay its metadata/secondary CLV; distinguish no-close P&L from closing-derived values.
+Gate new decisions at forward_end while keeping existing forecasts eligible for closes.
+Unresolved historical bets retain pending stakes and cannot affect realized P&L/ROI/CLV.
+Split missing outcomes from missing prices. All 21 affected regression tests pass.
+Original tags, validation, test metrics and coefficients remain intact. Collection is
+paused until the prospective runtime/inference amendment is frozen. Commit references
+for every finding are collected in the final review-resolution table below.

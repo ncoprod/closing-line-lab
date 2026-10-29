@@ -89,8 +89,7 @@ def forecast():
     cfg, fc = frozen_runtime(), forward_config()
     if not ARTIFACT.exists():
         return {"status": "AWAITING_LOCAL_PARAMETER_EXPORT", "new_forecasts": 0}
-    if not timestamp(cfg["forward_start"]) <= now_utc() < timestamp(cfg["forward_end"]):
-        return {"status": "OUTSIDE_REGISTERED_WINDOW", "new_forecasts": 0}
+    decision_window = timestamp(cfg["forward_start"]) <= now_utc() < timestamp(cfg["forward_end"])
     records = read_ledger()
     if records:
         verify()
@@ -104,7 +103,8 @@ def forecast():
         for event in events:
             lead = (timestamp(event["commence_time"]) - now_utc()).total_seconds() / 60
             if (
-                event["id"] not in forecasts
+                decision_window
+                and event["id"] not in forecasts
                 and fc["decision_min_hours"] * 60 <= lead <= fc["decision_max_hours"] * 60
             ) or (
                 event["id"] in forecasts
@@ -123,7 +123,10 @@ def forecast():
                 continue
             lead = (timestamp(event["commence_time"]) - now_utc()).total_seconds() / 60
             if event["id"] not in forecasts:
-                if not fc["decision_min_hours"] * 60 <= lead <= fc["decision_max_hours"] * 60:
+                if (
+                    not decision_window
+                    or not fc["decision_min_hours"] * 60 <= lead <= fc["decision_max_hours"] * 60
+                ):
                     continue
                 observed = quote(event, fc["decision_book_priority"], entry["retrieved_at"], fc)
                 if observed:

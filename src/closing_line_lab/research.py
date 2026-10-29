@@ -148,9 +148,11 @@ def simulate(frame, cfg):
         if not np.isfinite(closing) or closing <= 1:
             # Missing future prices do not affect selection or portfolio stakes.
             closing = np.nan
-        won = row.outcome == bet["side_index"]
+        resolved = pd.notna(row.outcome)
+        won = row.outcome == bet["side_index"] if resolved else None
         cash -= stake
-        heapq.heappush(pending, (row.available_at, row.match_id, stake, won, bet["odds"]))
+        settlement = row.available_at if resolved else pd.Timestamp.max.tz_localize("UTC")
+        heapq.heappush(pending, (settlement, row.match_id, stake, won, bet["odds"]))
         close_prices = np.array([getattr(row, cfg["closing_source"] + s) for s in SIDES])
         fair = (
             devig(close_prices)[bet["side_index"]]
@@ -164,23 +166,32 @@ def simulate(frame, cfg):
                 "league": row.div,
                 "decision_at": row.decision_at.isoformat(),
                 "kickoff_utc": row.kickoff_utc.isoformat(),
-                "settled_at": row.available_at.isoformat(),
+                "status": "SETTLED" if resolved else "PENDING",
+                "settled_at": row.available_at.isoformat() if resolved else None,
                 **bet,
                 "stake_units": stake,
-                "profit_units": float(stake * (bet["odds"] - 1) if won else -stake),
-                "log_clv": float(np.log(bet["odds"] / closing)) if np.isfinite(closing) else None,
-                "fair_log_clv": float(np.log(bet["odds"] * fair)) if np.isfinite(fair) else None,
+                "profit_units": float(stake * (bet["odds"] - 1) if won else -stake)
+                if resolved
+                else None,
+                "log_clv": float(np.log(bet["odds"] / closing))
+                if resolved and np.isfinite(closing)
+                else None,
+                "fair_log_clv": float(np.log(bet["odds"] * fair))
+                if resolved and np.isfinite(fair)
+                else None,
                 "same_book_log_clv": float(np.log(bet["odds"] / paired_close))
-                if np.isfinite(paired_close) and paired_close > 1
+                if resolved and np.isfinite(paired_close) and paired_close > 1
                 else None,
                 "block": row.kickoff_utc.date().isoformat(),
-                "side_won": bool(won),
+                "side_won": bool(won) if resolved else None,
             }
         )
     return pd.DataFrame(bets)
 
 
 def daily_returns(bets, start=None, end=None):
+    if not bets.empty:
+        bets = bets[bets.profit_units.notna() & bets.settled_at.notna()]
     if bets.empty:
         return (
             pd.Series(0.0, index=pd.date_range(start, end, freq="D"))
@@ -197,9 +208,16 @@ def daily_returns(bets, start=None, end=None):
 
 
 def summarize_bets(bets, cfg):
+    selected = len(bets)
+    pending = bets[bets.profit_units.isna()] if selected else bets
+    if selected:
+        bets = bets[bets.profit_units.notna()]
     if bets.empty:
         return {
             "bets": 0,
+            "selected_bets": selected,
+            "pending_bets": len(pending),
+            "open_stake_units": float(pending.stake_units.sum()) if len(pending) else 0.0,
             "clv": block_ci([], []),
             "profit_units": 0,
             "roi": None,
@@ -208,6 +226,9 @@ def summarize_bets(bets, cfg):
     valid = bets[bets.log_clv.notna()]
     return {
         "bets": len(bets),
+        "selected_bets": selected,
+        "pending_bets": len(pending),
+        "open_stake_units": float(pending.stake_units.sum()) if len(pending) else 0.0,
         "clv_missing": int(bets.log_clv.isna().sum()),
         "clv": block_ci(valid.log_clv, valid.block, cfg["bootstrap_samples"], cfg["seed"]),
         "profit_units": float(bets.profit_units.sum()),
@@ -225,7 +246,8 @@ def summarize_bets(bets, cfg):
 
 def evaluate(frame, cfg):
     closes = frame[[cfg["closing_source"] + s for s in SIDES]].to_numpy(float)
-    eligible = np.isfinite(closes).all(1) & (closes > 1).all(1) & frame.outcome.notna()
+    prices_valid = np.isfinite(closes).all(1) & (closes > 1).all(1)
+    eligible = prices_valid & frame.outcome.notna()
     comparable = frame[eligible]
     if comparable.empty:
         raise ValueError("No complete closing-price triples for evaluation")
@@ -233,7 +255,9 @@ def evaluate(frame, cfg):
     predicted = comparable[["p" + s for s in SIDES]].to_numpy(float)
     report = {
         "forecast_rows": len(frame),
-        "missing_closing_triples": int((~eligible).sum()),
+        "missing_closing_triples": int((~prices_valid).sum()),
+        "missing_results": int(frame.outcome.isna().sum()),
+        "unscorable_rows": int((~eligible).sum()),
         "model": scores(predicted, comparable.outcome, closing_p),
         "closing_baseline": scores(closing_p, comparable.outcome, closing_p),
     }

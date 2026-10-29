@@ -14,3 +14,9 @@ results/*_bets.csv
 .env
 .env.*
 data/api_raw/
+REVIEW_ASTRA.md
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out

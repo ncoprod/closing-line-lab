@@ -102,10 +102,11 @@ def test_valid_chain_cannot_hide_wrong_settlement_profit(tmp_path):
             "recorded_at": "2026-11-02T10:00:00+00:00",
             "status": "SETTLED",
             "result_kickoff_utc": record["kickoff_utc"],
-            "closing_prices": [2.0, 3.0, 4.0],
+            "closing_prices": None,
+            "closing_snapshot_hash": None,
             "outcome": 2,
             "profit_units": 1.2,
-            "log_clv": 0.1,
+            "log_clv": None,
         },
         path,
     )
@@ -149,3 +150,48 @@ def test_closing_snapshot_needs_its_own_pre_kickoff_receipt(tmp_path):
         verify_records(
             [original, changed], [receipt(original), receipt(changed, "2026-11-01T14:31:00+00:00")]
         )
+
+
+@pytest.mark.parametrize("link", ["absent", None])
+def test_unreceipted_settlement_close_is_rejected(tmp_path, link):
+    path = tmp_path / "ledger"
+    original = append_event(forecast(), path)
+    payload = {
+        "kind": "settlement",
+        "match_id": original["match_id"],
+        "forecast_hash": original["hash"],
+        "recorded_at": "2026-11-02T10:00:00Z",
+        "status": "SETTLED",
+        "result_kickoff_utc": original["kickoff_utc"],
+        "closing_prices": [1.1, 8, 10],
+        "outcome": 0,
+        "profit_units": 1.2,
+        "log_clv": 0.6931471805599453,
+    }
+    if link != "absent":
+        payload["closing_snapshot_hash"] = link
+    settled = append_event(payload, path)
+    with pytest.raises(ValueError, match="closing snapshot|Closing values"):
+        verify_records([original, settled], [receipt(original)])
+
+
+def test_missing_close_can_settle_profit_only(tmp_path):
+    path = tmp_path / "ledger"
+    original = append_event(forecast(), path)
+    settled = append_event(
+        {
+            "kind": "settlement",
+            "match_id": original["match_id"],
+            "forecast_hash": original["hash"],
+            "recorded_at": "2026-11-02T10:00:00Z",
+            "status": "SETTLED",
+            "result_kickoff_utc": original["kickoff_utc"],
+            "closing_snapshot_hash": None,
+            "closing_prices": None,
+            "outcome": 0,
+            "profit_units": 1.2,
+            "log_clv": None,
+        },
+        path,
+    )
+    assert verify_records([original, settled], [receipt(original)])["settlements"] == 1
