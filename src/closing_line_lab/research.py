@@ -22,6 +22,7 @@ def register_trial(specification):
     record = {
         "registered_at": now_utc().isoformat(),
         "source_commit": git("rev-parse", "HEAD"),
+        "working_tree_dirty": bool(git("status", "--porcelain")),
         **specification,
     }
     record["trial_id"] = digest(record)
@@ -39,13 +40,14 @@ def load_features(path):
 
 
 def build_features(stage):
+    if stage == "test":
+        assert_frozen()
     require_permission(training=True)
     cfg, history = strategy(), load_matches()
     maximum = cfg["test_season"] - 1 if stage == "validation" else cfg["test_season"]
     history = history[history.season <= maximum]
     targets = history[(history.season >= cfg["first_season"] + 3) & history.outcome.notna()]
     if stage == "test":
-        assert_frozen()
         targets = history[history.season == cfg["test_season"]]
     features = make_features(history, targets, cfg)
     path = ROOT / f"data/processed/features_{stage}.csv.gz"
@@ -169,12 +171,17 @@ def simulate(frame, cfg):
     return pd.DataFrame(bets)
 
 
-def daily_returns(bets):
+def daily_returns(bets, start=None, end=None):
     if bets.empty:
-        return pd.Series(dtype=float)
+        return (
+            pd.Series(0.0, index=pd.date_range(start, end, freq="D"))
+            if start is not None
+            else pd.Series(dtype=float)
+        )
     daily = bets.groupby(pd.to_datetime(bets.settled_at, utc=True).dt.floor("D")).profit_units.sum()
     daily = daily.reindex(
-        pd.date_range(daily.index.min(), daily.index.max(), freq="D"), fill_value=0
+        pd.date_range(start or daily.index.min(), end or daily.index.max(), freq="D"),
+        fill_value=0,
     )
     start_equity = 100 + daily.cumsum().shift(1, fill_value=0)
     return daily / start_equity
@@ -276,7 +283,13 @@ def run_backtest(stage):
         report, bets = evaluate(predicted, local)
         report.update({"trial_id": trial_id, "candidate": specification})
         reports.append(report)
-        daily.append(daily_returns(bets))
+        daily.append(
+            daily_returns(
+                bets,
+                predicted.decision_at.min().floor("D"),
+                predicted.available_at.max().floor("D"),
+            )
+        )
         name = f"{stage}_{model}_{specification['min_edge']:.2f}"
         predicted.to_csv(
             ROOT / f"results/{name}_predictions.csv.gz",
@@ -286,6 +299,12 @@ def run_backtest(stage):
         bets.to_csv(ROOT / f"results/{name}_bets.csv", index=False)
     trial_count = len(TRIALS.read_text().splitlines())
     sharpes = [float(x.mean() / x.std(ddof=1)) for x in daily if len(x) > 2 and x.std(ddof=1) > 0]
+    if stage == "test":
+        sharpes = [
+            report["deflated_sharpe"]["daily_sharpe"]
+            for report in read_json(ROOT / "results/validation.json")["reports"]
+            if "daily_sharpe" in report["deflated_sharpe"]
+        ]
     for report, returns in zip(reports, daily, strict=True):
         report["deflated_sharpe"] = deflated_sharpe(returns, sharpes, trial_count)
     result = {

@@ -1,9 +1,7 @@
 # Third-party notices
 
 Original code: MIT, copyright Nicolas Coquelet. No pretrained weights, vendored source,
-or code from `football-forecast-lab` is used. That repository currently exposes no LICENSE
-through GitHub's licence metadata; no MIT assumption was made. Models are independently
-implemented from their mathematical descriptions.
+or code from `football-forecast-lab` is used. Models are independently implemented from their mathematical descriptions.
 
 | Component | Licence / terms | Attribution and handling |
 |---|---|---|
@@ -35,3 +33,6 @@ References (papers are linked, not redistributed):
 - Buchdahl, [closing-odds discussion](https://football-data.co.uk/blog/closing_odds.php)
   and [market-efficiency discussion](https://football-data.co.uk/blog/pinnacle_efficiency.php).
   CLV is a diagnostic of market-relative pricing, not proof of profitability or independence.
+
+Upstream licence texts were retrieved and hashed on 2026-10-29; see
+[verification records](docs/license_verification.json).

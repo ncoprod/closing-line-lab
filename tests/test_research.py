@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from closing_line_lab import research
 from closing_line_lab.research import choose_bet, daily_returns, evaluate, simulate
 
 
@@ -45,3 +46,32 @@ def test_evaluation_closing_baseline_uses_identical_matches(history, cfg):
     report, _ = evaluate(frame, cfg)
     assert report["model"]["matches"] == report["closing_baseline"]["matches"] == 11
     assert report["missing_closing_triples"] == 1
+
+
+def test_heldout_guard_precedes_data_read(monkeypatch):
+    def blocked():
+        raise RuntimeError("not frozen")
+
+    monkeypatch.setattr(research, "assert_frozen", blocked)
+    monkeypatch.setattr(research, "load_matches", lambda: pytest.fail("Holdout opened"))
+    with pytest.raises(RuntimeError, match="not frozen"):
+        research.build_features("test")
+
+
+def test_heldout_second_open_is_refused(tmp_path, monkeypatch):
+    (tmp_path / "results").mkdir()
+    (tmp_path / "results/test.json").write_text("{}")
+    monkeypatch.setattr(research, "ROOT", tmp_path)
+    monkeypatch.setattr(research, "assert_frozen", lambda: None)
+    with pytest.raises(RuntimeError, match="already opened"):
+        research.run_backtest("test")
+
+
+def test_daily_returns_keep_inactive_boundary_days():
+    bets = pd.DataFrame({"settled_at": ["2026-01-03T12:00:00+00:00"], "profit_units": [1.0]})
+    result = daily_returns(
+        bets, pd.Timestamp("2026-01-01", tz="UTC"), pd.Timestamp("2026-01-05", tz="UTC")
+    )
+    assert len(result) == 5
+    assert result.iloc[0] == result.iloc[-1] == 0
+    assert result.iloc[2] == pytest.approx(0.01)

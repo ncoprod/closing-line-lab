@@ -89,3 +89,25 @@ def test_duplicate_and_account_replay(tmp_path):
     duplicate["hash"] = digest({k: v for k, v in duplicate.items() if k != "hash"})
     with pytest.raises(ValueError, match="Duplicate"):
         verify_records([record, duplicate], [receipt(record), receipt(duplicate)])
+
+
+def test_valid_chain_cannot_hide_wrong_settlement_profit(tmp_path):
+    path = tmp_path / "ledger"
+    record = append_event(forecast(), path)
+    settlement = append_event(
+        {
+            "kind": "settlement",
+            "match_id": record["match_id"],
+            "forecast_hash": record["hash"],
+            "recorded_at": "2026-11-02T10:00:00+00:00",
+            "status": "SETTLED",
+            "result_kickoff_utc": record["kickoff_utc"],
+            "closing_prices": [2.0, 3.0, 4.0],
+            "outcome": 2,
+            "profit_units": 1.2,
+            "log_clv": 0.1,
+        },
+        path,
+    )
+    with pytest.raises(ValueError, match="profit does not replay"):
+        verify_records([record, settlement], [receipt(record)])

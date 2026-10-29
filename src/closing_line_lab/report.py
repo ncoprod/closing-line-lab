@@ -58,6 +58,7 @@ def figures(bets, resolved):
                 va="center",
             )
             axis.set_xticks([])
+            axis.set_yticks([])
     else:
         plotted = bets.sort_values(["recorded_at", "match_id"])
         x = pd.to_datetime(plotted.recorded_at, utc=True)

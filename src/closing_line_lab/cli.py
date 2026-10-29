@@ -46,6 +46,17 @@ def main():
             else:
                 result = forecast() if args.command == "forward" else settle()
     except PermissionMissing as error:
+        if args.command == "backtest":
+            from .research import register_trial
+
+            register_trial(
+                {
+                    "kind": "iteration_attempt",
+                    "stage": args.stage,
+                    "status": "BLOCKED_DATA_PERMISSION",
+                    "reason": str(error),
+                }
+            )
         print(json.dumps({"status": "BLOCKED_DATA_PERMISSION", "reason": str(error)}))
         sys.exit(2)
     print(json.dumps(result, indent=2, allow_nan=False))

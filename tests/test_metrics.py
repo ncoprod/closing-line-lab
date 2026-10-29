@@ -3,7 +3,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from closing_line_lab.metrics import block_ci, clv, devig, power_analysis, scores
+from closing_line_lab.metrics import block_ci, clv, deflated_sharpe, devig, power_analysis, scores
 
 
 @given(st.lists(st.floats(min_value=1.01, max_value=100), min_size=3, max_size=3))
@@ -36,3 +36,18 @@ def test_scores_separate_results_from_closing_distribution():
     assert result["log_loss"] == pytest.approx(-np.log(0.5))
     assert result["brier"] == pytest.approx(0.38)
     assert result["closing_cross_entropy"] > result["log_loss"]
+
+
+def test_more_trials_reduce_deflated_sharpe():
+    returns = np.random.default_rng(19).normal(0.001, 0.02, 500)
+    single = deflated_sharpe(returns, [0.05], 1)
+    many = deflated_sharpe(returns, [0.05] * 100, 100)
+    assert 0 <= many["probability"] < single["probability"] <= 1
+    assert many["trial_sharpe_variance"] > 0
+
+
+def test_power_scales_with_inverse_squared_effect():
+    report = power_analysis([0.01, -0.02, 0.03, -0.04] * 20, list(range(80)))
+    required = report["required_bets"]
+    assert report["status"] == "ESTIMATED"
+    assert required["5"] >= required["10"] >= required["100"] > 0

@@ -1,0 +1,85 @@
+{
+  "checked_on": "2026-10-29",
+  "sources": [
+    {
+      "name": "NumPy",
+      "licence": "BSD-3-Clause with bundled notices",
+      "url": "https://raw.githubusercontent.com/numpy/numpy/main/LICENSE.txt",
+      "sha256": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+      "bytes": 1543,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "pandas",
+      "licence": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/main/LICENSE",
+      "sha256": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae",
+      "bytes": 1634,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "SciPy",
+      "licence": "BSD-3-Clause with bundled notices",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/main/LICENSE.txt",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "bytes": 1531,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "scikit-learn",
+      "licence": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING",
+      "sha256": "50d6a9d340f19ab355609917993114daf5f47e3161067bcf34955bbd05cd9cb0",
+      "bytes": 1532,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "Matplotlib",
+      "licence": "Matplotlib licence, PSF based",
+      "url": "https://raw.githubusercontent.com/matplotlib/matplotlib/main/LICENSE/LICENSE",
+      "sha256": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc",
+      "bytes": 4830,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "pytest",
+      "licence": "MIT",
+      "url": "https://raw.githubusercontent.com/pytest-dev/pytest/main/LICENSE",
+      "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+      "bytes": 1091,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "Hypothesis",
+      "url": "https://raw.githubusercontent.com/HypothesisWorks/hypothesis/master/LICENSE.txt",
+      "status": "VERIFIED",
+      "licence": "MPL-2.0",
+      "bytes": 414,
+      "sha256": "df2ca456f6cda1226620ee99f16bafb6345241040996734d3a46e3afe414c056"
+    },
+    {
+      "name": "Ruff",
+      "licence": "MIT",
+      "url": "https://raw.githubusercontent.com/astral-sh/ruff/main/LICENSE",
+      "sha256": "2597d854122b77ddc71971564ca2350a37608575ce324adc5650a2b2051c8f18",
+      "bytes": 20731,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "uv MIT",
+      "licence": "MIT OR Apache-2.0",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/main/LICENSE-MIT",
+      "sha256": "860e3d7a86b84e6a7012c7a635fc64df475cebc6cce34dfeb73a5982ec58176c",
+      "bytes": 1077,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "uv Apache",
+      "licence": "MIT OR Apache-2.0",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/main/LICENSE-APACHE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "status": "VERIFIED"
+    }
+  ]
+}
