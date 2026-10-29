@@ -9,7 +9,7 @@ of a profitable strategy; a well-measured negative result is useful research.
 | Held-out CLV estimate | report mean, 95% date-block CI, missingness and count; no positivity requirement | MET: negative/inconclusive, two bets; `results/test.json`, `results/test_coverage.json` |
 | Primary forward hypothesis | lower 95% CLV CI endpoint > 0 | NOT_ESTIMABLE: no bets |
 | Forward pipeline on GitHub | real forecast pushed and server-receipt verified before kickoff | LIVE API workflow passes; first eligible quote window has not opened; no timing claim yet |
-| Scheduled execution | at least one `event=schedule` run succeeds | PENDING: active default-branch cron; no genuine scheduled run observed in `results/actions_evidence.json` |
+| Scheduled execution | at least one `event=schedule` run succeeds | UNMET at the 14:35 UTC checkpoint: no genuine run observed; `results/schedule_check.json`; timer remains active |
 | Code verification | ruff and required tests green on GitHub | MET: 38 tests; `results/engineering.json` and CI run URLs |
 
 For research iterations: run validation → measure → diagnose → make one focused change
@@ -133,9 +133,9 @@ as another engineering trial; no performance improvement is claimed.
 
 All completed download/feature stages were reused. No killed fit needs restarting.
 Scientific iteration stopped because the predeclared calibration target was met, with no
-positive edge established. The trial registry has 15 entries including the held-out run,
-two prospective engineering amendments and two reporting corrections; the original test DSR retains its 11-trial
-count at evaluation, while subsequent forward reporting uses the full current registry.
+positive edge established. The trial registry has 16 entries including the held-out run,
+two prospective engineering amendments, two reporting corrections and the deployment check.
+The original test DSR retains its 11-trial count at evaluation, while subsequent forward reporting uses the full current registry.
 
 The hourly workflow has successfully queried live fixture discovery, without paid odds
 requests outside the registered windows. This does not meet the real-forecast timing
@@ -155,3 +155,16 @@ and that paper P&L still includes settlements without closes. All 38 tests pass.
 forecast, staking, historical selection or original test metric changes. Both this change
 and the earlier saved-prediction reporting correction are conservatively added to the trial
 registry now, without backdating their registration or changing the original test report.
+
+## Deployment observation checkpoint — 29 October 2026
+
+The live manual run succeeds. Repository settings show private, non-fork, default main,
+Actions enabled, and an active hourly cron. Re-enabled the same workflow without changing
+its schedule. Monitored through the next 14:17 UTC boundary and a delay window ending at
+14:35 UTC: no genuine schedule event appeared. See `results/schedule_check.json` for the
+query, observation interval and counts. The cause is unknown; do not attribute this to
+a diagnosed outage or call a manual run scheduled evidence. This failed verification
+iteration is conservatively trial 16. The automatic-run target remains unmet; cron remains
+enabled. No scientifically justified model change remains after the calibration target.
+The first projected decision window opens at 19:00 UTC, so no real forecast receipt can
+yet be claimed. The full forward analysis remains prospective.

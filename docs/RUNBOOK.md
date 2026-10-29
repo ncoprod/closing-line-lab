@@ -78,3 +78,11 @@ tamper-evident, not trustless or immutable. Private evidence needs reviewer acce
 Refresh evidence with `uv run cll actions-evidence`. A manual dispatch is not a scheduled
 run; a readiness-gated schedule success is not proof of an actual forecast. Missing data,
 late publication and verifier failures stay visible and stop claimed timing verification.
+
+## End of the registered window
+
+New forecasts stop at the configured forward_end (29 January 2027, exclusive). Allow
+settlement/reporting afterward; unresolved observations stay explicitly unresolved. Once
+the final analysis is saved and scoring is no longer useful, stop the hourly runner cost
+with `gh workflow disable paper.yml -R ncoprod/closing-line-lab`. Retain the audit workflow,
+ledger history and verification artifacts. The cron does not disable itself automatically.

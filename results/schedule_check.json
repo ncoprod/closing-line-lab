@@ -1,0 +1,33 @@
+{
+  "source_commit": "eb5e4abe0e8abb59ea949051134c697838591031",
+  "checked_at": "2026-10-29T14:35:32.004996+00:00",
+  "first_poll_utc": "2026-10-29T13:29:40.965122+00:00",
+  "last_poll_utc": "2026-10-29T14:34:10.052900+00:00",
+  "polls": 70,
+  "poll_errors": 0,
+  "query": [
+    "gh",
+    "run",
+    "list",
+    "-R",
+    "ncoprod/closing-line-lab",
+    "--event",
+    "schedule",
+    "--limit",
+    "10"
+  ],
+  "observed_runs": [],
+  "successful_scheduled_runs": 0,
+  "status": "NOT_OBSERVED",
+  "repository_checks": {
+    "private": true,
+    "fork": false,
+    "default_branch": "main",
+    "actions_enabled": true,
+    "workflow_state": "active",
+    "cron_utc": "17 * * * *"
+  },
+  "re_enable_attempt": "gh workflow enable paper.yml -R ncoprod/closing-line-lab; unchanged hourly cron",
+  "manual_live_api_run": "https://github.com/ncoprod/closing-line-lab/actions/runs/40881307193",
+  "limitation": "Observation checkpoint, not proof that a future run cannot occur. No configuration cause identified. Manual success is not a scheduled-run or pre-kickoff forecast receipt."
+}

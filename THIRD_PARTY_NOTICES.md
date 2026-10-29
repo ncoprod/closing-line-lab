@@ -40,7 +40,6 @@ Upstream licence texts were retrieved and hashed on 2026-10-29; see
 Automation actions (upstream MIT licences verified on 2026-10-29):
 
 - actions/checkout: [MIT](https://github.com/actions/checkout/blob/main/LICENSE). The workflow pins a commit SHA.
-- actions/cache: [MIT](https://github.com/actions/cache/blob/main/LICENSE). The workflow pins a commit SHA.
 - actions/upload-artifact: [MIT](https://github.com/actions/upload-artifact/blob/main/LICENSE). The workflow pins a commit SHA.
 - astral-sh/setup-uv: [MIT](https://github.com/astral-sh/setup-uv/blob/main/LICENSE). The workflow pins a commit SHA.
 
