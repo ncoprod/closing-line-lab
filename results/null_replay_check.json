@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-10-29T15:38:25.057584+00:00",
+  "source_commit": "968bb7ddc9165cd28977f4c5c42e3e7da6f1633c",
+  "changed_fields": [
+    "source_commit",
+    "implementation_sha256"
+  ],
+  "comparison": [
+    {
+      "file": "results/null_calibration.json",
+      "all_scientific_fields_unchanged": true,
+      "original_file_sha256": "c16acb44b760d4dcb85ac749cc5642acab608db2ea5f197775c2d10e9d52c815",
+      "replayed_file_sha256": "f6ef3b366833270fcad216a28ef2d891c67b92628537f1d57ef03c33c78c0d00"
+    },
+    {
+      "file": "results/null_calibration_candidate1.json",
+      "all_scientific_fields_unchanged": true,
+      "original_file_sha256": "696a0a859b1f1eac013d2cf6b2de62cbfd826220089ec033dda464a786120d1c",
+      "replayed_file_sha256": "25202f4239ca40431f40cc91c15e93b935eff6afcc595070ded155427ea2f3c5"
+    }
+  ]
+}

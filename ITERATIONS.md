@@ -261,3 +261,12 @@ rerun warning; this is retained in paper/build.json with an upstream discussion 
 than hidden. Bibliography content, source hashes and PDF metadata were checked directly.
 No arXiv submission is attempted. `make check test` remains clean with 59 tests.
 This publication work changes no scientific parameters or selection rule.
+
+Final provenance verification caught a stale metrics.py implementation fingerprint in the
+null reports after the paper commit. The fingerprint assertion failed; the shell sequence
+continued and created the paper commit, so this is corrected explicitly in new commits.
+Re-ran both fixed synthetic candidates with current frozen source. Every policy, null rate,
+coverage value and failure status is identical; only source commit/fingerprints change.
+`results/null_replay_check.json` records comparison hashes. The full historical replay's
+source fingerprints already match. Rebuild the paper manifest from the corrected committed
+inputs. No history rewrite, parameter adjustment or hidden new inference candidate.
