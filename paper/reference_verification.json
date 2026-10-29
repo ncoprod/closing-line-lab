@@ -1,0 +1,166 @@
+{
+  "verified_at": "2026-10-29T15:15:28.474577+00:00",
+  "references": {
+    "dixon1997": {
+      "doi": "10.1111/1467-9876.00065",
+      "title": [
+        "Modelling Association Football Scores and Inefficiencies in the Football Betting Market"
+      ],
+      "authors": [
+        {
+          "given": "Mark J.",
+          "family": "Dixon",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Lancaster University , UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Stuart G.",
+          "family": "Coles",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Lancaster University , UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            1997,
+            6,
+            1
+          ]
+        ]
+      },
+      "container": [
+        "Journal of the Royal Statistical Society Series C: Applied Statistics"
+      ],
+      "volume": "46",
+      "issue": "2",
+      "page": "265-280",
+      "verification_url": "https://api.crossref.org/works/10.1111/1467-9876.00065",
+      "response_sha256": "1a108fa6847f76b4dd6b01cc8199cb7bf2dcd223020503b3cd5954104cf7c049"
+    },
+    "bailey2014": {
+      "doi": "10.3905/jpm.2014.40.5.094",
+      "title": [
+        "The Deflated Sharpe Ratio:\n                    <i>Correcting for Selection Bias, Backtest</i>\n                    <i>Overfitting, and Non-Normality</i>"
+      ],
+      "authors": [
+        {
+          "given": "David H.",
+          "family": "Bailey",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marcos",
+          "family": "L\u00f3pez de Prado",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2014,
+            9,
+            30
+          ]
+        ]
+      },
+      "container": [
+        "The Journal of Portfolio Management"
+      ],
+      "volume": "40",
+      "issue": "5",
+      "page": "94-107",
+      "verification_url": "https://api.crossref.org/works/10.3905/jpm.2014.40.5.094",
+      "response_sha256": "e1b25e9e1215a272f4b69cd9412a5f035e46a9902297c8f120c86decfb224371"
+    },
+    "efron1979": {
+      "doi": "10.1214/aos/1176344552",
+      "title": [
+        "Bootstrap Methods: Another Look at the Jackknife"
+      ],
+      "authors": [
+        {
+          "given": "B.",
+          "family": "Efron",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            1979,
+            1,
+            1
+          ]
+        ]
+      },
+      "container": [
+        "The Annals of Statistics"
+      ],
+      "volume": "7",
+      "issue": "1",
+      "page": "1-26",
+      "verification_url": "https://api.crossref.org/works/10.1214/aos/1176344552",
+      "response_sha256": "99170d34d6ab6093354f1cf1d2708e22a83d2622d8320969f8ada090f75488a3"
+    },
+    "kaunitz2017": {
+      "arxiv_id": "1710.02824",
+      "title": "Beating the bookies with their own numbers - and how the online sports betting market is rigged",
+      "authors": [
+        "Lisandro Kaunitz",
+        "Shenjun Zhong",
+        "Javier Kreiner"
+      ],
+      "published": "2017-10-08T11:44:35Z",
+      "verification_url": "https://export.arxiv.org/api/query?id_list=1710.02824",
+      "response_sha256": "7468a2f2886e2736300c3099e836b872415974c4d925a6730250d4de11d4f7cf"
+    },
+    "oddsdocs": {
+      "title": "Odds API Documentation V4",
+      "verification_url": "https://the-odds-api.com/liveapi/guides/v4/",
+      "identifier_type": "official documentation URL; no scholarly DOI",
+      "response_sha256": "daf6de3255666ba66b0b61b44693e84f4a2975da0dc07165ab9e52e956b8d636"
+    }
+  }
+}

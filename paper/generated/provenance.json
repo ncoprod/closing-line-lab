@@ -1,0 +1,19 @@
+{
+  "input_commit": "1e5fd9d421686734018d1a4cefb88373051f32a3",
+  "sha256": {
+    "results/review_corrections.json": "fdc02a197ba3fc2c6b3cd3b46a622137e133395486cd74fd2c5baea45ea8612d",
+    "results/historical_analysis.json": "fe95d923577905301674447550bee6a43bfcf840c6d0562dcc711b976a114ae2",
+    "results/data_quality.json": "190e33d811e2ba1cc7fbd8d339cb04bc9b64b7fa8da42449aacbcb85cdb3b73c",
+    "results/forward.json": "1c6fa9011538073eae2f069baa8ec4ee4bace5cffc81a7e2cce41a1d713bf8a0",
+    "results/null_calibration_candidate1.json": "696a0a859b1f1eac013d2cf6b2de62cbfd826220089ec033dda464a786120d1c",
+    "results/null_calibration.json": "c16acb44b760d4dcb85ac749cc5642acab608db2ea5f197775c2d10e9d52c815",
+    "results/power_analysis.json": "366d824ae920277937fa1ddcf14744e494107379e3c47c5c525a91fd35c2104d",
+    "config/strategy.json": "87506a1d50d21263088307bb5d0c18cc6469f2a6b431e49924d804cd96a9275f",
+    "config/forward.json": "f4f7617f7d1c19af5e77659583395a4d1af5b7e1c5c3171eb7654b5ab548cf78",
+    "results/actions_evidence.json": "a26160e5afc7b907cbe9a57967c9b652e767a10bead55ebd4ada369708ef1fb5",
+    "results/engineering.json": "c045dea3ad445058039c5e21c9cc7dca2e1b9816610f9e0f307e858ed57ffbaa",
+    "data/manifest.jsonl": "c8f3e318767051c966f1915d092d71191ee23440cd05d57ddc1172f66c117ef6"
+  },
+  "generator_sha256": "1dadd9a5657c3e7780383e5250efb53fb8a415fb88a0b3f4d7cfa67185f3d00c",
+  "display": "Round to nearest, six decimals unless units require otherwise"
+}

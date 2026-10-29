@@ -80,6 +80,22 @@
       "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
       "bytes": 11357,
       "status": "VERIFIED"
+    },
+    {
+      "name": "Latin Modern fonts",
+      "licence": "GUST Font License 1.0 (LPPL 1.3c or later with nonbinding recommendations)",
+      "url": "https://www.gust.org.pl/projects/e-foundry/licenses/GUST-FONT-LICENSE.txt",
+      "sha256": "5eb61bb836bb1845ef668717cb15b382e997748ce2629e4388cc5e4c3fa4e433",
+      "bytes": 1417,
+      "status": "VERIFIED"
+    },
+    {
+      "name": "Tectonic build tool",
+      "licence": "MIT for original Tectonic; bundled components retain their own licences",
+      "url": "https://raw.githubusercontent.com/tectonic-typesetting/tectonic/master/LICENSE",
+      "sha256": "814a258f76e420b25cb3c07172eb2b3956f34cefbf0a650413b78e65c425f306",
+      "bytes": 1192,
+      "status": "VERIFIED"
     }
   ]
 }

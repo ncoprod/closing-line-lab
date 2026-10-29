@@ -243,3 +243,21 @@ changed. CI 40900469164 and audit 40900469115 pass at that commit. The remote bu
 was initialized from the two prior smoke credits and read back (498 remaining, no pending
 reservation). The workflow is re-enabled; manual run 40900625519 passes free fixture
 discovery with zero forecasts. This is not genuine schedule or live receipt acceptance.
+
+## Paper delivery
+
+`paper/main.tex` reports the negative historical comparison, prospective protocol, all
+validation candidates and both failed inference candidates. Tables, numeric macros and
+figures are generated from committed aggregate blobs at `1e5fd9d` by paper/make_tables.py;
+input/generator SHA-256 hashes are saved alongside them. Crossref resolves Dixon–Coles,
+Bailey–López de Prado and Efron; the arXiv API resolves Kaunitz–Zhong–Kreiner, and the API
+reference is verified against official documentation. No unverifiable references are used.
+
+`tectonic -X compile paper/main.tex` exits successfully. The initial ten-page layout had a
+single reference on its final page; removing redundant DOI URLs yields nine pages without
+changing results. All nine final pages were rendered and inspected. No undefined reference,
+citation or LaTeX layout warning remains. Tectonic 0.15 emits its bibliography consistency/
+rerun warning; this is retained in paper/build.json with an upstream discussion link rather
+than hidden. Bibliography content, source hashes and PDF metadata were checked directly.
+No arXiv submission is attempted. `make check test` remains clean with 59 tests.
+This publication work changes no scientific parameters or selection rule.

@@ -1,5 +1,7 @@
 # closing-line-lab
 
+[Read the paper (PDF)](paper/main.pdf) · [LaTeX source](paper/main.tex)
+
 **Paper-only research.** No bookmaker account, bet placement or money handling.
 
 <!-- RESULTS:START -->
@@ -66,6 +68,18 @@ Python 3.12 and uv: `make install`, `make check test`, `make verify`.
 The implementation includes Dixon–Coles with exponential time decay, Elo, and a regularized
 multinomial logistic blend anchored to market probabilities. All eight declared validation
 candidates and the frozen held-out result are reported above.
+
+## Paper
+
+The paper reports the negative historical comparison and the prospective protocol; forward
+performance remains unobserved. Its tables, numerical macros and figures are generated
+from committed aggregate artifacts with `uv run python paper/make_tables.py`, then built
+with `tectonic -X compile paper/main.tex`. Sources and SHA-256 hashes are recorded in
+[paper provenance](paper/generated/provenance.json). The bibliography has verified
+Crossref/arXiv identifiers and an official documentation URL, with
+[verification metadata](paper/reference_verification.json). The local Tectonic 0.15 build
+emits a bibliography rerun warning; citations and all rendered pages were checked. See
+[build evidence](paper/build.json) and the matching [upstream discussion](https://github.com/tectonic-typesetting/tectonic/discussions/1186).
 
 ## Reproduce
 

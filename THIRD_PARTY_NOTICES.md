@@ -50,3 +50,18 @@ Pty Ltd under its [terms](https://the-odds-api.com/terms-and-conditions.html), r
 2026-10-29 (updated 2026-08-31). No MIT or open-data licence is asserted. Research, storage
 and derived analytics are permitted; standalone data-feed redistribution is prohibited.
 Credit is given voluntarily; see DATA_NOTICE.md and tests/fixtures/NOTICE.md.
+
+## Paper and typesetting
+
+The paper's text, tables and figures are original work; cited manuscripts are not vendored
+or redistributed. Additional reference: Efron (1979), *Bootstrap Methods: Another Look at
+the Jackknife*, [DOI](https://doi.org/10.1214/aos/1176344552). All scholarly DOI/arXiv
+identifiers were verified against primary metadata; see paper/reference_verification.json.
+
+Latin Modern fonts from the GUST e-foundry project are embedded by the TeX distribution
+under the [GUST Font License 1.0](https://www.gust.org.pl/projects/e-foundry/licenses/GUST-FONT-LICENSE.txt),
+which applies LPPL 1.3c or later with nonbinding naming recommendations. No font source is
+modified or vendored. Tectonic's original code is [MIT](https://github.com/tectonic-typesetting/tectonic/blob/master/LICENSE);
+its bundled TeX components retain their own licences in the installed distribution.
+The build tool is not redistributed by this repository. Licence retrieval hashes are in
+docs/license_verification.json. These licences do not change the MIT licence of original code.
