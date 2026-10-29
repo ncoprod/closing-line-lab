@@ -3,7 +3,15 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from closing_line_lab.metrics import block_ci, clv, deflated_sharpe, devig, power_analysis, scores
+from closing_line_lab.metrics import (
+    block_ci,
+    clv,
+    clv_inference,
+    deflated_sharpe,
+    devig,
+    power_analysis,
+    scores,
+)
 
 
 @given(st.lists(st.floats(min_value=1.01, max_value=100), min_size=3, max_size=3))
@@ -51,3 +59,31 @@ def test_power_scales_with_inverse_squared_effect():
     required = report["required_bets"]
     assert report["status"] == "ESTIMATED"
     assert required["5"] >= required["10"] >= required["100"] > 0
+
+
+def test_sparse_bootstrap_is_descriptive_and_never_evidence():
+    dates = ["2026-10-01", "2026-10-02"]
+    assert block_ci([0.01, 0.02], dates)["ci95"][0] > 0
+    inference = clv_inference([0.01, 0.02], dates)
+    assert inference["status"] == "INSUFFICIENT_INFORMATION"
+    assert not inference["positive_evidence"]
+    assert inference["ci"] is None
+
+
+def test_failed_null_rules_stay_disabled_even_with_adequate_counts():
+    import pandas as pd
+
+    dates = pd.date_range("2024-01-01", periods=120, freq="7D").astype(str)
+    inference = clv_inference([0.02] * 120, dates)
+    assert inference["status"] == "INFERENCE_NOT_VALIDATED"
+    assert inference["populated_weeks"] == 120
+    assert not inference["positive_evidence"]
+
+
+def test_sparse_dsr_keeps_arithmetic_out_of_probability():
+    result = deflated_sharpe([-0.01, -0.02] + [0] * 304, [0.02, -0.03], 11)
+    assert result["days"] == 306
+    assert result["nonzero_days"] == 2
+    assert result["status"] == "NOT_ESTIMABLE"
+    assert result["probability"] is None
+    assert result["arithmetic_diagnostic"] is not None

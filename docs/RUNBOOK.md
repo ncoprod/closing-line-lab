@@ -4,7 +4,7 @@ Paper only. No account creation, bet-placement endpoint or payments exist. Pytho
 `make install`, `make check test`, `make verify`. Tests use synthetic data and a trimmed,
 attributed API documentation example. Tests never download historical provider data.
 
-## Local research
+## Historical authoring (already complete)
 
 Read DATA_NOTICE.md. `make download` is the owner's authorized one-off private download:
 ten leagues, 2012/13 through the current partial season, sequential with a one-second delay.
@@ -30,10 +30,19 @@ If a cache is lost, a mutable URL may no longer reproduce the manifest; privatel
 Long commands log to ignored `runs/` and resume at completed file/stage boundaries. Keep
 BLAS at one thread on the shared machine. These fits do not require heavy-ML locks.
 
+## Reviewer replay on main
+
+Do not run the authoring selection sequence again. With the matching private cache:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run cll replay --output-dir runs/reviewer-replay --rebuild-features`.
+Compare the isolated replay.json with results/review_corrections.json. Registered artifacts
+and tags are preserved; row-level replay files stay ignored. Without the cache, unit tests,
+ledger verification and aggregate paper regeneration remain available, but exact historical
+feature replay does not. Never delete tags or bypass the holdout guards to reproduce a run.
+
 ## Hosted collection
 
 The owner supplies ODDS_API_KEY as a GitHub Actions secret. Never print it or put it in
-command arguments. The hourly `:17` UTC job first checks key, active v1.2 runtime tag and model availability.
+command arguments. The hourly `:17` UTC job first checks key, active v1.3 runtime tag and model availability.
 It never downloads, restores or trains on football-data rows. Complete API responses are
 not committed. API hashes, sanitized endpoint parameters and quota headers are retained.
 
@@ -53,6 +62,22 @@ least 100. Reserve costs before transmission, including ambiguous/failed request
 billing resets can differ from calendar months; the remaining-balance guard handles that.
 Requests stop when either guard binds; coverage losses are reported, never backfilled.
 The two live odds smoke calls count against this same budget.
+
+The authoritative journal is data/api_reservations.json on the dedicated api-budget branch.
+A GitHub Contents compare-and-swap commit reserves credits before every paid transmission;
+a second commit records quota headers. Main's api_usage.json is only a mirror. Unavailable
+remote writes prevent HTTP; a pending ambiguous reservation blocks all subsequent paid calls,
+even after runner loss or provider reset. Paid calls have no automatic retry. Free events
+retain bounded backoff retries. CI/audit push triggers are restricted to main to avoid billing
+runner minutes for accounting commits.
+
+Manual reconciliation after an ambiguous call: keep collection paused; read the remote
+journal and compare the provider's current quota via free events/account dashboard. Retain
+the month charge (never refund ambiguous reservations), update remaining/provider_used from
+the provider, and clear pending only after resolving whether another runner can still send
+that request. Commit the reconciled state on api-budget with the same SHA-based Contents API
+update. Run both staged and full-history secret scans before publication. Never publish
+failed/late forecast working files as accounting recovery; restart from fresh main afterward.
 
 At 24 short jobs/day the 31-day baseline is 744 one-minute runner jobs. Dependency caches
 keep the forecast job short; a separate scoring job starts only when scores are due,
@@ -82,7 +107,10 @@ late publication and verifier failures stay visible and stop claimed timing veri
 ## End of the registered window
 
 New forecasts stop at the configured forward_end (29 January 2027, exclusive). Allow
-settlement/reporting afterward; unresolved observations stay explicitly unresolved. Once
+closing collection for decisions already inside the window, then settlement/reporting
+until resolved or explicitly unavailable. Inclusion is by decision time, so an eligible
+28 January decision may have a 29 January kickoff. New decisions outside the window are
+forbidden; existing forecasts retain their closing window. Unresolved bets remain exposure. Once
 the final analysis is saved and scoring is no longer useful, stop the hourly runner cost
 with `gh workflow disable paper.yml -R ncoprod/closing-line-lab`. Retain the audit workflow,
 ledger history and verification artifacts. The cron does not disable itself automatically.

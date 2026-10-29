@@ -179,3 +179,59 @@ Split missing outcomes from missing prices. All 21 affected regression tests pas
 Original tags, validation, test metrics and coefficients remain intact. Collection is
 paused until the prospective runtime/inference amendment is frozen. Commit references
 for every finding are collected in the final review-resolution table below.
+
+## Independent review: inference and operational correction
+
+Candidate 1 (`results/null_calibration_candidate1.json`): weekly HAC-t lag 4, 30-week/100-bet
+minimum, 99% critical parameter. Synthetic normal/t(5)/negative-lognormal shocks with
+weekly AR(1) 0/0.3/0.6, unequal 4–10 bets/week, 30/60/120 weeks, 10,000 replications per
+scenario. Required every Wilson 95% upper false-positive bound ≤0.05. FAILED: worst false
+positive rate 0.1264; upper 0.13305674427638517. Reproduce with:
+`uv run python scripts/calibrate_inference.py --min-weeks 30 --critical-coverage 0.99 --output results/null_calibration_candidate1.json`.
+
+One focused synthetic-only change: 60-week minimum and 99.9% critical parameter. Candidate 2
+(`results/null_calibration.json`) also FAILED: worst rate 0.0484; upper 0.052782457999490946.
+Reproduce with `uv run python scripts/calibrate_inference.py`. No observed validation,
+test or forward outcome selected these inference parameters. Both attempts count in the
+trial registry. After two failed attempts, stop inferential tuning and disable confirmatory
+CLV inference for this pilot. The original two-date rule has exact null rejection 0.25 and
+coverage 0.5 under independent symmetric continuous zero-mean observations. Bootstrap
+quantiles are retained descriptively. A future confirmatory study needs a new protocol.
+
+Full private-cache replay regenerates monthly DC and chronological Elo features, all eight
+validation rules and the selected held-out rule into `runs/full_replay`, without reselection.
+Headline agreement and maximum probability deviation are in `results/review_corrections.json`.
+Original validation/test files and fitted coefficients are preserved. Corrected test missingness
+is zero closing triples, one result; the unknown result was not selected. DSR is now
+NOT_ESTIMABLE on two nonzero return days, with its original arithmetic retained as a diagnostic.
+
+## Independent review disposition
+
+No BLOCKER findings were issued. All five MAJOR findings are accepted and fixed. Collection
+was temporarily paused during amendment; no forward record existed. Commit references below
+identify the fixes (the prospective v1.3 tag resolves to the exact correction commit).
+
+| Finding | Disposition / verification | Fix commit |
+|---|---|---|
+| 1 MAJOR, closing evidence | Fixed: mandatory latest receipted snapshot link; replay metadata and secondary CLV; absent/null-link attacks rejected; no-close P&L allowed | `d4a1159` |
+| 2 MAJOR, bootstrap evidence | Fixed: old quantiles labeled descriptive; both failed synthetic candidates retained; prospective v1.3 disables confirmation for all sample sizes | `forward-v1.3` |
+| 3 MAJOR, lost budget reservations | Fixed: remote CAS journal commits before HTTP; uncertain pending state blocks paid calls across fresh runners; first-league success/second failure and no-journal/no-HTTP tests | `forward-v1.3` |
+| 4 MAJOR, end-window close | Fixed: decision-time inclusion; existing forecasts still close after end; boundary integration test spans final decision, close and settlement | `d4a1159` |
+| 5 MAJOR, unresolved loss | Fixed: pending exposure retained before subsequent decisions; no realized loss/ROI/settled CLV; exposure-cap regression | `d4a1159` |
+| 6 MINOR, reproduction | Fixed: isolated full-feature replay; no reselection or registered-file overwrite; validation guard regression | `forward-v1.3` |
+| 7 MINOR, sparse DSR | Fixed: require 30 nonzero / 60 calendar days, expose counts, hide probability below threshold; preserve original arithmetic | `forward-v1.3` |
+| 8 MINOR, missingness label | Fixed: price/label/union separated, frozen original preserved, corrected companion + independent missingness tests | `d4a1159`, `forward-v1.3` |
+| 9 MINOR, scheduler claim | Fixed: configured versus observed wording; schedule and actual receipt acceptance remain separate pending checks | `forward-v1.3` |
+| 10 MINOR, secret scan | Fixed staged value patterns and all-reachable-history scan. Partially disagreed: ordinary JSON member fixture restoration conflicts with the owner's explicit mandatory legacy scan; retain escaped example member names and the exact legacy scan alongside stronger value detection | `forward-v1.3` |
+
+The broad legacy false positive is retained solely because the owner explicitly requires that
+exact scan before every commit. Value patterns additionally cover NVIDIA/Kaggle/OpenAI,
+GitHub, AWS, Google and private-key headers without logging matches. No claim that pattern
+scanning proves the absence of arbitrary unknown credentials. The review file stays ignored.
+
+Review verification: `make check test` passes 59 tests. One temporary-directory guard test
+initially failed because the new validation-tag check preceded the existing test guard;
+restricting that check to validation restored the intended holdout error without a Git call
+in a synthetic directory. No experiment result was changed by this test-harness correction.
+The full-history value scan is clean. Frozen validation/test/selection/parameters remain
+byte-identical to v1.1; only the correction companion carries revised reporting semantics.

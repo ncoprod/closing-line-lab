@@ -1,0 +1,240 @@
+{
+  "source_commit": "d4a115962222ce58fdb0233ef252cb0e10591303",
+  "implementation_sha256": {
+    "/Users/nico/Documents/AI/closing-line-lab/scripts/calibrate_inference.py": "36e623f8b3a2ed8f6e9cb7344269e871ae17e3a1a65a8681b25d720709472b7c",
+    "src/closing_line_lab/metrics.py": "c91ccb83df350f262c1f5f7fd628941a8711960491239182160778e7ec18e0e9"
+  },
+  "seed": 20261029,
+  "data": "SYNTHETIC_NULL_ONLY",
+  "policy": {
+    "min_weeks": 60,
+    "min_bets": 100,
+    "confidence_parameter": 0.999,
+    "hac_lags": 4
+  },
+  "old_two_date_false_positive_rate": 0.24884,
+  "old_two_date_exact_null_rate": 0.25,
+  "old_two_date_exact_coverage": 0.5,
+  "new_two_date_status": "INSUFFICIENT_INFORMATION",
+  "scenarios": [
+    {
+      "weeks": 30,
+      "distribution": "normal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "normal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "normal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 30,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0,
+      "wilson95_upper": 0.00038399837067659573
+    },
+    {
+      "weeks": 60,
+      "distribution": "normal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0026,
+      "wilson95_upper": 0.0038070132089826243
+    },
+    {
+      "weeks": 60,
+      "distribution": "normal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0036,
+      "wilson95_upper": 0.004979629943629281
+    },
+    {
+      "weeks": 60,
+      "distribution": "normal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0117,
+      "wilson95_upper": 0.014003014393430442
+    },
+    {
+      "weeks": 60,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0015,
+      "wilson95_upper": 0.002473584549971443
+    },
+    {
+      "weeks": 60,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0042,
+      "wilson95_upper": 0.005671895816224385
+    },
+    {
+      "weeks": 60,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0098,
+      "wilson95_upper": 0.011927755947400165
+    },
+    {
+      "weeks": 60,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0267,
+      "wilson95_upper": 0.03004592715424078
+    },
+    {
+      "weeks": 60,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0346,
+      "wilson95_upper": 0.03836459828547208
+    },
+    {
+      "weeks": 60,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0484,
+      "wilson95_upper": 0.052782457999490946
+    },
+    {
+      "weeks": 120,
+      "distribution": "normal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0011,
+      "wilson95_upper": 0.001968802920030785
+    },
+    {
+      "weeks": 120,
+      "distribution": "normal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0028,
+      "wilson95_upper": 0.004043842249115169
+    },
+    {
+      "weeks": 120,
+      "distribution": "normal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0077,
+      "wilson95_upper": 0.009612340752496585
+    },
+    {
+      "weeks": 120,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0009,
+      "wilson95_upper": 0.0017097301130243718
+    },
+    {
+      "weeks": 120,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0017,
+      "wilson95_upper": 0.0027209854150957833
+    },
+    {
+      "weeks": 120,
+      "distribution": "student_t5",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0065,
+      "wilson95_upper": 0.00827559176202603
+    },
+    {
+      "weeks": 120,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.0,
+      "replications": 10000,
+      "false_positive_rate": 0.0166,
+      "wilson95_upper": 0.019296205409215377
+    },
+    {
+      "weeks": 120,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.3,
+      "replications": 10000,
+      "false_positive_rate": 0.0178,
+      "wilson95_upper": 0.020582815004462834
+    },
+    {
+      "weeks": 120,
+      "distribution": "negative_lognormal",
+      "weekly_ar1": 0.6,
+      "replications": 10000,
+      "false_positive_rate": 0.0336,
+      "wilson95_upper": 0.037314758324488204
+    }
+  ],
+  "validation_rule": "Every scenario's Wilson 95% upper false-positive bound must be <= 0.05",
+  "status": "FAIL",
+  "limitations": "Finite scenarios do not prove universal coverage; stronger dependence/heavier tails may invalidate inference. This pilot cannot attain the week threshold."
+}

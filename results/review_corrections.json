@@ -1,0 +1,3176 @@
+{
+  "source_commit": "d4a115962222ce58fdb0233ef252cb0e10591303",
+  "data_sha256": "833b27f3b8fdd2924af1406e2594cd62f0bdd1e30a9673e49fd613de319f0311",
+  "implementation_sha256": {
+    "src/closing_line_lab/__init__.py": "4652ae3c6eaac501b674e43cdb460d80fd1d7927588d0423ebf67ed11531ed19",
+    "src/closing_line_lab/artifact.py": "1c03a68d1ccf92dfa2730cc987f879274352c40192f28d1e1ba01fbaef99e793",
+    "src/closing_line_lab/budget.py": "f33ec6728702ee0db9e27271ab2d66dd3ecd5c87141d9147e6933859fe1e6dd8",
+    "src/closing_line_lab/cli.py": "88af5a3cfbaaafbedede277d18c23dda0daa60b87c7052e6094d456a25a6ea3a",
+    "src/closing_line_lab/common.py": "aed1cf1b3e7eafcbae889b1b085619c22161858f09b14d1d3cb3c529cfef133d",
+    "src/closing_line_lab/data.py": "602070fc9a36e53a9b0fef11d1159c305a7311de5021c554947806a2ba427630",
+    "src/closing_line_lab/forward.py": "12795a5276a173e87250893598065e731769852bb920b0bccc6f256b716acaa0",
+    "src/closing_line_lab/ledger.py": "e74851ca3c8e42dc5c61134b4a90a583d3eb839613fa8325f93ec5ca60fc6e85",
+    "src/closing_line_lab/metrics.py": "6b93a101588b8adb79c35a5e07570b415d460e16392b580b0a8a801a04a15c19",
+    "src/closing_line_lab/models.py": "78cc4994822b2cbcd3831b6813d9d0c648eeae892d0d6a0c197af37c50f16a5a",
+    "src/closing_line_lab/odds.py": "298914d4d2e55aa6f42df76bc8677fe285a3acebf3f5cdec0a9d36ed5c07151d",
+    "src/closing_line_lab/replay.py": "2fe9d693175fc72d52a7cb2ab829f7347b5e05b488cdcc8230c5109df65b857e",
+    "src/closing_line_lab/report.py": "3f17d2e98819316e1c1cac958b1d49cab0a31ec3890ab70cfd824c7bd4f9f362",
+    "src/closing_line_lab/research.py": "0e360a20ddc830d063033093644bff845b46a72bee8df611773d615c101034fa",
+    "src/closing_line_lab/security.py": "7a0ba1cd9ba48c1f248d7bbfdb9fed59d84fe5082a6146658463598756f2f628"
+  },
+  "rebuild_features": true,
+  "maximum_prediction_deviation": 1.1102230246251565e-16,
+  "original_outputs_unchanged": true,
+  "interpretation": "Corrected companion; original tags, selection and reports are preserved. Bootstrap endpoints are descriptive quantiles; no sparse CLV/DSR inference.",
+  "validation": {
+    "reports": [
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0063675492486361,
+          "brier": 0.6021858256333976,
+          "closing_cross_entropy": 1.0188423052222817,
+          "closing_probability_mse": 0.0016741738321406122
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.00353307018408211,
+        "bets": 0,
+        "selected_bets": 0,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv": {
+          "mean": null,
+          "ci95": null,
+          "blocks": 0,
+          "observations": 0
+        },
+        "profit_units": 0,
+        "roi": null,
+        "power": {
+          "status": "NOT_ESTIMABLE",
+          "reason": "Need observed CLV across multiple dates"
+        },
+        "by_league": {},
+        "by_side": {},
+        "candidate": {
+          "model": "market",
+          "min_edge": 0.03
+        },
+        "primary_inference": {
+          "bets": 0,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "status": "INSUFFICIENT_INFORMATION",
+          "populated_weeks": 0,
+          "ci": null,
+          "positive_evidence": false
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 0,
+          "probability": null,
+          "status": "NOT_ESTIMABLE",
+          "reason": "insufficient variation"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0063675492486361,
+          "brier": 0.6021858256333976,
+          "closing_cross_entropy": 1.0188423052222817,
+          "closing_probability_mse": 0.0016741738321406122
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.00353307018408211,
+        "bets": 0,
+        "selected_bets": 0,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv": {
+          "mean": null,
+          "ci95": null,
+          "blocks": 0,
+          "observations": 0
+        },
+        "profit_units": 0,
+        "roi": null,
+        "power": {
+          "status": "NOT_ESTIMABLE",
+          "reason": "Need observed CLV across multiple dates"
+        },
+        "by_league": {},
+        "by_side": {},
+        "candidate": {
+          "model": "market",
+          "min_edge": 0.05
+        },
+        "primary_inference": {
+          "bets": 0,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "status": "INSUFFICIENT_INFORMATION",
+          "populated_weeks": 0,
+          "ci": null,
+          "positive_evidence": false
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 0,
+          "probability": null,
+          "status": "NOT_ESTIMABLE",
+          "reason": "insufficient variation"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0259169666789891,
+          "brier": 0.6155347547054176,
+          "closing_cross_entropy": 1.0318336716240117,
+          "closing_probability_mse": 0.010640056642312505
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.0230824876144351,
+        "bets": 3401,
+        "selected_bets": 3401,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.0043107974661079,
+          "ci95": [
+            -0.007675265654996787,
+            -0.000928401680537866
+          ],
+          "blocks": 676,
+          "observations": 3401,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": -97.26304214023618,
+        "stake_units": 942.0492283773808,
+        "roi": -0.10324624150243773,
+        "fair_log_clv": -0.05723678200820233,
+        "same_book_log_clv": 0.0023115343976537195,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.09890619706535674,
+          "design_effect": 1.0617474729620582,
+          "required_bets": {
+            "5": 256860,
+            "10": 64215,
+            "25": 10275,
+            "50": 2569,
+            "100": 643
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 122,
+            "selected_bets": 122,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.017008393523550745,
+              "ci95": [
+                -0.03052955523185877,
+                -0.003451582390421191
+              ],
+              "blocks": 98,
+              "observations": 122,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -8.740250173284277,
+            "stake_units": 32.463097486165964,
+            "roi": -0.2692364823476535,
+            "fair_log_clv": -0.05985596579118987,
+            "same_book_log_clv": -0.004330540011508826,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.07901287711447187,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 154392,
+                "10": 38598,
+                "25": 6176,
+                "50": 1544,
+                "100": 386
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D2": {
+            "bets": 480,
+            "selected_bets": 480,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.014595226527194123,
+              "ci95": [
+                0.0068670451304422234,
+                0.022165800732175032
+              ],
+              "blocks": 266,
+              "observations": 480,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -15.537935385518313,
+            "stake_units": 136.0713815251963,
+            "roi": -0.11418959087029742,
+            "fair_log_clv": -0.0433744327624716,
+            "same_book_log_clv": 0.008908648459514706,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08486666317576486,
+              "design_effect": 1.0262871883536744,
+              "required_bets": {
+                "5": 182798,
+                "10": 45700,
+                "25": 7312,
+                "50": 1828,
+                "100": 457
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E0": {
+            "bets": 307,
+            "selected_bets": 307,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.028008897768184556,
+              "ci95": [
+                -0.039405815063612674,
+                -0.016568896915765356
+              ],
+              "blocks": 218,
+              "observations": 307,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -5.319952385878018,
+            "stake_units": 80.15558704299957,
+            "roi": -0.06637032529028979,
+            "fair_log_clv": -0.06755821862898274,
+            "same_book_log_clv": -0.005125062348886159,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10926076179456552,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 295228,
+                "10": 73807,
+                "25": 11810,
+                "50": 2953,
+                "100": 739
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E1": {
+            "bets": 528,
+            "selected_bets": 528,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.010755555276366444,
+              "ci95": [
+                -0.019427178505678263,
+                -0.002332966130029154
+              ],
+              "blocks": 244,
+              "observations": 528,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.741860363498285,
+            "stake_units": 160.90432851067993,
+            "roi": -0.060544426950277314,
+            "fair_log_clv": -0.06179185392525253,
+            "same_book_log_clv": -0.005610234767675845,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09092634098875597,
+              "design_effect": 1.234212888477712,
+              "required_bets": {
+                "5": 252347,
+                "10": 63087,
+                "25": 10094,
+                "50": 2524,
+                "100": 631
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F1": {
+            "bets": 255,
+            "selected_bets": 255,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0065701230553658245,
+              "ci95": [
+                -0.01720658265861016,
+                0.0038270889675141207
+              ],
+              "blocks": 162,
+              "observations": 255,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -26.602242094347993,
+            "stake_units": 80.2866315479955,
+            "roi": -0.3313408668595733,
+            "fair_log_clv": -0.052365859126940695,
+            "same_book_log_clv": 0.0037542772075618066,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09336885299586967,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 215592,
+                "10": 53898,
+                "25": 8624,
+                "50": 2156,
+                "100": 539
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F2": {
+            "bets": 266,
+            "selected_bets": 266,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.018552164881279577,
+              "ci95": [
+                -0.029419489512918305,
+                -0.007443671049536064
+              ],
+              "blocks": 98,
+              "observations": 266,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -5.495388525464685,
+            "stake_units": 60.96910863420437,
+            "roi": -0.09013398175845579,
+            "fair_log_clv": -0.0840704528037798,
+            "same_book_log_clv": -0.004987823979954247,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09845972081293282,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 239743,
+                "10": 59936,
+                "25": 9590,
+                "50": 2398,
+                "100": 600
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I1": {
+            "bets": 362,
+            "selected_bets": 362,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.007711974103682621,
+              "ci95": [
+                -0.01788334567350534,
+                0.0024194828253737816
+              ],
+              "blocks": 245,
+              "observations": 362,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -19.04646484861384,
+            "stake_units": 90.53713423952406,
+            "roi": -0.21037185469361908,
+            "fair_log_clv": -0.05242613234496432,
+            "same_book_log_clv": 0.008902360032202352,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10265384778606182,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 260603,
+                "10": 65151,
+                "25": 10425,
+                "50": 2607,
+                "100": 652
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I2": {
+            "bets": 370,
+            "selected_bets": 370,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.0038283363436491234,
+              "ci95": [
+                -0.0072425178323196,
+                0.015062560442933005
+              ],
+              "blocks": 172,
+              "observations": 370,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.2693507608676242,
+            "stake_units": 97.30662160111623,
+            "roi": -0.0027680619924485635,
+            "fair_log_clv": -0.059218643270097064,
+            "same_book_log_clv": 0.004336627101514611,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10962571411564864,
+              "design_effect": 1.050513536344798,
+              "required_bets": {
+                "5": 312216,
+                "10": 78054,
+                "25": 12489,
+                "50": 3123,
+                "100": 781
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP1": {
+            "bets": 315,
+            "selected_bets": 315,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.020054524090330803,
+              "ci95": [
+                -0.03004005582357731,
+                -0.009935459127770429
+              ],
+              "blocks": 230,
+              "observations": 315,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -12.782636119874097,
+            "stake_units": 87.52793016042234,
+            "roi": -0.14604065349707132,
+            "fair_log_clv": -0.06344283891950127,
+            "same_book_log_clv": -0.002397042347776155,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09555057647472227,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 225785,
+                "10": 56447,
+                "25": 9032,
+                "50": 2258,
+                "100": 565
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP2": {
+            "bets": 396,
+            "selected_bets": 396,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.02269858686797216,
+              "ci95": [
+                0.011377294827202192,
+                0.03365881355089995
+              ],
+              "blocks": 276,
+              "observations": 396,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 6.273038517110963,
+            "stake_units": 115.82740762907648,
+            "roi": 0.05415849880021164,
+            "fair_log_clv": -0.04187874081849079,
+            "same_book_log_clv": 0.012491372921135389,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10457410078960942,
+              "design_effect": 1.2042989609226622,
+              "required_bets": {
+                "5": 325695,
+                "10": 81424,
+                "25": 13028,
+                "50": 3257,
+                "100": 815
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1706,
+            "selected_bets": 1706,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.004975512703850164,
+              "ci95": [
+                -0.010510151220389336,
+                0.0003780573045627182
+              ],
+              "blocks": 583,
+              "observations": 1706,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -50.47037724519867,
+            "stake_units": 464.8240717596145,
+            "roi": -0.10857952569913291,
+            "fair_log_clv": -0.05792202863020762,
+            "same_book_log_clv": 0.0012668203990262418,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.1073595066524338,
+              "design_effect": 1.0962199175811647,
+              "required_bets": {
+                "5": 312469,
+                "10": 78118,
+                "25": 12499,
+                "50": 3125,
+                "100": 782
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D": {
+            "bets": 216,
+            "selected_bets": 216,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.013535407449113034,
+              "ci95": [
+                0.0005412421698920645,
+                0.026320195663331228
+              ],
+              "blocks": 164,
+              "observations": 216,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 9.16184321547734,
+            "stake_units": 42.81037586172256,
+            "roi": 0.21400987566822766,
+            "fair_log_clv": -0.03733853773670284,
+            "same_book_log_clv": 0.009628234931587243,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09260223805862691,
+              "design_effect": 1.1151970207320072,
+              "required_bets": {
+                "5": 236496,
+                "10": 59124,
+                "25": 9460,
+                "50": 2365,
+                "100": 592
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "H": {
+            "bets": 1479,
+            "selected_bets": 1479,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.006150402649407034,
+              "ci95": [
+                -0.011106038371785261,
+                -0.001347408101685188
+              ],
+              "blocks": 577,
+              "observations": 1479,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -55.95450811051485,
+            "stake_units": 434.4147807560438,
+            "roi": -0.12880433767270333,
+            "fair_log_clv": -0.059352393925378014,
+            "same_book_log_clv": 0.0024480284925346087,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08893494211758862,
+              "design_effect": 1.1493647688788475,
+              "required_bets": {
+                "5": 224818,
+                "10": 56205,
+                "25": 8993,
+                "50": 2249,
+                "100": 563
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "dc",
+          "min_edge": 0.03
+        },
+        "primary_inference": {
+          "bets": 3401,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 136,
+          "status": "INFERENCE_NOT_VALIDATED",
+          "ci": null,
+          "positive_evidence": false,
+          "reason": "Both null-calibration candidates failed; confirmatory CLV inference is disabled for v1.3"
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 680,
+          "status": "ASSUMPTION_CONDITIONAL",
+          "probability": 8.974699258417593e-11,
+          "arithmetic_diagnostic": 8.974699258417593e-11,
+          "daily_sharpe": -0.10881411001173577,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0259169666789891,
+          "brier": 0.6155347547054176,
+          "closing_cross_entropy": 1.0318336716240117,
+          "closing_probability_mse": 0.010640056642312505
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.0230824876144351,
+        "bets": 3192,
+        "selected_bets": 3192,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.004204388069203356,
+          "ci95": [
+            -0.007847844119791683,
+            -0.0006042157488302235
+          ],
+          "blocks": 666,
+          "observations": 3192,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": -97.1358805149444,
+        "stake_units": 1007.2990238819788,
+        "roi": -0.09643202089147009,
+        "fair_log_clv": -0.05696410511948591,
+        "same_book_log_clv": 0.002681596735919883,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.10073322032043656,
+          "design_effect": 1.0516934686332087,
+          "required_bets": {
+            "5": 263915,
+            "10": 65979,
+            "25": 10557,
+            "50": 2640,
+            "100": 660
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 116,
+            "selected_bets": 116,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.017312721823673653,
+              "ci95": [
+                -0.03046758965277183,
+                -0.004508585484334076
+              ],
+              "blocks": 94,
+              "observations": 116,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -11.124652718300933,
+            "stake_units": 35.29138880976603,
+            "roi": -0.3152228657893581,
+            "fair_log_clv": -0.06018652156882374,
+            "same_book_log_clv": -0.003136656386141713,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.080113832534911,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 158725,
+                "10": 39682,
+                "25": 6349,
+                "50": 1588,
+                "100": 397
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D2": {
+            "bets": 414,
+            "selected_bets": 414,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.012943213265376386,
+              "ci95": [
+                0.0038794613864987955,
+                0.02151414868004403
+              ],
+              "blocks": 256,
+              "observations": 414,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -13.907247581188162,
+            "stake_units": 131.7738919137367,
+            "roi": -0.10553871771725679,
+            "fair_log_clv": -0.044998405069078054,
+            "same_book_log_clv": 0.006959373883221032,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08754054770678785,
+              "design_effect": 1.0954313156353832,
+              "required_bets": {
+                "5": 207603,
+                "10": 51901,
+                "25": 8305,
+                "50": 2077,
+                "100": 520
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E0": {
+            "bets": 311,
+            "selected_bets": 311,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.026602183847599107,
+              "ci95": [
+                -0.038067118037820986,
+                -0.015051405389007082
+              ],
+              "blocks": 218,
+              "observations": 311,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -2.7308737851221334,
+            "stake_units": 91.21176768085225,
+            "roi": -0.029939928307029354,
+            "fair_log_clv": -0.06610746658369492,
+            "same_book_log_clv": -0.0033845135411378073,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.11115774208872135,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 305568,
+                "10": 76392,
+                "25": 12223,
+                "50": 3056,
+                "100": 764
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E1": {
+            "bets": 496,
+            "selected_bets": 496,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.011515592695268487,
+              "ci95": [
+                -0.020258178869210275,
+                -0.00249088703270409
+              ],
+              "blocks": 234,
+              "observations": 496,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.186947644177067,
+            "stake_units": 172.304962130981,
+            "roi": -0.053317951674505044,
+            "fair_log_clv": -0.06252080563269863,
+            "same_book_log_clv": -0.0061282129562678644,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09060625495003975,
+              "design_effect": 1.249226952813024,
+              "required_bets": {
+                "5": 253622,
+                "10": 63406,
+                "25": 10145,
+                "50": 2537,
+                "100": 635
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F1": {
+            "bets": 241,
+            "selected_bets": 241,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0032939837135551905,
+              "ci95": [
+                -0.015026494220595705,
+                0.008142279235854618
+              ],
+              "blocks": 158,
+              "observations": 241,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -28.144865143713638,
+            "stake_units": 86.54297599194561,
+            "roi": -0.3252125874008889,
+            "fair_log_clv": -0.049112718806428105,
+            "same_book_log_clv": 0.007801062774067878,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.0945781744528217,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 221213,
+                "10": 55304,
+                "25": 8849,
+                "50": 2213,
+                "100": 554
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F2": {
+            "bets": 247,
+            "selected_bets": 247,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.022466864222247727,
+              "ci95": [
+                -0.03432784351010442,
+                -0.010886710120765572
+              ],
+              "blocks": 95,
+              "observations": 247,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -2.8504064689643824,
+            "stake_units": 64.91243539132087,
+            "roi": -0.04391156258089643,
+            "fair_log_clv": -0.08806061351679968,
+            "same_book_log_clv": -0.010265119777328604,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09970949452402315,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 245868,
+                "10": 61467,
+                "25": 9835,
+                "50": 2459,
+                "100": 615
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I1": {
+            "bets": 340,
+            "selected_bets": 340,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.007928976720996789,
+              "ci95": [
+                -0.019165695590809936,
+                0.003020623579971484
+              ],
+              "blocks": 240,
+              "observations": 340,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -25.39867036785621,
+            "stake_units": 96.92788064496192,
+            "roi": -0.2620367865143905,
+            "fair_log_clv": -0.052649524299822975,
+            "same_book_log_clv": 0.008258570157071918,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10246967554512919,
+              "design_effect": 1.008918573787276,
+              "required_bets": {
+                "5": 261985,
+                "10": 65497,
+                "25": 10480,
+                "50": 2620,
+                "100": 655
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I2": {
+            "bets": 362,
+            "selected_bets": 362,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.004757003507171345,
+              "ci95": [
+                -0.006235948579113103,
+                0.01578774091206897
+              ],
+              "blocks": 172,
+              "observations": 362,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 2.492004021410976,
+            "stake_units": 113.99475775073992,
+            "roi": 0.021860689654343346,
+            "fair_log_clv": -0.05829920323993711,
+            "same_book_log_clv": 0.0038817209466294835,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.11053898675322571,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 302176,
+                "10": 75544,
+                "25": 12088,
+                "50": 3022,
+                "100": 756
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP1": {
+            "bets": 302,
+            "selected_bets": 302,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0179586396348774,
+              "ci95": [
+                -0.028771285821384225,
+                -0.0072130708544245825
+              ],
+              "blocks": 231,
+              "observations": 302,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -13.08385242586504,
+            "stake_units": 94.15559857104932,
+            "roi": -0.13895989855549623,
+            "fair_log_clv": -0.06146308342712407,
+            "same_book_log_clv": 0.0008047573691359962,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09654116579853474,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 230491,
+                "10": 57623,
+                "25": 9220,
+                "50": 2305,
+                "100": 577
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP2": {
+            "bets": 363,
+            "selected_bets": 363,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.02742392121040645,
+              "ci95": [
+                0.01515167562496001,
+                0.039405033615318746
+              ],
+              "blocks": 252,
+              "observations": 363,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 6.799631598832174,
+            "stake_units": 120.1833649966251,
+            "roi": 0.05657714442446437,
+            "fair_log_clv": -0.037175118012898925,
+            "same_book_log_clv": 0.017448485858634507,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10966130683824815,
+              "design_effect": 1.18037947192952,
+              "required_bets": {
+                "5": 351041,
+                "10": 87761,
+                "25": 14042,
+                "50": 3511,
+                "100": 878
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1627,
+            "selected_bets": 1627,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.004822642307178691,
+              "ci95": [
+                -0.01022811980156667,
+                0.0007392756850619348
+              ],
+              "blocks": 571,
+              "observations": 1627,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -50.37371237414975,
+            "stake_units": 507.3571311448502,
+            "roi": -0.09928649718686634,
+            "fair_log_clv": -0.05780684671220079,
+            "same_book_log_clv": 0.0012329576902221848,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10964593727634232,
+              "design_effect": 1.0794859271905564,
+              "required_bets": {
+                "5": 320945,
+                "10": 80237,
+                "25": 12838,
+                "50": 3210,
+                "100": 803
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D": {
+            "bets": 187,
+            "selected_bets": 187,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.013574909061117607,
+              "ci95": [
+                -0.0026654747989538364,
+                0.028131984447666746
+              ],
+              "blocks": 150,
+              "observations": 187,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 14.343933790602879,
+            "stake_units": 44.39886003356112,
+            "roi": 0.3230698666533396,
+            "fair_log_clv": -0.03586187888511556,
+            "same_book_log_clv": 0.013413537791488444,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10156601563483686,
+              "design_effect": 1.1243402104185158,
+              "required_bets": {
+                "5": 286829,
+                "10": 71708,
+                "25": 11474,
+                "50": 2869,
+                "100": 718
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "H": {
+            "bets": 1378,
+            "selected_bets": 1378,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.005887137646985759,
+              "ci95": [
+                -0.011219458870830756,
+                -0.000924253969509066
+              ],
+              "blocks": 570,
+              "observations": 1378,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -61.10610193139757,
+            "stake_units": 455.54303270356746,
+            "roi": -0.13413903307607108,
+            "fair_log_clv": -0.058832737727962055,
+            "same_book_log_clv": 0.002935633564627311,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.0887628233249055,
+              "design_effect": 1.1734946890732787,
+              "required_bets": {
+                "5": 228651,
+                "10": 57163,
+                "25": 9147,
+                "50": 2287,
+                "100": 572
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "dc",
+          "min_edge": 0.05
+        },
+        "primary_inference": {
+          "bets": 3192,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 136,
+          "status": "INFERENCE_NOT_VALIDATED",
+          "ci": null,
+          "positive_evidence": false,
+          "reason": "Both null-calibration candidates failed; confirmatory CLV inference is disabled for v1.3"
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 670,
+          "status": "ASSUMPTION_CONDITIONAL",
+          "probability": 1.350975817953625e-10,
+          "arithmetic_diagnostic": 1.350975817953625e-10,
+          "daily_sharpe": -0.1068041956391678,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0259362847864204,
+          "brier": 0.6156265567839588,
+          "closing_cross_entropy": 1.035804189960752,
+          "closing_probability_mse": 0.013199671224687726
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.023101805721866375,
+        "bets": 3465,
+        "selected_bets": 3465,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.007974626992547858,
+          "ci95": [
+            -0.011051671911246733,
+            -0.004736291217233984
+          ],
+          "blocks": 669,
+          "observations": 3465,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": -92.69730027117639,
+        "stake_units": 1071.7626574129856,
+        "roi": -0.0864905113366504,
+        "fair_log_clv": -0.06166295714934294,
+        "same_book_log_clv": -0.0033573522583844576,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.09051738595059342,
+          "design_effect": 1.1233705578161446,
+          "required_bets": {
+            "5": 227623,
+            "10": 56906,
+            "25": 9105,
+            "50": 2277,
+            "100": 570
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 120,
+            "selected_bets": 120,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.019835291826543578,
+              "ci95": [
+                -0.03499853970667651,
+                -0.004038511617343293
+              ],
+              "blocks": 99,
+              "observations": 120,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 3.4197263246208167,
+            "stake_units": 34.69004031933413,
+            "roi": 0.09857948544138383,
+            "fair_log_clv": -0.06289377593570078,
+            "same_book_log_clv": -0.01536996905122127,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.07895186385006868,
+              "design_effect": 1.2460814779610427,
+              "required_bets": {
+                "5": 192088,
+                "10": 48022,
+                "25": 7684,
+                "50": 1921,
+                "100": 481
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D2": {
+            "bets": 492,
+            "selected_bets": 492,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.0032907404525752376,
+              "ci95": [
+                -0.0039518704749803,
+                0.01078430076192325
+              ],
+              "blocks": 263,
+              "observations": 492,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -7.1297646629870455,
+            "stake_units": 166.24965312618542,
+            "roi": -0.04288589196378937,
+            "fair_log_clv": -0.05464760250304121,
+            "same_book_log_clv": -0.0034535558451231005,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08098162562627696,
+              "design_effect": 1.0649720482903378,
+              "required_bets": {
+                "5": 172719,
+                "10": 43180,
+                "25": 6909,
+                "50": 1728,
+                "100": 432
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E0": {
+            "bets": 255,
+            "selected_bets": 255,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.013598488431046307,
+              "ci95": [
+                -0.024143560099651802,
+                -0.004035126753238344
+              ],
+              "blocks": 177,
+              "observations": 255,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.30681114538564,
+            "stake_units": 68.86073012515568,
+            "roi": -0.13515411655482498,
+            "fair_log_clv": -0.05310978036565517,
+            "same_book_log_clv": 0.0044782557288382515,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09022163042178304,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 201303,
+                "10": 50326,
+                "25": 8053,
+                "50": 2014,
+                "100": 504
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E1": {
+            "bets": 547,
+            "selected_bets": 547,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.006742886874724311,
+              "ci95": [
+                -0.01386857352983176,
+                0.0006777789946471129
+              ],
+              "blocks": 232,
+              "observations": 547,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -20.946071540264402,
+            "stake_units": 182.33115211705834,
+            "roi": -0.11487928034819209,
+            "fair_log_clv": -0.05789336708583037,
+            "same_book_log_clv": -0.0011042876397651153,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08010665475526502,
+              "design_effect": 1.1501465527655161,
+              "required_bets": {
+                "5": 182524,
+                "10": 45631,
+                "25": 7301,
+                "50": 1826,
+                "100": 457
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F1": {
+            "bets": 217,
+            "selected_bets": 217,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.02029962131765507,
+              "ci95": [
+                -0.03165567201041266,
+                -0.008185674304719618
+              ],
+              "blocks": 138,
+              "observations": 217,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -12.812402051492874,
+            "stake_units": 74.15569825996693,
+            "roi": -0.17277704009443157,
+            "fair_log_clv": -0.0664289014740399,
+            "same_book_log_clv": -0.014897713901968554,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09243913463261341,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 211320,
+                "10": 52830,
+                "25": 8453,
+                "50": 2114,
+                "100": 529
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F2": {
+            "bets": 313,
+            "selected_bets": 313,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.019888111946149936,
+              "ci95": [
+                -0.032228015448391434,
+                -0.00812142074326721
+              ],
+              "blocks": 102,
+              "observations": 313,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -7.162860131385777,
+            "stake_units": 84.30727509194676,
+            "roi": -0.0849613526658744,
+            "fair_log_clv": -0.08546913581365606,
+            "same_book_log_clv": -0.0013570011068039893,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09324485999906436,
+              "design_effect": 1.3136243349417114,
+              "required_bets": {
+                "5": 282455,
+                "10": 70614,
+                "25": 11299,
+                "50": 2825,
+                "100": 707
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I1": {
+            "bets": 347,
+            "selected_bets": 347,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.007530822363493389,
+              "ci95": [
+                -0.015932803469064203,
+                0.0007586620463808341
+              ],
+              "blocks": 226,
+              "observations": 347,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -16.488968861040938,
+            "stake_units": 96.51483169113939,
+            "roi": -0.17084388556784602,
+            "fair_log_clv": -0.052301366816404356,
+            "same_book_log_clv": 0.004105973615547385,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08295378683723852,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 170177,
+                "10": 42545,
+                "25": 6808,
+                "50": 1702,
+                "100": 426
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I2": {
+            "bets": 377,
+            "selected_bets": 377,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0077237070672093,
+              "ci95": [
+                -0.01825900338372364,
+                0.0029459238706779846
+              ],
+              "blocks": 166,
+              "observations": 377,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -8.59159086005473,
+            "stake_units": 111.70484890681487,
+            "roi": -0.07691332063142493,
+            "fair_log_clv": -0.07081522005896432,
+            "same_book_log_clv": -0.006270115794531379,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10160638468565983,
+              "design_effect": 1.1571019566458007,
+              "required_bets": {
+                "5": 295422,
+                "10": 73856,
+                "25": 11817,
+                "50": 2955,
+                "100": 739
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP1": {
+            "bets": 328,
+            "selected_bets": 328,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.021236279576585942,
+              "ci95": [
+                -0.029495435254211298,
+                -0.013122601702187181
+              ],
+              "blocks": 244,
+              "observations": 328,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -10.955088492927151,
+            "stake_units": 100.67117826566835,
+            "roi": -0.10882050534878004,
+            "fair_log_clv": -0.06456671262114774,
+            "same_book_log_clv": -0.008188630415577623,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08265524284457292,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 168955,
+                "10": 42239,
+                "25": 6759,
+                "50": 1690,
+                "100": 423
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP2": {
+            "bets": 469,
+            "selected_bets": 469,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.007261431446476064,
+              "ci95": [
+                -0.0023401471848444157,
+                0.016683134264287348
+              ],
+              "blocks": 310,
+              "observations": 469,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -2.7234688502586426,
+            "stake_units": 152.27724950971583,
+            "roi": -0.017884935924620017,
+            "fair_log_clv": -0.057200217639024144,
+            "same_book_log_clv": -0.002868044426114266,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10802686386680159,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 288597,
+                "10": 72150,
+                "25": 11544,
+                "50": 2886,
+                "100": 722
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1547,
+            "selected_bets": 1547,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.01084358129685584,
+              "ci95": [
+                -0.016040808323487848,
+                -0.0057356250787246104
+              ],
+              "blocks": 565,
+              "observations": 1547,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -60.0459605767829,
+            "stake_units": 461.41410179144293,
+            "roi": -0.13013464552482057,
+            "fair_log_clv": -0.06490473489016864,
+            "same_book_log_clv": -0.008858569875392418,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09960982025903453,
+              "design_effect": 1.0625066969153483,
+              "required_bets": {
+                "5": 260714,
+                "10": 65179,
+                "25": 10429,
+                "50": 2608,
+                "100": 652
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D": {
+            "bets": 156,
+            "selected_bets": 156,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.012293753901692125,
+              "ci95": [
+                -0.002387666287948923,
+                0.02682218108998782
+              ],
+              "blocks": 131,
+              "observations": 156,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -2.0662659327028416,
+            "stake_units": 28.669067550913304,
+            "roi": -0.07207300792163424,
+            "fair_log_clv": -0.033567701313231536,
+            "same_book_log_clv": 0.01626865858739422,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.0984610499232514,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 239750,
+                "10": 59938,
+                "25": 9590,
+                "50": 2398,
+                "100": 600
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "H": {
+            "bets": 1762,
+            "selected_bets": 1762,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.007250220131445129,
+              "ci95": [
+                -0.01126374880847854,
+                -0.002997604952595834
+              ],
+              "blocks": 590,
+              "observations": 1762,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -30.585073761690644,
+            "stake_units": 581.6794880706294,
+            "roi": -0.05258062969202879,
+            "fair_log_clv": -0.06130417720914773,
+            "same_book_log_clv": -0.00026499927224947153,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08067690821703205,
+              "design_effect": 1.174267009214227,
+              "required_bets": {
+                "5": 189014,
+                "10": 47254,
+                "25": 7561,
+                "50": 1891,
+                "100": 473
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "elo",
+          "min_edge": 0.03
+        },
+        "primary_inference": {
+          "bets": 3465,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 136,
+          "status": "INFERENCE_NOT_VALIDATED",
+          "ci": null,
+          "positive_evidence": false,
+          "reason": "Both null-calibration candidates failed; confirmatory CLV inference is disabled for v1.3"
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 682,
+          "status": "ASSUMPTION_CONDITIONAL",
+          "probability": 1.3591599044283948e-09,
+          "arithmetic_diagnostic": 1.3591599044283948e-09,
+          "daily_sharpe": -0.09080569798870684,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0259362847864204,
+          "brier": 0.6156265567839588,
+          "closing_cross_entropy": 1.035804189960752,
+          "closing_probability_mse": 0.013199671224687726
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.023101805721866375,
+        "bets": 3272,
+        "selected_bets": 3272,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.007093607128997683,
+          "ci95": [
+            -0.010468264584194396,
+            -0.0037449044364014326
+          ],
+          "blocks": 669,
+          "observations": 3272,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": -91.02737245529988,
+        "stake_units": 1129.6428111426628,
+        "roi": -0.08058066811687435,
+        "fair_log_clv": -0.06083410565561408,
+        "same_book_log_clv": -0.001987815647442901,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.09235820379964607,
+          "design_effect": 1.1202914563056374,
+          "required_bets": {
+            "5": 236326,
+            "10": 59082,
+            "25": 9454,
+            "50": 2364,
+            "100": 591
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 116,
+            "selected_bets": 116,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.018193619787668355,
+              "ci95": [
+                -0.03449768691837711,
+                -0.002623567831404424
+              ],
+              "blocks": 95,
+              "observations": 116,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 3.367538234263815,
+            "stake_units": 37.66564850396202,
+            "roi": 0.08940608666035808,
+            "fair_log_clv": -0.06132497989898609,
+            "same_book_log_clv": -0.01022343371252748,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08218473017844469,
+              "design_effect": 1.1710800075958854,
+              "required_bets": {
+                "5": 195613,
+                "10": 48904,
+                "25": 7825,
+                "50": 1957,
+                "100": 490
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D2": {
+            "bets": 423,
+            "selected_bets": 423,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.003136699441763485,
+              "ci95": [
+                -0.005210819822593087,
+                0.011381857160700838
+              ],
+              "blocks": 251,
+              "observations": 423,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.255581071456703,
+            "stake_units": 159.80023165488848,
+            "roi": -0.05791969745979754,
+            "fair_log_clv": -0.05466730309080399,
+            "same_book_log_clv": -0.0026024858374308715,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08352058984511355,
+              "design_effect": 1.1010650699485223,
+              "required_bets": {
+                "5": 189946,
+                "10": 47487,
+                "25": 7598,
+                "50": 1900,
+                "100": 475
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E0": {
+            "bets": 241,
+            "selected_bets": 241,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.013314227701460688,
+              "ci95": [
+                -0.023764892905512976,
+                -0.002590142938097787
+              ],
+              "blocks": 174,
+              "observations": 241,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.608598221514606,
+            "stake_units": 75.61549653372262,
+            "roi": -0.12707181281590094,
+            "fair_log_clv": -0.05281086993507926,
+            "same_book_log_clv": 0.0049274751478881685,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09240227462399221,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 211152,
+                "10": 52788,
+                "25": 8447,
+                "50": 2112,
+                "100": 528
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "E1": {
+            "bets": 516,
+            "selected_bets": 516,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.006169819871151148,
+              "ci95": [
+                -0.013493692017192735,
+                0.0012419024295787417
+              ],
+              "blocks": 228,
+              "observations": 516,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -21.181038638592373,
+            "stake_units": 190.41843842174876,
+            "roi": -0.1112341788649663,
+            "fair_log_clv": -0.05732187998275135,
+            "same_book_log_clv": -0.000223553564363371,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.07908372388226104,
+              "design_effect": 1.2170512021472502,
+              "required_bets": {
+                "5": 188240,
+                "10": 47060,
+                "25": 7530,
+                "50": 1883,
+                "100": 471
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F1": {
+            "bets": 199,
+            "selected_bets": 199,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.01637421684175784,
+              "ci95": [
+                -0.029067483314976144,
+                -0.003852116907806233
+              ],
+              "blocks": 128,
+              "observations": 199,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -9.029717354316329,
+            "stake_units": 71.35506955904184,
+            "roi": -0.12654626237656183,
+            "fair_log_clv": -0.0625117926434216,
+            "same_book_log_clv": -0.010272380212565997,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09665229428841517,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 231022,
+                "10": 57756,
+                "25": 9241,
+                "50": 2311,
+                "100": 578
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F2": {
+            "bets": 304,
+            "selected_bets": 304,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.018872185561537264,
+              "ci95": [
+                -0.030510864653108153,
+                -0.007656242471848767
+              ],
+              "blocks": 109,
+              "observations": 304,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -4.912572871207557,
+            "stake_units": 95.17998143422426,
+            "roi": -0.051613509450014694,
+            "fair_log_clv": -0.08442181821995862,
+            "same_book_log_clv": -0.0005296016934415967,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.09528247177467775,
+              "design_effect": 1.1680971139735732,
+              "required_bets": {
+                "5": 262261,
+                "10": 65566,
+                "25": 10491,
+                "50": 2623,
+                "100": 656
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I1": {
+            "bets": 324,
+            "selected_bets": 324,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.007314154312276185,
+              "ci95": [
+                -0.016113741687810965,
+                0.001354487361899543
+              ],
+              "blocks": 219,
+              "observations": 324,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -16.849469504751113,
+            "stake_units": 100.54030011963928,
+            "roi": -0.16758921034352256,
+            "fair_log_clv": -0.05213218184217971,
+            "same_book_log_clv": 0.005194291976688837,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08469290304512452,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 177388,
+                "10": 44347,
+                "25": 7096,
+                "50": 1774,
+                "100": 444
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I2": {
+            "bets": 378,
+            "selected_bets": 378,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0054985160934838085,
+              "ci95": [
+                -0.016181632971090286,
+                0.004927372994962899
+              ],
+              "blocks": 166,
+              "observations": 378,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -8.378247407634047,
+            "stake_units": 130.17288860949049,
+            "roi": -0.06436246054866464,
+            "fair_log_clv": -0.06840506481460838,
+            "same_book_log_clv": -0.004680769131132849,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10576780607975007,
+              "design_effect": 1.0226628087450322,
+              "required_bets": {
+                "5": 282923,
+                "10": 70731,
+                "25": 11317,
+                "50": 2830,
+                "100": 708
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP1": {
+            "bets": 316,
+            "selected_bets": 316,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.01985105965846518,
+              "ci95": [
+                -0.028946850829585966,
+                -0.010821933821155837
+              ],
+              "blocks": 240,
+              "observations": 316,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -16.027168227191755,
+            "stake_units": 108.07896283719005,
+            "roi": -0.14829128450589457,
+            "fair_log_clv": -0.0632454682984529,
+            "same_book_log_clv": -0.006783808236126356,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08435515910067354,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 175976,
+                "10": 43994,
+                "25": 7040,
+                "50": 1760,
+                "100": 440
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "SP2": {
+            "bets": 455,
+            "selected_bets": 455,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.008093369076474006,
+              "ci95": [
+                -0.0016630218762037046,
+                0.01754232355527346
+              ],
+              "blocks": 302,
+              "observations": 455,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 0.8474826071007904,
+            "stake_units": 160.8157934687551,
+            "roi": 0.005269896624086538,
+            "fair_log_clv": -0.056413468637396394,
+            "same_book_log_clv": -0.001877504921170187,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10753457140928922,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 285973,
+                "10": 71494,
+                "25": 11439,
+                "50": 2860,
+                "100": 715
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1485,
+            "selected_bets": 1485,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.009051134382077837,
+              "ci95": [
+                -0.014486922102259462,
+                -0.0035624058496537487
+              ],
+              "blocks": 560,
+              "observations": 1485,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -55.431343079610414,
+            "stake_units": 497.9575498442286,
+            "roi": -0.11131740666840072,
+            "fair_log_clv": -0.06312287088604676,
+            "same_book_log_clv": -0.0066905931808674286,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.101647876804332,
+              "design_effect": 1.05587431116879,
+              "required_bets": {
+                "5": 269797,
+                "10": 67450,
+                "25": 10792,
+                "50": 2698,
+                "100": 675
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "D": {
+            "bets": 144,
+            "selected_bets": 144,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.012064597392419272,
+              "ci95": [
+                -0.004176679286081358,
+                0.028480349413747788
+              ],
+              "blocks": 121,
+              "observations": 144,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -1.7480547736103933,
+            "stake_units": 32.42582829191521,
+            "roi": -0.05390933295129546,
+            "fair_log_clv": -0.03332709185305524,
+            "same_book_log_clv": 0.020207244166829837,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.10432278853587143,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 269146,
+                "10": 67287,
+                "25": 10766,
+                "50": 2692,
+                "100": 673
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "H": {
+            "bets": 1643,
+            "selected_bets": 1643,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.0070034388272691445,
+              "ci95": [
+                -0.011223488190187208,
+                -0.0026431535800503815
+              ],
+              "blocks": 583,
+              "observations": 1643,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -33.84797460207908,
+            "stake_units": 599.259433006519,
+            "roi": -0.056483006754289786,
+            "fair_log_clv": -0.06117628071366396,
+            "same_book_log_clv": 0.00031744060567952606,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.08167615662498301,
+              "design_effect": 1.1665647592730555,
+              "required_bets": {
+                "5": 192455,
+                "10": 48114,
+                "25": 7699,
+                "50": 1925,
+                "100": 482
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "elo",
+          "min_edge": 0.05
+        },
+        "primary_inference": {
+          "bets": 3272,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 136,
+          "status": "INFERENCE_NOT_VALIDATED",
+          "ci": null,
+          "positive_evidence": false,
+          "reason": "Both null-calibration candidates failed; confirmatory CLV inference is disabled for v1.3"
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 678,
+          "status": "ASSUMPTION_CONDITIONAL",
+          "probability": 1.0099293518035675e-08,
+          "arithmetic_diagnostic": 1.0099293518035675e-08,
+          "daily_sharpe": -0.07972870546810112,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0057639497705855,
+          "brier": 0.6018685487884785,
+          "closing_cross_entropy": 1.019209363018626,
+          "closing_probability_mse": 0.0018801098373799232
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.002929470706031445,
+        "bets": 14,
+        "selected_bets": 14,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.04823819541359959,
+          "ci95": [
+            -0.14246628848098467,
+            0.03198977666733289
+          ],
+          "blocks": 13,
+          "observations": 14,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": 1.0879267538176443,
+        "stake_units": 6.452535118083215,
+        "roi": 0.16860454595105293,
+        "fair_log_clv": -0.09487487991944195,
+        "same_book_log_clv": -0.027031242836297684,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.1714477559140551,
+          "design_effect": 1.0193878363897346,
+          "required_bets": {
+            "5": 741023,
+            "10": 185256,
+            "25": 29641,
+            "50": 7411,
+            "100": 1853
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 4,
+            "selected_bets": 4,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.021390356123120305,
+              "ci95": [
+                -0.11520797083613006,
+                0.07242725858988945
+              ],
+              "blocks": 4,
+              "observations": 4,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -1.8024286131304392,
+            "stake_units": 1.8024286131304392,
+            "roi": -1.0,
+            "fair_log_clv": -0.06562044017938386,
+            "same_book_log_clv": -0.03261327101982595,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.1096725806191995,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 297458,
+                "10": 74365,
+                "25": 11899,
+                "50": 2975,
+                "100": 744
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "F1": {
+            "bets": 3,
+            "selected_bets": 3,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.03200776371688322,
+              "ci95": [
+                0.016129381929883717,
+                0.04167269640056808
+              ],
+              "blocks": 3,
+              "observations": 3,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 0.4305965124839526,
+            "stake_units": 1.1490982017929672,
+            "roi": 0.3747255994414419,
+            "fair_log_clv": -0.015788958924071443,
+            "same_book_log_clv": 0.06196645938061288,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.01385894804293167,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 4750,
+                "10": 1188,
+                "25": 190,
+                "50": 48,
+                "100": 12
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "I1": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.04313949266061774,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.38550335601545427,
+            "stake_units": 0.38550335601545427,
+            "roi": -1.0,
+            "fair_log_clv": -0.0015522683827272454,
+            "same_book_log_clv": 0.11778303565638346,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "I2": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.16853941727935803,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 0.7908168173197673,
+            "stake_units": 0.5453909084963912,
+            "roi": 1.4500000000000002,
+            "fair_log_clv": 0.10511145612152681,
+            "same_book_log_clv": 0.15415067982725836,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "SP1": {
+            "bets": 5,
+            "selected_bets": 5,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.1794951024777077,
+              "ci95": [
+                -0.41181048923959224,
+                -0.03981208640329481
+              ],
+              "blocks": 4,
+              "observations": 5,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 2.054445393159818,
+            "stake_units": 2.5701140386479624,
+            "roi": 0.7993596246182844,
+            "fair_log_clv": -0.2243917738242474,
+            "same_book_log_clv": -0.14116348185086885,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.21329099965270634,
+              "design_effect": 1.0152396670382515,
+              "required_bets": {
+                "5": 1142199,
+                "10": 285550,
+                "25": 45688,
+                "50": 11422,
+                "100": 2856
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 6,
+            "selected_bets": 6,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.09728102150380563,
+              "ci95": [
+                -0.2940622506912179,
+                0.07156917222524102
+              ],
+              "blocks": 6,
+              "observations": 6,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.5162327214475592,
+            "stake_units": 1.8524404472637177,
+            "roi": -0.27867709442972827,
+            "fair_log_clv": -0.1447705806538109,
+            "same_book_log_clv": -0.08225943263149317,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.2555896250876378,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 1615529,
+                "10": 403883,
+                "25": 64622,
+                "50": 16156,
+                "100": 4039
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          },
+          "H": {
+            "bets": 8,
+            "selected_bets": 8,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.011456075845945069,
+              "ci95": [
+                -0.05533094381409462,
+                0.02805050730282513
+              ],
+              "blocks": 8,
+              "observations": 8,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 1.6041594752652033,
+            "stake_units": 4.600094670819496,
+            "roi": 0.34872314377378366,
+            "fair_log_clv": -0.05745310436866522,
+            "same_book_log_clv": 0.014389899510098926,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.06572829303466458,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 106840,
+                "10": 26710,
+                "25": 4274,
+                "50": 1069,
+                "100": 268
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "blend",
+          "min_edge": 0.03
+        },
+        "primary_inference": {
+          "bets": 14,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 10,
+          "status": "INSUFFICIENT_INFORMATION",
+          "ci": null,
+          "positive_evidence": false
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 13,
+          "status": "NOT_ESTIMABLE",
+          "probability": null,
+          "arithmetic_diagnostic": 0.0014674362206410002,
+          "daily_sharpe": 0.012955391238889606,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      },
+      {
+        "forecast_rows": 11486,
+        "missing_closing_triples": 0,
+        "missing_results": 0,
+        "unscorable_rows": 0,
+        "model": {
+          "matches": 11486,
+          "log_loss": 1.0057639497705855,
+          "brier": 0.6018685487884785,
+          "closing_cross_entropy": 1.019209363018626,
+          "closing_probability_mse": 0.0018801098373799232
+        },
+        "closing_baseline": {
+          "matches": 11486,
+          "log_loss": 1.002834479064554,
+          "brier": 0.5999152207878332,
+          "closing_cross_entropy": 1.016317328301013,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.002929470706031445,
+        "bets": 4,
+        "selected_bets": 4,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.0398891288028935,
+          "ci95": [
+            -0.08678290542845579,
+            0.016520650702510617
+          ],
+          "blocks": 4,
+          "observations": 4,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": 2.306993006448781,
+        "stake_units": 2.377594740101683,
+        "roi": 0.9703053962636701,
+        "fair_log_clv": -0.08349900392349875,
+        "same_book_log_clv": -0.01664019162958475,
+        "power": {
+          "status": "ESTIMATED",
+          "alpha_one_sided": 0.05,
+          "power": 0.8,
+          "clv_sd": 0.062071353171463305,
+          "design_effect": 1.0,
+          "required_bets": {
+            "5": 95282,
+            "10": 23821,
+            "25": 3812,
+            "50": 953,
+            "100": 239
+          },
+          "assumption": "normal approximation; historical date clustering persists"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.10388574450672108,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.4097990039830144,
+            "stake_units": 0.4097990039830144,
+            "roi": -1.0,
+            "fair_log_clv": -0.14457952584609654,
+            "same_book_log_clv": -0.1466034741918754,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "I1": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.04313949266061774,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.3939424846657899,
+            "stake_units": 0.3939424846657899,
+            "roi": -1.0,
+            "fair_log_clv": -0.0015522683827272454,
+            "same_book_log_clv": 0.11778303565638346,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "SP1": {
+            "bets": 2,
+            "selected_bets": 2,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.04940513168273532,
+              "ci95": [
+                -0.06333587517181076,
+                -0.03547438819365988
+              ],
+              "blocks": 2,
+              "observations": 2,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 3.110734495097585,
+            "stake_units": 1.5738532514528787,
+            "roi": 1.9765086053772534,
+            "fair_log_clv": -0.0939321107325856,
+            "same_book_log_clv": -0.018870163991423543,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.10388574450672108,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.4097990039830144,
+            "stake_units": 0.4097990039830144,
+            "roi": -1.0,
+            "fair_log_clv": -0.14457952584609654,
+            "same_book_log_clv": -0.1466034741918754,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "H": {
+            "bets": 3,
+            "selected_bets": 3,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.018556923568284298,
+              "ci95": [
+                -0.06333587517181076,
+                0.04313949266061775
+              ],
+              "blocks": 3,
+              "observations": 3,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": 2.7167920104317953,
+            "stake_units": 1.9677957361186686,
+            "roi": 1.3806270440398791,
+            "fair_log_clv": -0.06313882994929948,
+            "same_book_log_clv": 0.026680902557845457,
+            "power": {
+              "status": "ESTIMATED",
+              "alpha_one_sided": 0.05,
+              "power": 0.8,
+              "clv_sd": 0.055216858347572284,
+              "design_effect": 1.0,
+              "required_bets": {
+                "5": 75401,
+                "10": 18851,
+                "25": 3017,
+                "50": 755,
+                "100": 189
+              },
+              "assumption": "normal approximation; historical date clustering persists"
+            }
+          }
+        },
+        "candidate": {
+          "model": "blend",
+          "min_edge": 0.05
+        },
+        "primary_inference": {
+          "bets": 4,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "ci": null,
+          "positive_evidence": false
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 10,
+          "days": 1055,
+          "nonzero_days": 4,
+          "status": "NOT_ESTIMABLE",
+          "probability": null,
+          "arithmetic_diagnostic": 0.0007554950902468289,
+          "daily_sharpe": 0.031456992235413775,
+          "null_benchmark": 0.0984419015862855,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      }
+    ],
+    "original_report_sha256": "7f4aa7ee66ffd231d1a8bc24956b227478fb5c08fbd051feb8c9f86e74d33b3d",
+    "original_trial_count": 10
+  },
+  "test": {
+    "reports": [
+      {
+        "forecast_rows": 3755,
+        "missing_closing_triples": 0,
+        "missing_results": 1,
+        "unscorable_rows": 1,
+        "model": {
+          "matches": 3754,
+          "log_loss": 1.0079610672878487,
+          "brier": 0.6034158390490296,
+          "closing_cross_entropy": 1.0236915169744454,
+          "closing_probability_mse": 0.0018199729685239234
+        },
+        "closing_baseline": {
+          "matches": 3754,
+          "log_loss": 1.0069576799118165,
+          "brier": 0.602787224497548,
+          "closing_cross_entropy": 1.0208662504380748,
+          "closing_probability_mse": 0.0
+        },
+        "log_loss_gap": 0.0010033873760322276,
+        "bets": 2,
+        "selected_bets": 2,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
+        "clv_missing": 0,
+        "clv": {
+          "mean": -0.02607313191949432,
+          "ci95": [
+            -0.15984870094189613,
+            0.10770243710290749
+          ],
+          "blocks": 2,
+          "observations": 2,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        },
+        "profit_units": -0.8326864888550614,
+        "stake_units": 0.8326864888550614,
+        "roi": -1.0,
+        "fair_log_clv": -0.08939808910075733,
+        "same_book_log_clv": -0.05004172927849128,
+        "power": {
+          "status": "NOT_ESTIMABLE",
+          "reason": "Need observed CLV across multiple dates"
+        },
+        "by_league": {
+          "D1": {
+            "bets": 2,
+            "selected_bets": 2,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.02607313191949432,
+              "ci95": [
+                -0.15984870094189613,
+                0.10770243710290749
+              ],
+              "blocks": 2,
+              "observations": 2,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.8326864888550614,
+            "stake_units": 0.8326864888550614,
+            "roi": -1.0,
+            "fair_log_clv": -0.08939808910075733,
+            "same_book_log_clv": -0.05004172927849128,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          }
+        },
+        "by_side": {
+          "A": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": 0.10770243710290749,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.27152729451799124,
+            "stake_units": 0.27152729451799124,
+            "roi": -1.0,
+            "fair_log_clv": 0.04695626390553615,
+            "same_book_log_clv": 0.05406722127027579,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          },
+          "H": {
+            "bets": 1,
+            "selected_bets": 1,
+            "pending_bets": 0,
+            "open_stake_units": 0.0,
+            "clv_missing": 0,
+            "clv": {
+              "mean": -0.15984870094189613,
+              "ci95": null,
+              "blocks": 1,
+              "observations": 1,
+              "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+            },
+            "profit_units": -0.5611591943370702,
+            "stake_units": 0.5611591943370702,
+            "roi": -1.0,
+            "fair_log_clv": -0.2257524421070508,
+            "same_book_log_clv": -0.15415067982725836,
+            "power": {
+              "status": "NOT_ESTIMABLE",
+              "reason": "Need observed CLV across multiple dates"
+            }
+          }
+        },
+        "candidate": {
+          "model": "blend",
+          "min_edge": 0.05
+        },
+        "primary_inference": {
+          "bets": 2,
+          "min_bets": 100,
+          "min_populated_weeks": 60,
+          "candidate_confidence_parameter": 0.999,
+          "hac_lags": 4,
+          "populated_weeks": 2,
+          "status": "INSUFFICIENT_INFORMATION",
+          "ci": null,
+          "positive_evidence": false
+        },
+        "unchanged_original_headlines": {
+          "log_loss_gap": true,
+          "bets": true,
+          "profit_units": true,
+          "clv_mean": true
+        },
+        "deflated_sharpe": {
+          "trials": 11,
+          "days": 306,
+          "nonzero_days": 2,
+          "status": "NOT_ESTIMABLE",
+          "probability": null,
+          "arithmetic_diagnostic": 3.571438898945635e-11,
+          "daily_sharpe": -0.07642779989757632,
+          "null_benchmark": 0.1014179216482234,
+          "trial_sharpe_variance": 0.003908592833718299,
+          "assumption": "independent trials and daily returns; descriptive under dependence"
+        }
+      }
+    ],
+    "original_report_sha256": "c13d9e2396bac48bc5ee78e41aa4b37fa14f9df0eba1df2dd5ca08244f30c402",
+    "original_trial_count": 11
+  }
+}

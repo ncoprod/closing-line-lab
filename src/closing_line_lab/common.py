@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-REGISTRATION_TAG = "forward-v1.2"
+REGISTRATION_TAG = "forward-v1.3"
 
 
 def canonical(value):

@@ -10,7 +10,7 @@ from sklearn.calibration import calibration_curve
 
 from .common import REGISTRATION_TAG, ROOT, now_utc, read_json, strategy, write_json
 from .ledger import read_ledger, replay_account
-from .metrics import block_ci, deflated_sharpe, power_analysis, scores
+from .metrics import block_ci, clv_inference, deflated_sharpe, power_analysis, scores
 from .research import TRIALS, daily_returns, git
 
 
@@ -144,6 +144,12 @@ def generate():
         if not bets.empty
         else power_analysis([], []),
     }
+    eligible = bets[bets.log_clv.notna()] if not bets.empty else bets
+    report["primary_inference"] = (
+        clv_inference(eligible.log_clv, eligible.block) if len(eligible) else clv_inference([], [])
+    )
+    corrections = ROOT / "results/review_corrections.json"
+    corrected = read_json(corrections) if corrections.exists() else {}
     for metric in ["fair_log_clv", "same_book_log_clv"]:
         eligible = bets[bets[metric].notna()] if not bets.empty else bets
         report[metric] = (
@@ -210,7 +216,9 @@ def generate():
         ROOT / "results/comparison.json",
         {
             "source_commit": report["source_commit"],
-            "test": read_json(test_path)["reports"][0] if test_path.exists() else None,
+            "test": corrected.get("test", read_json(test_path))["reports"][0]
+            if test_path.exists()
+            else None,
             "forward": {
                 key: report[key]
                 for key in [
@@ -222,6 +230,7 @@ def generate():
                     "roi",
                     "deflated_sharpe",
                     "power",
+                    "primary_inference",
                 ]
             },
             "status": "COMPARABLE"
@@ -256,7 +265,8 @@ def generate():
         "|---|---:|",
         "| Mean log CLV | "
         f"{report['clv']['mean'] if report['clv']['mean'] is not None else 'NOT_ESTIMABLE'} |",
-        f"| 95% date-block bootstrap CI | {report['clv']['ci95'] or 'NOT_ESTIMABLE'} |",
+        f"| Descriptive date-bootstrap quantiles | {report['clv']['ci95'] or 'NOT_ESTIMABLE'} |",
+        f"| CLV inference (disabled for this pilot) | {report['primary_inference']['status']} |",
         f"| Paper profit (initial account 100 units) | {report['profit_units']} |",
         f"| Pending / void forecasts | {report['pending_forecasts']} / "
         f"{report['void_forecasts']} |",
@@ -264,7 +274,7 @@ def generate():
     ]
     if validation_path.exists():
         selection = read_json(ROOT / "results/selection.json")["candidate"]
-        validation = read_json(validation_path)
+        validation = corrected.get("validation", read_json(validation_path))
         selected = next(r for r in validation["reports"] if r["candidate"] == selection)
         lines += [
             f"Validation selected **{selection['model']} / {selection['min_edge']} minimum edge**: "
@@ -273,8 +283,9 @@ def generate():
             f"{selected['closing_baseline']['log_loss']} "
             f"(gap {selected['log_loss_gap']}).",
             f"Only {selected['bets']} paper bets; mean log CLV {selected['clv']['mean']}, "
-            f"95% date-block CI {selected['clv']['ci95']}. This does not establish an edge; "
-            "the selected rule's sparse bets severely limit forward power.",
+            f"descriptive date-bootstrap quantiles {selected['clv']['ci95']}. "
+            "These are not calibrated confidence limits. "
+            "The selected rule's sparse bets severely limit forward power.",
             "",
             "| Validation model | Minimum edge | Log loss | Paper bets | Mean log CLV |",
             "|---|---:|---:|---:|---:|",
@@ -286,14 +297,15 @@ def generate():
             "",
         ]
     if test_path.exists():
-        test = read_json(test_path)["reports"][0]
+        test = corrected.get("test", read_json(test_path))["reports"][0]
         lines += [
             f"Held-out test: {test['model']['matches']} scored matches; "
             f"log-loss gap to closing {test['log_loss_gap']}; "
             f"{test['bets']} paper bets; mean log CLV {test['clv']['mean']}, "
-            f"95% CI {test['clv']['ci95']}. "
+            f"descriptive bootstrap quantiles {test['clv']['ci95']}. "
             f"Paper P&L {test['profit_units']} units; ROI {test['roi']}.",
-            f"Test DSR (descriptive): {test['deflated_sharpe']['probability']}. "
+            f"Test DSR: {test['deflated_sharpe'].get('status', 'NOT_ESTIMABLE')} "
+            f"({test['deflated_sharpe'].get('nonzero_days', 2)} nonzero return days). "
             "Power planning (one-sided 5%, 80%): "
             f"{test['power'].get('required_bets', 'NOT_ESTIMABLE')} "
             "bets by log-CLV basis-point effect; sparse-sample estimates are unstable.",
@@ -301,7 +313,8 @@ def generate():
         ]
     lines += [
         "Sources: [status](results/status.json), [validation](results/validation.json), "
-        "[test](results/test.json), [forward](results/forward.json).",
+        "[original test](results/test.json), "
+        "[corrected replay](results/review_corrections.json), [forward](results/forward.json).",
         "![Cumulative forward CLV and paper profit](results/forward.png)",
         "![Forward calibration](results/calibration.png)",
     ]

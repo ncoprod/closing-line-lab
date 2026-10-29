@@ -272,14 +272,9 @@ def publish(settlements_only=False):
     ]
     paths = [p for p in paths if (ROOT / p).exists()]
     subprocess.run(["git", "add", "--", *paths], check=True, cwd=ROOT)
-    # Required pre-commit check. Match only tracked content; never print matched secrets.
-    scan = subprocess.run(
-        ["git", "grep", "-nE", r"nvapi-[A-Za-z0-9]{10}|" + "KGA" + r'T_|"key"\s*:'],
-        cwd=ROOT,
-        capture_output=True,
-    )
-    if scan.returncode != 1:
-        raise RuntimeError("Secret scan matched content or failed; publication stopped")
+    from .security import publication_scan
+
+    publication_scan()
     if not git("diff", "--cached", "--name-only"):
         return {"status": "NO_CHANGES"}
     subprocess.run(

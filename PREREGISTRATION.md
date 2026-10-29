@@ -9,7 +9,8 @@ Selected model: market-anchored multinomial logistic blend; minimum edge 0.05.
 Validation: 11486 matched closing-price observations, log loss
 1.0057639497705855 versus closing 1.002834479064554.
 The 4 selected paper bets have mean log CLV -0.0398891288028935,
-95% date-block CI [-0.08678290542845579, 0.016520650702510617]. This is not positive-edge evidence.
+date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617].
+The original tag calls these confidence limits; the v1.3 amendment below withdraws that interpretation. This is not positive-edge evidence.
 The calibration target (gap at most 0.01 nats) is met; no further scientific tuning occurs.
 The sparse selected bets imply weak power for the planned forward window. Retain the rule
 and report inconclusive results if insufficient bets accrue. Selection and validation hashes
@@ -22,9 +23,11 @@ on all eligible, settled paper bets with an observed close. The planned window i
 2026 UTC through 29 January 2027 exclusive. Report the actual first forecast; never backfill
 missed days. Scoring can continue afterward. No performance-based stopping or extension.
 
-Report mean CLV and a 95% percentile bootstrap CI, resampling UTC kickoff dates with all
-bets on a sampled date retained (5,000 resamples; seed 20261029). Evidence requires the lower
-endpoint above zero. This is more conservative than a one-sided 5% test. Bets/matches are
+The original v1 tag specified a percentile-bootstrap lower-endpoint rejection rule. That
+rule is withdrawn prospectively in v1.3: with two independent symmetric zero-mean dates it
+rejects with probability 0.25. The claim that it is more conservative than a one-sided 5%
+test was incorrect. Preserve 5,000 UTC-date resampling quantiles (seed 20261029) descriptively;
+never interpret a positive lower quantile as confirmatory evidence in this pilot. Bets/matches are
 not assumed independent. Report missing closes, unresolved results and voids explicitly.
 
 ## Data split and population
@@ -148,7 +151,7 @@ beats closing outcome log loss. Historical raw CLV includes cross-book margin di
 Report secondary `log(raw_taken * p_close_devig)` and same-book raw CLV when available.
 
 Paper P&L uses recorded stakes/effective prices, with no liquidity or fill claim. Report
-calibration curves (H/D/A, quantile bins), date-block CLV intervals, missingness, benchmark
+calibration curves (H/D/A, quantile bins), descriptive date-block CLV quantiles, missingness, benchmark
 mix and actual source/snapshot gaps. League/draw/lead-time splits are descriptive uncorrected
 comparisons and cannot change v1. Historical early-week quote timing is unknowable.
 
@@ -159,8 +162,7 @@ and daily independence are imperfect; DSR is secondary descriptive evidence, not
 
 Power: normal approximation, one-sided 5%, 80% power, observed CLV variance and UTC-date
 cluster design effect floored at one, for 5/10/25/50/100 log-CLV basis points. Without enough
-observations report NOT_ESTIMABLE. The primary two-sided 95% lower-CI rule requires more
-power. Compare historical vs forward with coverage, source, cadence and frozen-model drift
+observations report NOT_ESTIMABLE. No validated confirmatory rule remains for this pilot. Compare historical vs forward with coverage, source, cadence and frozen-model drift
 explicit. Publish a positive, negative or inconclusive result without changing the protocol.
 
 ## Prospective identity amendment — `forward-v1.1`
@@ -195,3 +197,47 @@ The original v1/v1.1 tags stay intact. No forecast formula, fitted coefficient, 
 benchmark, window or staking change; no test re-evaluation. This operational correction
 and active tag reference are frozen in v1.2. The artifact remains unchanged. Successful
 responses still replace the conservative estimate with actual provider quota headers.
+
+
+## Prospective independent-review amendment — `forward-v1.3`
+
+Created before any forward forecast or outcome. Original tags/results are retained; the
+selected blend coefficients, 0.05 threshold, leagues, prices and staking parameters remain
+unchanged. Historical engine fixes are replayed into a correction companion, never into the
+original validation/test reports. The frozen rule abstained on the one unresolved test row,
+so its point estimates are unchanged. Full DC/Elo feature regeneration verifies predictions.
+
+1. Closing-derived settlement fields require the hash of the latest pre-kickoff snapshot
+   with a valid server receipt. Replay prices, bookmaker, gap, raw/fair/same-book CLV.
+   With no verified close these fields must all be null; known outcomes can still settle P&L.
+2. Inclusion is by decision time in [forward_start, forward_end). Stop new decisions at end,
+   but continue closing capture and settlement for already included forecasts afterward.
+3. Missing historical outcomes retain the selected stake as pending exposure. Exclude them
+   from realized ROI/P&L/settled CLV without filtering them before stake selection. Separate
+   missing labels, missing prices and their union in corrected aggregate outputs.
+4. Paid requests reserve credits with a remote compare-and-swap commit on api-budget before
+   transmission. A pending ambiguous reservation blocks further paid calls, even on a fresh
+   runner. No paid retries. Completion reconciles actual quota headers remotely; main's usage
+   file is a mirror. Manual reconciliation retains all ambiguous charges. Budget caps and
+   model decisions are unchanged; accounting-only commits cannot publish failed forecasts.
+5. Confirmatory CLV inference is **disabled for this pilot**, regardless of point estimates.
+   Two synthetic-only weekly HAC-t candidates (lag 4, bet-weighted mean) were tested across
+   normal, Student-t(5) and negative centered lognormal shocks, weekly AR(1) coefficients
+   0/0.3/0.6, and 30/60/120 weeks, with unequal 4–10 bets/week and 10,000 replications/scenario.
+   Candidate 1 required 30 populated weeks, 100 bets and a 99% critical-coverage parameter;
+   candidate 2 required 60 weeks, 100 bets and 99.9%. Each had to have every scenario's Wilson
+   95% upper false-positive bound at most 0.05. Both failed: worst bounds 0.13305674427638517
+   and 0.052782457999490946. All failures are retained; no more inferential iteration occurs.
+   These critical parameters are not validated confidence levels. Below 100 bets or 60
+   populated weeks return INSUFFICIENT_INFORMATION; otherwise INFERENCE_NOT_VALIDATED.
+   Always return no inferential CI and positive_evidence=false. A future confirmatory study
+   requires a separate validated preregistration; this three-month window cannot reach 60 weeks.
+6. Secondary DSR returns NOT_ESTIMABLE below 30 nonzero return days or 60 calendar days.
+   Expose both counts. Keep the old formula as an assumption-dependent arithmetic diagnostic,
+   not a headline probability, p-value, or probability of edge. Counting engineering/null
+   attempts and using a null-SE floor are bespoke conservative conventions, not independent
+   strategy trials. Preserve original trial counts in original-stage replay diagnostics.
+
+The primary scientific question remains mean raw CLV > 0, but this pilot estimates it
+without a validated rejection decision. Report negative, positive or inconclusive point
+estimates and missingness plainly; no success claim follows from bootstrap quantiles.

@@ -1,6 +1,7 @@
 import argparse
 import json
 import sys
+from pathlib import Path
 
 from .data import PermissionMissing
 
@@ -23,11 +24,24 @@ def main():
     for name in ["features", "backtest"]:
         command = sub.add_parser(name)
         command.add_argument("--stage", choices=["validation", "test"], default="validation")
+    replay_parser = sub.add_parser("replay")
+    replay_parser.add_argument("--output-dir", type=Path, required=True)
+    replay_parser.add_argument("--rebuild-features", action="store_true")
+    for name in ["scan-staged", "scan-history"]:
+        sub.add_parser(name)
     publish = sub.add_parser("publish")
     publish.add_argument("--settlements-only", action="store_true")
     args = parser.parse_args()
     try:
-        if args.command == "prepare-forward":
+        if args.command == "replay":
+            from .replay import replay
+
+            result = replay(args.output_dir, args.rebuild_features)
+        elif args.command in ("scan-staged", "scan-history"):
+            from .security import history_scan, publication_scan
+
+            result = publication_scan() if args.command == "scan-staged" else history_scan()
+        elif args.command == "prepare-forward":
             from .artifact import prepare
 
             result = prepare()

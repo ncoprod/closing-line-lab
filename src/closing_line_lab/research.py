@@ -280,6 +280,8 @@ def evaluate(frame, cfg):
 def run_backtest(stage):
     cfg = strategy()
     output = ROOT / f"results/{stage}.json"
+    if stage == "validation" and output.exists() and git("tag", "-l", "forward-v1"):
+        raise RuntimeError("Registered result exists; use cll replay --output-dir runs/replay")
     if stage == "test":
         assert_frozen()
         if output.exists():

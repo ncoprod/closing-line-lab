@@ -1,8 +1,10 @@
 {
-  "source_commit": "eb5e4abe0e8abb59ea949051134c697838591031",
+  "source_commit": "d4a115962222ce58fdb0233ef252cb0e10591303",
   "test": {
     "forecast_rows": 3755,
-    "missing_closing_triples": 1,
+    "missing_closing_triples": 0,
+    "missing_results": 1,
+    "unscorable_rows": 1,
     "model": {
       "matches": 3754,
       "log_loss": 1.0079610672878487,
@@ -19,6 +21,9 @@
     },
     "log_loss_gap": 0.0010033873760322276,
     "bets": 2,
+    "selected_bets": 2,
+    "pending_bets": 0,
+    "open_stake_units": 0.0,
     "clv_missing": 0,
     "clv": {
       "mean": -0.02607313191949432,
@@ -27,7 +32,8 @@
         0.10770243710290749
       ],
       "blocks": 2,
-      "observations": 2
+      "observations": 2,
+      "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
     },
     "profit_units": -0.8326864888550614,
     "stake_units": 0.8326864888550614,
@@ -41,6 +47,9 @@
     "by_league": {
       "D1": {
         "bets": 2,
+        "selected_bets": 2,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
         "clv_missing": 0,
         "clv": {
           "mean": -0.02607313191949432,
@@ -49,7 +58,8 @@
             0.10770243710290749
           ],
           "blocks": 2,
-          "observations": 2
+          "observations": 2,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
         },
         "profit_units": -0.8326864888550614,
         "stake_units": 0.8326864888550614,
@@ -65,12 +75,16 @@
     "by_side": {
       "A": {
         "bets": 1,
+        "selected_bets": 1,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
         "clv_missing": 0,
         "clv": {
           "mean": 0.10770243710290749,
           "ci95": null,
           "blocks": 1,
-          "observations": 1
+          "observations": 1,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
         },
         "profit_units": -0.27152729451799124,
         "stake_units": 0.27152729451799124,
@@ -84,12 +98,16 @@
       },
       "H": {
         "bets": 1,
+        "selected_bets": 1,
+        "pending_bets": 0,
+        "open_stake_units": 0.0,
         "clv_missing": 0,
         "clv": {
           "mean": -0.15984870094189613,
           "ci95": null,
           "blocks": 1,
-          "observations": 1
+          "observations": 1,
+          "interpretation": "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
         },
         "profit_units": -0.5611591943370702,
         "stake_units": 0.5611591943370702,
@@ -102,18 +120,37 @@
         }
       }
     },
-    "trial_id": "1ef660dba86b27b29fa761f5eb85d4d8cfccf6dbe65db39f7eb784eec721ea67",
     "candidate": {
       "model": "blend",
       "min_edge": 0.05
     },
+    "primary_inference": {
+      "bets": 2,
+      "min_bets": 100,
+      "min_populated_weeks": 60,
+      "candidate_confidence_parameter": 0.999,
+      "hac_lags": 4,
+      "populated_weeks": 2,
+      "status": "INSUFFICIENT_INFORMATION",
+      "ci": null,
+      "positive_evidence": false
+    },
+    "unchanged_original_headlines": {
+      "log_loss_gap": true,
+      "bets": true,
+      "profit_units": true,
+      "clv_mean": true
+    },
     "deflated_sharpe": {
-      "probability": 3.571438898945635e-11,
+      "trials": 11,
+      "days": 306,
+      "nonzero_days": 2,
+      "status": "NOT_ESTIMABLE",
+      "probability": null,
+      "arithmetic_diagnostic": 3.571438898945635e-11,
       "daily_sharpe": -0.07642779989757632,
       "null_benchmark": 0.1014179216482234,
       "trial_sharpe_variance": 0.003908592833718299,
-      "trials": 11,
-      "days": 306,
       "assumption": "independent trials and daily returns; descriptive under dependence"
     }
   },
@@ -130,13 +167,27 @@
     "profit_units": 0.0,
     "roi": null,
     "deflated_sharpe": {
+      "trials": 20,
+      "days": 0,
+      "nonzero_days": 0,
       "probability": null,
-      "trials": 16,
+      "status": "NOT_ESTIMABLE",
       "reason": "insufficient variation"
     },
     "power": {
       "status": "NOT_ESTIMABLE",
       "reason": "Need observed CLV across multiple dates"
+    },
+    "primary_inference": {
+      "bets": 0,
+      "min_bets": 100,
+      "min_populated_weeks": 60,
+      "candidate_confidence_parameter": 0.999,
+      "hac_lags": 4,
+      "status": "INSUFFICIENT_INFORMATION",
+      "populated_weeks": 0,
+      "ci": null,
+      "positive_evidence": false
     }
   },
   "status": "NOT_COMPARABLE_YET",

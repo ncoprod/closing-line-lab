@@ -1,5 +1,5 @@
 {
-  "source_commit": "eb5e4abe0e8abb59ea949051134c697838591031",
+  "source_commit": "d4a115962222ce58fdb0233ef252cb0e10591303",
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -25,6 +25,17 @@
   "power": {
     "status": "NOT_ESTIMABLE",
     "reason": "Need observed CLV across multiple dates"
+  },
+  "primary_inference": {
+    "bets": 0,
+    "min_bets": 100,
+    "min_populated_weeks": 60,
+    "candidate_confidence_parameter": 0.999,
+    "hac_lags": 4,
+    "status": "INSUFFICIENT_INFORMATION",
+    "populated_weeks": 0,
+    "ci": null,
+    "positive_evidence": false
   },
   "fair_log_clv": {
     "mean": null,
@@ -56,8 +67,11 @@
     "unknown_teams": 0
   },
   "deflated_sharpe": {
+    "trials": 20,
+    "days": 0,
+    "nonzero_days": 0,
     "probability": null,
-    "trials": 16,
+    "status": "NOT_ESTIMABLE",
     "reason": "insufficient variation"
   }
 }

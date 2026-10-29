@@ -10,6 +10,8 @@ import urllib.request
 
 import numpy as np
 
+from .budget import BudgetExhausted as BudgetExhausted
+from .budget import GitHubBudget
 from .common import ROOT, canonical, now_utc, read_json, timestamp, write_json
 
 API = "https://api.the-odds-api.com/v4/sports"
@@ -21,16 +23,13 @@ def forward_config():
     return read_json(ROOT / "config/forward.json")
 
 
-class BudgetExhausted(RuntimeError):
-    pass
-
-
 class OddsClient:
-    def __init__(self):
+    def __init__(self, journal=None):
         self.credential = os.environ.get("ODDS_API_KEY")
         if not self.credential:
             raise RuntimeError("ODDS_API_KEY is absent")
         self.cfg = forward_config()
+        self.journal = journal or GitHubBudget()
         self.usage = read_json(USAGE) if USAGE.exists() else {"months": {}}
 
     def get(self, sport, endpoint, **params):
@@ -43,18 +42,12 @@ class OddsClient:
             params.update(daysFrom=3)
         safe_url = f"{API}/{sport}/{endpoint}"
         for attempt in range(3):
-            month = now_utc().strftime("%Y-%m")
-            charged = self.usage["months"].get(month, 0)
-            remaining = self.usage.get("remaining", self.cfg["provider_monthly_credits"])
-            if expected and (
-                charged + expected > self.cfg["monthly_credit_cap"]
-                or remaining - expected < self.cfg["provider_reserve"]
-            ):
-                raise BudgetExhausted("Credit cap/reserve reached; no paid request made")
-            # Reserve before transmission: failed/ambiguous calls also consume the local budget.
-            self.usage["months"][month] = charged + expected
-            self.usage["remaining"] = remaining - expected
-            write_json(USAGE, self.usage)
+            reservation, reservation_commit = None, None
+            if expected:
+                reservation, reservation_commit, self.usage = self.journal.reserve(
+                    self.usage, expected, endpoint, self.cfg
+                )
+                write_json(USAGE, self.usage)
             query = urllib.parse.urlencode({**params, "apiKey": self.credential})
             request = urllib.request.Request(safe_url + "?" + query)
             try:
@@ -64,7 +57,7 @@ class OddsClient:
                 break
             except (urllib.error.URLError, TimeoutError) as error:
                 code = getattr(error, "code", None)
-                if attempt == 2 or (code is not None and code != 429 and code < 500):
+                if expected or attempt == 2 or (code is not None and code != 429 and code < 500):
                     raise RuntimeError(
                         f"Odds API request failed; HTTP {code or 'network'}"
                     ) from None
@@ -74,8 +67,10 @@ class OddsClient:
         if any(k not in headers for k in required):
             raise RuntimeError("Quota headers missing; stop instead of guessing usage")
         remaining, used, last = [int(headers[k]) for k in required]
-        self.usage.update(remaining=remaining, provider_used=used)
-        self.usage["months"][month] += max(0, last - expected)
+        if reservation:
+            self.usage = self.journal.complete(reservation, remaining, used, last)
+        else:
+            self.usage.update(remaining=remaining, provider_used=used)
         write_json(USAGE, self.usage)
         data = json.loads(payload)
         if not isinstance(data, list):
@@ -93,6 +88,8 @@ class OddsClient:
             "credits_remaining": remaining,
             "credits_used": used,
             "credits_last": last,
+            "reservation_id": reservation["id"] if reservation else None,
+            "reservation_commit": reservation_commit,
         }
         MANIFEST.parent.mkdir(exist_ok=True)
         with MANIFEST.open("a") as handle:

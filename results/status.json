@@ -1,10 +1,10 @@
 {
-  "status": "FROZEN_MODEL_READY",
+  "status": "PREPARING_MODEL",
   "real_data_matches": 55476,
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
   "backtest": "COMPLETE",
   "test_season": "EVALUATED_ONCE",
-  "reason": null
+  "reason": "Local research authorized; forward model export/freeze not yet complete."
 }

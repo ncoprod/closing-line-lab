@@ -107,3 +107,13 @@ def test_price_and_label_missingness_are_distinct(history, cfg):
     assert result["missing_closing_triples"] == result["missing_results"] == 1
     assert result["unscorable_rows"] == 2
     assert result["model"]["matches"] == 10
+
+
+def test_registered_validation_refuses_overwrite_before_loading_data(tmp_path, monkeypatch):
+    (tmp_path / "results").mkdir()
+    (tmp_path / "results/validation.json").write_text("{}")
+    monkeypatch.setattr(research, "ROOT", tmp_path)
+    monkeypatch.setattr(research, "git", lambda *args: "registered-tag")
+    monkeypatch.setattr(research, "load_matches", lambda: pytest.fail("Opened data"))
+    with pytest.raises(RuntimeError, match="use cll replay"):
+        research.run_backtest("validation")

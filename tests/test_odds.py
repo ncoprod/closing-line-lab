@@ -2,8 +2,17 @@ import json
 from pathlib import Path
 
 import pytest
+from test_budget import FileJournal
 
 from closing_line_lab import odds
+from closing_line_lab.budget import BudgetUncertain
+
+
+@pytest.fixture(autouse=True)
+def fake_journal(tmp_path, monkeypatch):
+    journal = FileJournal(tmp_path / "remote-budget.json")
+    monkeypatch.setattr(odds, "GitHubBudget", lambda: journal)
+    return journal
 
 
 def event():
@@ -48,7 +57,7 @@ def test_three_way_mapping_freshness_commission_and_no_in_play():
     assert odds.quote(e, cfg["benchmark_priority"], "2026-11-01T14:01:00Z", cfg) is None
 
 
-def test_client_documented_response_cache_headers_and_budget(tmp_path, monkeypatch):
+def test_client_documented_response_cache_headers_and_budget(tmp_path, monkeypatch, fake_journal):
     documented = (Path(__file__).parent / "fixtures/docs_odds.json").read_bytes()
     monkeypatch.setenv("ODDS_API_KEY", "synthetic-credential-never-persist")
     monkeypatch.setattr(odds, "ROOT", tmp_path)
@@ -87,7 +96,9 @@ def test_client_documented_response_cache_headers_and_budget(tmp_path, monkeypat
         client.get("soccer_epl", "odds")
     assert len(calls) == 1
     client.usage["remaining"] = 500
-    client.usage["months"] = {odds.now_utc().strftime("%Y-%m"): 400}
+    state, revision = fake_journal.load()
+    state["months"] = {odds.now_utc().strftime("%Y-%m"): 400}
+    fake_journal.save(state, revision)
     with pytest.raises(odds.BudgetExhausted):
         client.get("soccer_epl", "scores")
     assert len(calls) == 1
@@ -118,7 +129,48 @@ def test_ambiguous_failure_reserves_provider_headroom_before_retry(tmp_path, mon
         raise odds.urllib.error.HTTPError(request.full_url, 503, "unavailable", {}, None)
 
     monkeypatch.setattr(odds.urllib.request, "urlopen", fail)
-    with pytest.raises(odds.BudgetExhausted):
+    with pytest.raises(RuntimeError, match="HTTP 503"):
+        odds.OddsClient().get("soccer_epl", "odds")
+    with pytest.raises(BudgetUncertain):
         odds.OddsClient().get("soccer_epl", "odds")
     assert len(calls) == 1
     assert json.loads(odds.USAGE.read_text())["remaining"] == 100
+
+
+def test_no_transmission_when_remote_reservation_cannot_be_committed(monkeypatch, fake_journal):
+    monkeypatch.setenv("ODDS_API_KEY", "synthetic-not-a-real-credential")
+
+    def refuse(*args):
+        raise BudgetUncertain("Remote journal unavailable")
+
+    def unexpected(*args, **kwargs):
+        pytest.fail("Paid HTTP transmission before durable reservation")
+
+    monkeypatch.setattr(fake_journal, "save", refuse)
+    monkeypatch.setattr(odds.urllib.request, "urlopen", unexpected)
+    with pytest.raises(BudgetUncertain):
+        odds.OddsClient().get("soccer_epl", "odds")
+
+
+def test_missing_quota_headers_keep_remote_reservation_pending(tmp_path, monkeypatch, fake_journal):
+    monkeypatch.setenv("ODDS_API_KEY", "synthetic-not-a-real-credential")
+    monkeypatch.setattr(odds, "USAGE", tmp_path / "usage.json")
+
+    class Response:
+        headers = {}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def read(self):
+            return b"[]"
+
+    monkeypatch.setattr(odds.urllib.request, "urlopen", lambda *args, **kw: Response())
+    with pytest.raises(RuntimeError, match="Quota headers missing"):
+        odds.OddsClient().get("soccer_epl", "odds")
+    with pytest.raises(BudgetUncertain):
+        odds.OddsClient().get("soccer_epl", "odds")
+    assert fake_journal.load()[0]["pending"] is not None

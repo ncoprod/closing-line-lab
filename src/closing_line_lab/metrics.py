@@ -1,6 +1,13 @@
 import numpy as np
 from scipy.stats import kurtosis, norm, skew
 
+CLV_MIN_WEEKS = 60
+CLV_MIN_BETS = 100
+CLV_HAC_LAGS = 4
+CLV_CONFIDENCE = 0.999
+DSR_MIN_NONZERO_DAYS = 30
+DSR_MIN_DAYS = 60
+
 
 def devig(odds):
     odds = np.asarray(odds, dtype=float)
@@ -49,14 +56,67 @@ def block_ci(values, blocks, samples=5000, seed=20261029):
         else None,
         "blocks": len(unique),
         "observations": len(values),
+        "interpretation": (
+            "Descriptive percentile quantiles, not a calibrated sparse-sample confidence interval"
+        ),
+    }
+
+
+def clv_inference(values, blocks):
+    """Never promote descriptive quantiles or a failed null-calibration rule to evidence."""
+    import pandas as pd
+
+    x = np.asarray(values, float)
+    information = {
+        "bets": len(x),
+        "min_bets": CLV_MIN_BETS,
+        "min_populated_weeks": CLV_MIN_WEEKS,
+        "candidate_confidence_parameter": CLV_CONFIDENCE,
+        "hac_lags": CLV_HAC_LAGS,
+    }
+    if not len(x):
+        return {
+            **information,
+            "status": "INSUFFICIENT_INFORMATION",
+            "populated_weeks": 0,
+            "ci": None,
+            "positive_evidence": False,
+        }
+    dates = pd.to_datetime(np.asarray(blocks), utc=True).tz_localize(None).to_period("W-SUN")
+    grouped = pd.DataFrame({"value": x, "week": dates}).groupby("week").value.agg(["sum", "size"])
+    g = len(grouped)
+    information["populated_weeks"] = g
+    if len(x) < CLV_MIN_BETS or g < CLV_MIN_WEEKS:
+        return {
+            **information,
+            "status": "INSUFFICIENT_INFORMATION",
+            "ci": None,
+            "positive_evidence": False,
+        }
+    return {
+        **information,
+        "status": "INFERENCE_NOT_VALIDATED",
+        "ci": None,
+        "positive_evidence": False,
+        "reason": (
+            "Both null-calibration candidates failed; "
+            "confirmatory CLV inference is disabled for v1.3"
+        ),
     }
 
 
 def deflated_sharpe(returns, trial_sharpes, trials):
     """Unannualized daily DSR; independent-trials approximation, not a CLV test."""
     r = np.asarray(returns, dtype=float)
+    nonzero = int(np.count_nonzero(r))
+    info = {"trials": trials, "days": len(r), "nonzero_days": nonzero}
     if len(r) < 3 or np.std(r, ddof=1) == 0:
-        return {"probability": None, "trials": trials, "reason": "insufficient variation"}
+        return {
+            **info,
+            "probability": None,
+            "status": "NOT_ESTIMABLE",
+            "reason": "insufficient variation",
+        }
     sr = float(r.mean() / r.std(ddof=1))
     trial_sharpes = np.asarray(trial_sharpes, dtype=float)
     # The null standard error prevents identical candidate returns implying no selection penalty.
@@ -73,10 +133,15 @@ def deflated_sharpe(returns, trial_sharpes, trials):
     denominator = (
         1 - skew(r, bias=False) * sr + (kurtosis(r, fisher=False, bias=False) - 1) * sr**2 / 4
     )
+    arithmetic = float(
+        norm.cdf((sr - benchmark) * np.sqrt(len(r) - 1) / np.sqrt(max(denominator, 1e-12)))
+    )
+    adequate = nonzero >= DSR_MIN_NONZERO_DAYS and len(r) >= DSR_MIN_DAYS
     return {
-        "probability": float(
-            norm.cdf((sr - benchmark) * np.sqrt(len(r) - 1) / np.sqrt(max(denominator, 1e-12)))
-        ),
+        **info,
+        "status": "ASSUMPTION_CONDITIONAL" if adequate else "NOT_ESTIMABLE",
+        "probability": arithmetic if adequate else None,
+        "arithmetic_diagnostic": arithmetic,
         "daily_sharpe": sr,
         "null_benchmark": float(benchmark),
         "trial_sharpe_variance": variance,

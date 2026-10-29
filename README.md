@@ -4,17 +4,18 @@
 
 <!-- RESULTS:START -->
 **55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
+Data status: **PREPARING_MODEL**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
 
 | Forward metric | Observed value |
 |---|---:|
 | Mean log CLV | NOT_ESTIMABLE |
-| 95% date-block bootstrap CI | NOT_ESTIMABLE |
+| Descriptive date-bootstrap quantiles | NOT_ESTIMABLE |
+| CLV inference (disabled for this pilot) | INSUFFICIENT_INFORMATION |
 | Paper profit (initial account 100 units) | 0.0 |
 | Pending / void forecasts | 0 / 0 |
 
 Validation selected **blend / 0.05 minimum edge**: 11486 scored matches, log loss 1.0057639497705855 versus closing 1.002834479064554 (gap 0.002929470706031445).
-Only 4 paper bets; mean log CLV -0.0398891288028935, 95% date-block CI [-0.08678290542845579, 0.016520650702510617]. This does not establish an edge; the selected rule's sparse bets severely limit forward power.
+Only 4 paper bets; mean log CLV -0.0398891288028935, descriptive date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617]. These are not calibrated confidence limits. the selected rule's sparse bets severely limit forward power.
 
 | Validation model | Minimum edge | Log loss | Paper bets | Mean log CLV |
 |---|---:|---:|---:|---:|
@@ -27,10 +28,10 @@ Only 4 paper bets; mean log CLV -0.0398891288028935, 95% date-block CI [-0.08678
 | blend | 0.03 | 1.0057639497705855 | 14 | -0.04823819541359959 |
 | blend | 0.05 | 1.0057639497705855 | 4 | -0.0398891288028935 |
 
-Held-out test: 3754 scored matches; log-loss gap to closing 0.0010033873760322276; 2 paper bets; mean log CLV -0.02607313191949432, 95% CI [-0.15984870094189613, 0.10770243710290749]. Paper P&L -0.8326864888550614 units; ROI -1.0.
-Test DSR (descriptive): 3.571438898945635e-11. Power planning (one-sided 5%, 80%): NOT_ESTIMABLE bets by log-CLV basis-point effect; sparse-sample estimates are unstable.
+Held-out test: 3754 scored matches; log-loss gap to closing 0.0010033873760322276; 2 paper bets; mean log CLV -0.02607313191949432, descriptive bootstrap quantiles [-0.15984870094189613, 0.10770243710290749]. Paper P&L -0.8326864888550614 units; ROI -1.0.
+Test DSR: NOT_ESTIMABLE (2 nonzero return days). Power planning (one-sided 5%, 80%): NOT_ESTIMABLE bets by log-CLV basis-point effect; sparse-sample estimates are unstable.
 
-Sources: [status](results/status.json), [validation](results/validation.json), [test](results/test.json), [forward](results/forward.json).
+Sources: [status](results/status.json), [validation](results/validation.json), [original test](results/test.json), [corrected replay](results/review_corrections.json), [forward](results/forward.json).
 ![Cumulative forward CLV and paper profit](results/forward.png)
 ![Forward calibration](results/calibration.png)
 <!-- RESULTS:END -->
@@ -38,7 +39,8 @@ Sources: [status](results/status.json), [validation](results/validation.json), [
 The research question is whether a pre-registered football model can obtain positive mean
 log closing-line value (CLV) on prices recorded before kickoff. Dixon–Coles, Elo and a
 market-anchored logistic blend are compared chronologically. There is no asserted edge.
-More matches do not imply independent observations; inference clusters by calendar date.
+More matches do not imply independent observations. This pilot has no validated CLV
+significance rule; calendar-date bootstrap endpoints are descriptive.
 
 ```mermaid
 flowchart LR
@@ -68,30 +70,36 @@ candidates and the frozen held-out result are reported above.
 ## Reproduce
 
 See the [runbook](docs/RUNBOOK.md), [registered protocol](PREREGISTRATION.md) and
-[iteration targets](ITERATIONS.md). The owner has authorized the local research split:
+[iteration targets](ITERATIONS.md). Historical authoring (download → features → candidates → selection → original tag →
+once-only test → parameter export) is complete. Normal clones must not repeat selection
+or replace registered reports. With the matching private cache and local research permission:
 
 ```sh
-make download                 # content-addressed cache and source audit
-make features                 # training/validation only
-make backtest                 # declared candidates; no test-season selection
-make select                   # validation log loss chooses the model
-# Commit the reviewed protocol/selection and create forward-v1 before opening the test.
-uv run cll features --stage test
-uv run cll backtest --stage test
-gh workflow run paper.yml --ref main
+uv sync --frozen
+make check test
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run cll replay \
+  --output-dir runs/reviewer-replay --rebuild-features
+# Compare runs/reviewer-replay/replay.json with results/review_corrections.json.
 make verify
-make report
 ```
 
-`forward-v1` freezes the strategy before the held-out evaluation. The prospective
-`forward-v1.1` amendment adds three exact club-name aliases and freezes the exported
-parameters before activation; `forward-v1.2` also fixes conservative retry accounting.
-The original tags and test result remain intact. No forecast formula, coefficients or bet
-rule were changed after seeing test metrics; the identity amendment is disclosed. See the explicit amendment in the protocol.
+Replay regenerates monthly DC/as-of Elo features, all declared validation predictions and
+the fixed selected test rule in an isolated directory. It does not reselect a model, mutate
+tags or overwrite registered artifacts. Row-level outputs remain ignored. Exact source-data
+replay requires the private cache matching the committed manifest; mutable URLs cannot
+recover a lost historical snapshot. `make select` is for the original pre-freeze authoring
+sequence only and intentionally refuses reselection. Validation and test commands now both
+refuse to overwrite registered result files.
 
-For a fresh historical reproduction, check out `forward-v1` before generating test features:
-that tagged tree predates `results/test.json`. Retain the private cache matching the manifest.
-The normal main-branch command refuses to overwrite the already evaluated test result.
+The original `forward-v1`, `forward-v1.1` and `forward-v1.2` tags are retained. The
+prospective **forward-v1.3** amendment repairs evidence/budget/settlement handling and
+withdraws the uncalibrated CLV significance rule before any forward observation. No fitted
+coefficient, forecast formula, selected threshold or staking parameter changed.
+[Corrected replay](results/review_corrections.json) preserves the original point estimates;
+[original test](results/test.json) remains historical evidence. Both synthetic-only inference
+candidates failed the predeclared calibration screen; this pilot reports **descriptive CLV,
+with no confirmatory rejection rule**. Sparse bootstrap endpoints are quantiles, not calibrated
+confidence limits. See the explicit amendment and failed experiments in the protocol.
 
 ![Validation and held-out calibration](results/historical_calibration.png)
 ![Selected historical paper results](results/historical_paths.png)
@@ -101,13 +109,16 @@ planning estimate of 23,821 bets for 10 log-CLV bp (one-sided 5%, 80% power). Tw
 cannot estimate power. The planned window is unlikely to establish a small edge for this
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
-Scheduled forecasts run hourly at minute 17 UTC for EPL and Championship; a separate
-scoring job starts only when results are due. Free fixture
+The workflow is configured hourly at minute 17 UTC for EPL and Championship; genuine
+scheduled execution has not yet been observed. A separate scoring job starts when results
+are due. Actual forecast, close and settlement receipts are separate pending acceptance checks. Free fixture
 discovery triggers league-wide EU/h2h requests only around decisions (23–25 hours before
 kickoff) or closing snapshots (15–75 minutes). **The closing line means the last observed
 pre-kickoff snapshot**, with bookmaker, source age and actual gap retained. Betfair EU is
 preferred; Pinnacle is the fixed fallback. A 400-credit cap and 100-credit provider reserve
-protect the 500-credit plan. [API costs](https://the-odds-api.com/liveapi/guides/v4/) define this budget. Missing windows/budget-limited coverage are never backfilled.
+protect the 500-credit plan. Each paid transmission first commits a reservation to the
+separate `api-budget` branch. An ambiguous request blocks further paid calls until manual
+reconciliation; a failed runner cannot erase reservations. Paid requests are not retried. [API costs](https://the-odds-api.com/liveapi/guides/v4/) define this budget. Missing windows/budget-limited coverage are never backfilled.
 Recent results cost two credits per league; at most one request per league/day when needed.
 Forward parameters are exported locally after freezing and stay fixed for v1. No hosted
 football-data download, historical row cache or retraining occurs. See the protocol for
@@ -121,8 +132,10 @@ is shared across the owner’s private repositories; it is not a separate allowa
 |---|---|---|---|
 | Historical row count / coverage | [data_quality.json](results/data_quality.json), [manifest](data/manifest.jsonl) | `cll download` (local only) | `c297fa0`; processed SHA in result |
 | All eight validation candidates | [validation.json](results/validation.json) | `cll features`; `cll backtest --stage validation` | `source_commit` = `c297fa0` |
-| Held-out scores, CLV, CI, P&L, DSR | [test.json](results/test.json) | `cll features --stage test`; `cll backtest --stage test` | `source_commit` = `7c16ca0`; original `forward-v1` |
-| Calibration bins, paths, paired loss CI | [historical_analysis.json](results/historical_analysis.json) | `cll research-report` (local saved predictions) | `source_commit` in result |
+| Original held-out scores, CLV quantiles, P&L, DSR arithmetic | [test.json](results/test.json) | `cll features --stage test`; `cll backtest --stage test` | `source_commit` = `7c16ca0`; original `forward-v1` |
+| Calibration bins, paths, paired loss quantiles | [historical_analysis.json](results/historical_analysis.json) | `cll research-report` (local saved predictions) | `source_commit` in result |
+| Corrected missingness, pending stakes, DSR guard, replay agreement | [review_corrections.json](results/review_corrections.json) | `cll replay --output-dir runs/full_replay --rebuild-features` | `source_commit` and implementation hashes in result |
+| Failed inference candidates | [candidate 1](results/null_calibration_candidate1.json), [candidate 2](results/null_calibration.json) | `python scripts/calibrate_inference.py` (see ITERATIONS for flags) | Source and implementation hashes in results |
 | Planning power / insufficiency | [power_analysis.json](results/power_analysis.json) | Extract selected `power` from validation/test reports | Same source commits as reports above |
 | Exact forward parameters / identity coverage | [fitted_model.json](config/fitted_model.json), [activation](results/forward_activation.json) | `cll prepare-forward`; exact identity check | `source_commit` and artifact SHA; frozen in `forward-v1.1` and `forward-v1.2` |
 | API availability / credits | [api_smoke.json](results/api_smoke.json), [usage](data/api_usage.json) | Client `/events` and `/odds` smoke checks | `c297fa0`; response hashes in API manifest |
@@ -134,7 +147,8 @@ is shared across the owner’s private repositories; it is not a separate allowa
 ## Limits and interpretation
 
 - The held-out point estimates do not beat the closing line. Two selected bets and two
-  dates give a coarse CLV interval, not reliable evidence of an edge. The near-market blend
+  dates do not support calibrated CLV inference. The original percentile endpoints are
+  descriptive only; neither synthetic HAC candidate passed the calibration screen. The near-market blend
   usually abstains; thousands of forecasts do not become thousands of independent bets.
   Empty forward plots show missing observations, not a zero-return experiment.
 - Two schema-previewed test fixtures are prospectively excluded from primary held-out
@@ -145,8 +159,9 @@ is shared across the owner’s private repositories; it is not a separate allowa
   price. Forward exchange paper P&L deducts 2% of winnings; liquidity, limits and slippage are unmodeled.
 - Raw CLV across B365 and AvgC can reflect different margins. De-vigged CLV and same-book
   closing CLV are secondary checks. Positive CLV alone cannot establish profitable execution.
-- Date clustering reduces effective sample size. Bootstrap intervals, power calculations,
-  DSR and calibration remain estimates with assumptions; no number of matches guarantees
+- Date clustering reduces effective sample size. Bootstrap quantiles and power calculations
+  remain descriptive with assumptions. DSR is NOT_ESTIMABLE below 30 nonzero return days
+  and 60 calendar days; its old arithmetic is retained only in source artifacts; no number of matches guarantees
   an edge. Lower-division/draw splits are descriptive, not another selection opportunity.
 - GitHub receipts bound when ledger content existed on GitHub. Hash chaining exposes edits
   against retained history; an owner can still delete history or workflows. Private evidence
