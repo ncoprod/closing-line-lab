@@ -1,0 +1,63 @@
+name: Paper research
+on:
+  schedule:
+    - cron: '7 1,7,10,19 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: paper-ledger
+  cancel-in-progress: false
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    outputs:
+      enabled: ${{ steps.permission.outputs.enabled }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: permission
+        run: |
+          python - <<'PY'
+          import json, os
+          p = json.load(open('config/data_permission.json'))
+          enabled = bool(p.get('evidence') and p.get('automated_collection') and p.get('model_training'))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f'enabled={str(enabled).lower()}\n')
+          print('Permission gate: ' + ('enabled' if enabled else 'BLOCKED_DATA_PERMISSION; no data requested'))
+          PY
+      - uses: astral-sh/setup-uv@v6
+        if: steps.permission.outputs.enabled == 'true'
+        with:
+          enable-cache: true
+      - if: steps.permission.outputs.enabled == 'true'
+        run: uv sync --frozen
+      - if: steps.permission.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          uv run cll forward
+          uv run cll publish
+  score:
+    needs: forecast
+    if: needs.forecast.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git pull --ff-only origin main
+          uv run cll score
+          uv run cll report
+          uv run cll publish --settlements-only

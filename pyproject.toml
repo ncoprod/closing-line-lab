@@ -1,0 +1,30 @@
+[project]
+name = "closing-line-lab"
+version = "0.1.0"
+description = "Pre-registered, auditable football forecasting research. Paper only."
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+authors = [{name = "Nicolas Coquelet"}]
+dependencies = [
+  "numpy>=2.1,<3", "pandas>=2.2,<3", "scipy>=1.14,<2",
+  "scikit-learn>=1.6,<2", "matplotlib>=3.9,<4",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "hypothesis>=6,<7", "ruff>=0.11,<1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+cll = "closing_line_lab.cli:main"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

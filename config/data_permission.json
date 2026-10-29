@@ -1,0 +1,9 @@
+{
+  "provider": "football-data.co.uk",
+  "automated_collection": false,
+  "model_training": false,
+  "redistribution": false,
+  "evidence": null,
+  "reviewed_at": "2026-10-29",
+  "terms_url": "https://football-data.co.uk/data.php"
+}

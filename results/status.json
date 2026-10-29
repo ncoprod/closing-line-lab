@@ -1,0 +1,10 @@
+{
+  "status": "BLOCKED_DATA_PERMISSION",
+  "real_data_matches": 0,
+  "forecasts": 0,
+  "paper_bets": 0,
+  "settled_bets": 0,
+  "backtest": "NOT_RUN",
+  "test_season": "UNOPENED",
+  "reason": "Provider permission for automated collection/training/redistribution is not established."
+}
