@@ -16,6 +16,7 @@ def test_permission_gate_precedes_network(monkeypatch, tmp_path):
 
 
 def test_training_permission_does_not_authorize_ledger_publication(monkeypatch, tmp_path):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     permission = tmp_path / "permission.json"
     permission.write_text(
         '{"local_private_research":true,"model_training":true,"evidence":"synthetic"}'

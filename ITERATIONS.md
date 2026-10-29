@@ -66,3 +66,8 @@ parameters for hosted inference. The API client was checked against an attribute
 sample and live responses, with quota headers, freshness checks and a strict budget.
 This iteration and all eight declared validation candidates count as trials. The held-out
 season remains unevaluated; its two predeclared exclusions remain in force.
+
+The first post-split CI run failed: a local-permission unit test inherited Actions' hosted
+runner environment. Its fixture now explicitly simulates local execution; a separate test
+continues to reject real hosted football-data access. This changes no research model.
+An additional ledger test rejects closing snapshots without their own on-time server receipt.

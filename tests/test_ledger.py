@@ -111,3 +111,41 @@ def test_valid_chain_cannot_hide_wrong_settlement_profit(tmp_path):
     )
     with pytest.raises(ValueError, match="profit does not replay"):
         verify_records([record, settlement], [receipt(record)])
+
+
+def test_closing_snapshot_needs_its_own_pre_kickoff_receipt(tmp_path):
+    path = tmp_path / "ledger"
+    original = append_event(forecast(), path)
+    closing = append_event(
+        {
+            "kind": "closing_snapshot",
+            "match_id": original["match_id"],
+            "forecast_hash": original["hash"],
+            "kickoff_utc": original["kickoff_utc"],
+            "updated_at": "2026-11-01T14:28:00+00:00",
+            "retrieved_at": "2026-11-01T14:29:00+00:00",
+            "recorded_at": "2026-11-01T14:30:00+00:00",
+            "prices": [2.0, 3.2, 4.2],
+            "snapshot_gap_minutes": 31.0,
+        },
+        path,
+    )
+    with pytest.raises(ValueError, match="receipt for closing"):
+        verify_records([original, closing], [receipt(original)])
+    with pytest.raises(ValueError, match="receipt for closing"):
+        verify_records(
+            [original, closing], [receipt(original), receipt(closing, original["kickoff_utc"])]
+        )
+    assert (
+        verify_records(
+            [original, closing], [receipt(original), receipt(closing, "2026-11-01T14:31:00+00:00")]
+        )["status"]
+        == "VERIFIED"
+    )
+    changed = deepcopy(closing)
+    changed["snapshot_gap_minutes"] = 1
+    changed["hash"] = digest({k: v for k, v in changed.items() if k != "hash"})
+    with pytest.raises(ValueError, match="gap does not replay"):
+        verify_records(
+            [original, changed], [receipt(original), receipt(changed, "2026-11-01T14:31:00+00:00")]
+        )
