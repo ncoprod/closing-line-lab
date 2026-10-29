@@ -1,0 +1,24 @@
+{
+  "source_commit": "bb51d7f48bb8387fd714421e03cc5b7583547bbc",
+  "checked_at": "2026-10-29T10:08:12.193933+00:00",
+  "checks": [
+    {
+      "command": "uv run ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff format --check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -q --junitxml=runs/tests.xml",
+      "exit_code": 0
+    }
+  ],
+  "tests": 27,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "data": "synthetic local test fixtures only",
+  "research_metrics": "NOT_RUN"
+}
