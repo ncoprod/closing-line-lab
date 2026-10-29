@@ -47,3 +47,7 @@ See `results/engineering.json` for the measured test counts. These fixes used sy
 only; no research metric improved or deteriorated because none was estimated. The first
 manual paper workflow succeeded through the permission gate; cron evidence is recorded
 separately in `results/actions_evidence.json`.
+
+Holdout correction: two test-season rows appeared during the initial schema preview.
+They were not used to fit or select a model. Their IDs were prospectively excluded from
+primary test metrics before any research fit; the full season is not claimed to be blinded.

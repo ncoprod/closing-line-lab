@@ -1,8 +1,23 @@
 {
   "version": "forward-v1",
-  "leagues": ["E0", "E1", "D1", "D2", "I1", "I2", "SP1", "SP2", "F1", "F2"],
+  "leagues": [
+    "E0",
+    "E1",
+    "D1",
+    "D2",
+    "I1",
+    "I2",
+    "SP1",
+    "SP2",
+    "F1",
+    "F2"
+  ],
   "first_season": 2012,
-  "validation_seasons": [2022, 2023, 2024],
+  "validation_seasons": [
+    2022,
+    2023,
+    2024
+  ],
   "test_season": 2025,
   "forward_start": "2026-10-29T00:00:00+00:00",
   "forward_end": "2027-01-29T00:00:00+00:00",
@@ -23,9 +38,13 @@
   "max_odds": 10.0,
   "kelly_fraction": 0.25,
   "stake_cap": 0.01,
-  "open_exposure_cap": 0.10,
+  "open_exposure_cap": 0.1,
   "min_lead_minutes": 30,
   "max_lead_hours": 96,
   "bootstrap_samples": 5000,
-  "seed": 20261029
+  "seed": 20261029,
+  "test_excluded_ids": [
+    "349f24de957d98b3272f623e",
+    "8c386056bd09cbfd334ac31c"
+  ]
 }

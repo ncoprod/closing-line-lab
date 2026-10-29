@@ -5,6 +5,6 @@
   "paper_bets": 0,
   "settled_bets": 0,
   "backtest": "NOT_RUN",
-  "test_season": "UNOPENED",
+  "test_season": "UNEVALUATED",
   "reason": "Provider permission for automated collection, training and redistribution is not established."
 }

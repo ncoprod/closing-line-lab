@@ -280,6 +280,8 @@ def run_backtest(stage):
             if stage == "validation"
             else predicted[predicted.season == cfg["test_season"]]
         )
+        if stage == "test":
+            predicted = predicted[~predicted.match_id.isin(cfg["test_excluded_ids"])]
         report, bets = evaluate(predicted, local)
         report.update({"trial_id": trial_id, "candidate": specification})
         reports.append(report)
@@ -314,6 +316,7 @@ def run_backtest(stage):
         "source_commit": git("rev-parse", "HEAD"),
         "data_sha": file_sha(PROCESSED),
         "trial_count": trial_count,
+        "predeclared_test_excluded_ids": cfg["test_excluded_ids"] if stage == "test" else [],
         "reports": reports,
         "warning": "Historical quote timing and availability are proxies, not execution proof",
     }

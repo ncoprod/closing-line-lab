@@ -1,5 +1,5 @@
 {
-  "source_commit": "5a3ffba77178a7f2dd33eca8da273c85274d7000",
+  "source_commit": "4c987e31d48db5eeee903688ac9476a2cace30f1",
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -23,5 +23,10 @@
   "power": {
     "status": "NOT_ESTIMABLE",
     "reason": "Need observed CLV across multiple dates"
+  },
+  "deflated_sharpe": {
+    "probability": null,
+    "trials": 1,
+    "reason": "insufficient variation"
   }
 }

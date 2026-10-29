@@ -10,8 +10,8 @@ from sklearn.calibration import calibration_curve
 
 from .common import ROOT, now_utc, read_json, strategy, write_json
 from .ledger import read_ledger, replay_account
-from .metrics import block_ci, power_analysis, scores
-from .research import git
+from .metrics import block_ci, deflated_sharpe, power_analysis, scores
+from .research import TRIALS, daily_returns, git
 
 
 def forward_tables(records):
@@ -35,6 +35,7 @@ def forward_tables(records):
                     "kickoff_utc": forecast["kickoff_utc"],
                     "block": forecast["kickoff_utc"][:10],
                     "recorded_at": row["recorded_at"],
+                    "settled_at": row["recorded_at"],
                     "log_clv": row["log_clv"],
                     "profit_units": row["profit_units"],
                     "stake_units": forecast["bet"]["stake_units"],
@@ -139,12 +140,60 @@ def generate():
             [r["outcome"] for r in resolved],
             devig([r["closing"] for r in resolved]),
         )
+    validation = ROOT / "results/validation.json"
+    trial_sharpes = (
+        [
+            r["deflated_sharpe"]["daily_sharpe"]
+            for r in read_json(validation)["reports"]
+            if "daily_sharpe" in r["deflated_sharpe"]
+        ]
+        if validation.exists()
+        else []
+    )
+    returns = (
+        daily_returns(
+            bets,
+            pd.Timestamp(forecasts[0]["decision_at"]).floor("D"),
+            pd.Timestamp(now_utc()).floor("D"),
+        )
+        if not bets.empty
+        else []
+    )
+    trial_count = len(TRIALS.read_text().splitlines()) if TRIALS.exists() else 0
+    report["deflated_sharpe"] = deflated_sharpe(returns, trial_sharpes, trial_count)
     write_json(ROOT / "results/forward.json", report)
     figures(bets, resolved)
     permission = read_json(ROOT / "config/data_permission.json")
-    enabled = all(permission.get(k) for k in ["automated_collection", "model_training", "evidence"])
+    enabled = all(
+        permission.get(k)
+        for k in ["automated_collection", "model_training", "ledger_publication", "evidence"]
+    )
     test_path = ROOT / "results/test.json"
     validation_path = ROOT / "results/validation.json"
+    write_json(
+        ROOT / "results/comparison.json",
+        {
+            "source_commit": report["source_commit"],
+            "test": read_json(test_path)["reports"][0] if test_path.exists() else None,
+            "forward": {
+                key: report[key]
+                for key in [
+                    "forecasts",
+                    "paper_bets",
+                    "settled_bets",
+                    "clv",
+                    "profit_units",
+                    "roi",
+                    "deflated_sharpe",
+                    "power",
+                ]
+            },
+            "status": "COMPARABLE"
+            if test_path.exists() and not bets.empty
+            else "NOT_COMPARABLE_YET",
+            "caveat": "Snapshot quotes do not establish executable prices.",
+        },
+    )
     status = {
         "status": "PERMITTED" if enabled else "BLOCKED_DATA_PERMISSION",
         "real_data_matches": read_json(ROOT / "results/data_quality.json")["matches"]
@@ -154,7 +203,7 @@ def generate():
         "paper_bets": report["paper_bets"],
         "settled_bets": len(bets),
         "backtest": "COMPLETE" if validation_path.exists() else "NOT_RUN",
-        "test_season": "EVALUATED_ONCE" if test_path.exists() else "UNOPENED",
+        "test_season": "EVALUATED_ONCE" if test_path.exists() else "UNEVALUATED",
         "reason": None
         if enabled
         else (

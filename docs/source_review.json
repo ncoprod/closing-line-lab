@@ -12,5 +12,11 @@
   "local_document_hashes": {
     "source-terms.html": "5888bdbe0334d79de71977de06b6b4a0c3f7402ac38c8b7bd08be1dff5d5b637",
     "source-notes.txt": "6ecd41a98ad2751372817e7e6f1709bfeb433c53dd9aeda330fd926a5471452d"
-  }
+  },
+  "test_schema_preview_rows": 2,
+  "test_preview_excluded_ids": [
+    "349f24de957d98b3272f623e",
+    "8c386056bd09cbfd334ac31c"
+  ],
+  "holdout_exception": "Two 2025/26 E0 schema-preview rows were displayed before protocol freeze. No fitting/selection used them. They are prospectively excluded from primary held-out metrics."
 }

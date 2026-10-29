@@ -70,6 +70,13 @@ once and preserve its predictions. Earlier test outcomes may enter later test *f
 strictly as-of, and forward training by the frozen expanding procedure. Test-season or
 forward aggregate results never choose a model, threshold, league or parameter.
 
+Holdout exception recorded before any fitting: the initial schema check displayed two
+2025/26 E0 match rows. Those rows were not used for selection or fitting. Their identifiers
+are prospectively excluded from the primary test metrics in `config/strategy.json` and
+recorded in `docs/source_review.json`. The remaining test targets are unevaluated; the full
+season must not be described as completely blinded. Their past results may enter later
+features by the same predeclared as-of procedure, just like other earlier test results.
+
 ## Paper selection and account
 
 At decision time choose the eligible side maximizing `p * B365_odds - 1`, with H/D/A as

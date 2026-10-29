@@ -1,0 +1,28 @@
+{
+  "source_commit": "4c987e31d48db5eeee903688ac9476a2cace30f1",
+  "test": null,
+  "forward": {
+    "forecasts": 0,
+    "paper_bets": 0,
+    "settled_bets": 0,
+    "clv": {
+      "mean": null,
+      "ci95": null,
+      "blocks": 0,
+      "observations": 0
+    },
+    "profit_units": 0.0,
+    "roi": null,
+    "deflated_sharpe": {
+      "probability": null,
+      "trials": 1,
+      "reason": "insufficient variation"
+    },
+    "power": {
+      "status": "NOT_ESTIMABLE",
+      "reason": "Need observed CLV across multiple dates"
+    }
+  },
+  "status": "NOT_COMPARABLE_YET",
+  "caveat": "Snapshot quotes do not establish executable prices."
+}

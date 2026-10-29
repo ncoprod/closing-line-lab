@@ -4,7 +4,7 @@
 
 <!-- RESULTS:START -->
 **0 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **BLOCKED_DATA_PERMISSION**. Validation: **NOT_RUN**. Test season: **UNOPENED**.
+Data status: **BLOCKED_DATA_PERMISSION**. Validation: **NOT_RUN**. Test season: **UNEVALUATED**.
 
 | Forward metric | Observed value |
 |---|---:|
@@ -86,6 +86,9 @@ workflow dispatch worked; it does **not** prove live data or paper forecasts wor
 
 - No real-data fit, held-out score, economic edge or live timing claim is established yet.
   Empty plots show missing observations; they are not a zero-return experiment.
+- Two schema-previewed test fixtures are prospectively excluded from primary held-out
+  metrics. No fitting or model selection used them; the full season is not fully blinded.
+  Exact identifiers and the exception are recorded in `docs/source_review.json`.
 - CSV prices are periodically captured snapshots. Historical decision times and result
   availability are proxies. Forward snapshots also do not prove an executable bookmaker
   price. No exchange commission, liquidity, account limits or slippage is modeled.
