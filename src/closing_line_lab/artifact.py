@@ -3,7 +3,16 @@
 import numpy as np
 import pandas as pd
 
-from .common import ROOT, digest, file_sha, now_utc, read_json, strategy, write_json
+from .common import (
+    REGISTRATION_TAG,
+    ROOT,
+    digest,
+    file_sha,
+    now_utc,
+    read_json,
+    strategy,
+    write_json,
+)
 from .data import PROCESSED, load_matches, require_permission
 from .metrics import devig
 from .models import SIDES, DixonColes, Elo, OffsetBlend, as_of, probability_matrix
@@ -40,7 +49,7 @@ def prepare():
     )
     result = {
         "source_commit": git("rev-parse", "HEAD"),
-        "registration_commit": git("rev-list", "-n", "1", "forward-v1"),
+        "registration_commit": git("rev-list", "-n", "1", REGISTRATION_TAG),
         "strategy_sha": digest(cfg),
         "candidate": selection["candidate"],
         "trained_at": cutoff.isoformat(),

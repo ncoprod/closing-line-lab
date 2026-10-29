@@ -33,7 +33,7 @@ BLAS at one thread on the shared machine. These fits do not require heavy-ML loc
 ## Hosted collection
 
 The owner supplies ODDS_API_KEY as a GitHub Actions secret. Never print it or put it in
-command arguments. The hourly `:17` UTC job first checks key, tag and model availability.
+command arguments. The hourly `:17` UTC job first checks key, active v1.1 runtime tag and model availability.
 It never downloads, restores or trains on football-data rows. Complete API responses are
 not committed. API hashes, sanitized endpoint parameters and quota headers are retained.
 

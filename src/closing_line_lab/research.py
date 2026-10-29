@@ -4,7 +4,16 @@ import subprocess
 import numpy as np
 import pandas as pd
 
-from .common import ROOT, digest, file_sha, now_utc, read_json, strategy, write_json
+from .common import (
+    REGISTRATION_TAG,
+    ROOT,
+    digest,
+    file_sha,
+    now_utc,
+    read_json,
+    strategy,
+    write_json,
+)
 from .data import PROCESSED, load_matches, require_permission
 from .metrics import block_ci, deflated_sharpe, devig, power_analysis, scores
 from .models import SIDES, OffsetBlend, make_features, probability_matrix
@@ -346,15 +355,15 @@ def select():
 def assert_frozen():
     cfg = strategy()
     selection = read_json(ROOT / "results/selection.json")
-    frozen_config = git("show", "forward-v1:config/strategy.json")
-    frozen_selection = git("show", "forward-v1:results/selection.json")
+    frozen_config = git("show", f"{REGISTRATION_TAG}:config/strategy.json")
+    frozen_selection = git("show", f"{REGISTRATION_TAG}:results/selection.json")
     import json
 
     if (
         digest(json.loads(frozen_config)) != digest(cfg)
         or json.loads(frozen_selection) != selection
     ):
-        raise RuntimeError("Configuration/selection differs from forward-v1")
+        raise RuntimeError("Configuration/selection differs from registered tag")
     if selection["strategy_sha"] != digest(cfg):
         raise RuntimeError("Selection was made under a different strategy")
     if selection["validation_sha"] != file_sha(ROOT / "results/validation.json"):
@@ -362,7 +371,7 @@ def assert_frozen():
     # Implementation files are frozen too; a post-tag model edit requires a new protocol.
     changed = git(
         "diff",
-        "forward-v1",
+        REGISTRATION_TAG,
         "--",
         *[
             str(path.relative_to(ROOT))
@@ -372,6 +381,7 @@ def assert_frozen():
         "config/strategy.json",
         "config/forward.json",
         "config/team_aliases.json",
+        "config/fitted_model.json",
     )
     if changed:
         raise RuntimeError("Model or bet rule changed since pre-registration")

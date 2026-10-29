@@ -66,7 +66,7 @@ multinomial logistic blend anchored to market probabilities. Validation feature 
 
 ## Reproduce
 
-See the [runbook](docs/RUNBOOK.md), [draft protocol](PREREGISTRATION.md) and
+See the [runbook](docs/RUNBOOK.md), [registered protocol](PREREGISTRATION.md) and
 [iteration targets](ITERATIONS.md). The owner has authorized the local research split:
 
 ```sh
@@ -82,36 +82,58 @@ make verify
 make report
 ```
 
-Until selection is measured and committed, `forward-v1` is intentionally absent. It would
-be misleading to call an unvalidated, unselected runtime a frozen research result.
+`forward-v1` freezes the strategy before the held-out evaluation. The prospective
+`forward-v1.1` amendment adds three exact club-name aliases and freezes the exported
+parameters before activation; the original tag/test result remain intact. No forecast formula, coefficients or bet
+rule were changed after seeing test metrics; the identity amendment is disclosed. See the explicit amendment in the protocol.
+
+For a fresh historical reproduction, check out `forward-v1` before generating test features:
+that tagged tree predates `results/test.json`. Retain the private cache matching the manifest.
+The normal main-branch command refuses to overwrite the already evaluated test result.
+
+![Validation and held-out calibration](results/historical_calibration.png)
+![Selected historical paper results](results/historical_paths.png)
+
+[Power analysis](results/power_analysis.json): the four validation bets give an unstable
+planning estimate of 23,821 bets for 10 log-CLV bp (one-sided 5%, 80% power). Two test bets
+cannot estimate power. The planned window is unlikely to establish a small edge for this
+sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 Scheduled Actions run hourly at minute 17 UTC for EPL and Championship. Free fixture
 discovery triggers league-wide EU/h2h requests only around decisions (23–25 hours before
 kickoff) or closing snapshots (15–75 minutes). **The closing line means the last observed
 pre-kickoff snapshot**, with bookmaker, source age and actual gap retained. Betfair EU is
 preferred; Pinnacle is the fixed fallback. A 400-credit cap and 100-credit provider reserve
-protect the 500-credit plan. Missing windows/budget-limited coverage are never backfilled.
+protect the 500-credit plan. [API costs](https://the-odds-api.com/liveapi/guides/v4/) define this budget. Missing windows/budget-limited coverage are never backfilled.
 Recent results cost two credits per league; at most one request per league/day when needed.
 Forward parameters are exported locally after freezing and stay fixed for v1. No hosted
 football-data download, historical row cache or retraining occurs. See the protocol for
-source shifts, model drift, commission and the Actions-minute planning assumptions.
+source shifts, model drift, commission and the Actions-minute planning assumptions. The
+[GitHub Free allowance](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
+is shared across the owner’s private repositories; it is not a separate allowance per repo.
 
 ## Provenance
 
 | Number / claim | Result file | Command | Commit |
 |---|---|---|---|
-| Observed research counts / blocked status | `results/status.json` | `uv run cll report` | Use `git log -1 --format=%H -- results/status.json` |
-| Source restrictions and schema | `DATA_NOTICE.md` | Source documentation review, 2026-10-29 | Use `git log -1 --format=%H -- DATA_NOTICE.md` |
-| Local test results and source revision | `results/engineering.json` | `make check test` | `source_commit` in the result file |
-| GitHub CI, audit and scheduled-run evidence | `results/actions_evidence.json` | `uv run cll actions-evidence` | Each run's `headSha` and server URL |
-| Future validation/test estimates | `results/validation.json`, `results/test.json` (absent until run) | `cll backtest --stage validation/test` | `source_commit` in each result |
-| Backtest vs forward availability | `results/comparison.json` | `uv run cll report` | `source_commit` in the result file |
-| Forward CLV, paper profit and power | `results/forward.json` | `uv run cll report` | `source_commit` in the result file |
+| Historical row count / coverage | [data_quality.json](results/data_quality.json), [manifest](data/manifest.jsonl) | `cll download` (local only) | `c297fa0`; processed SHA in result |
+| All eight validation candidates | [validation.json](results/validation.json) | `cll features`; `cll backtest --stage validation` | `source_commit` = `c297fa0` |
+| Held-out scores, CLV, CI, P&L, DSR | [test.json](results/test.json) | `cll features --stage test`; `cll backtest --stage test` | `source_commit` = `7c16ca0`; original `forward-v1` |
+| Calibration bins, paths, paired loss CI | [historical_analysis.json](results/historical_analysis.json) | `cll research-report` (local saved predictions) | `source_commit` in result |
+| Planning power / insufficiency | [power_analysis.json](results/power_analysis.json) | Extract selected `power` from validation/test reports | Same source commits as reports above |
+| Exact forward parameters / identity coverage | [fitted_model.json](config/fitted_model.json), [activation](results/forward_activation.json) | `cll prepare-forward`; exact identity check | `source_commit` and artifact SHA; frozen in `forward-v1.1` |
+| API availability / credits | [api_smoke.json](results/api_smoke.json), [usage](data/api_usage.json) | Client `/events` and `/odds` smoke checks | `c297fa0`; response hashes in API manifest |
+| Forward counts, CLV, P&L, gap/benchmark mix | [forward.json](results/forward.json) | `cll report` | `source_commit` in each result; ledger links runtime/registration SHAs |
+| Backtest vs forward | [comparison.json](results/comparison.json) | `cll report` | `source_commit` in result |
+| CI, audits, genuine schedule events | [actions_evidence.json](results/actions_evidence.json) | `cll actions-evidence`; `make verify` | Each run's `headSha`, server time and URL |
+| Required tests / code checks | [engineering.json](results/engineering.json) | `make check test` | Source revision and environment in result |
 
 ## Limits and interpretation
 
-- No held-out score, economic edge or live forecast timing claim is established yet.
-  Empty plots show missing observations; they are not a zero-return experiment.
+- The held-out point estimates do not beat the closing line. Two selected bets and two
+  dates give a coarse CLV interval, not reliable evidence of an edge. The near-market blend
+  usually abstains; thousands of forecasts do not become thousands of independent bets.
+  Empty forward plots show missing observations, not a zero-return experiment.
 - Two schema-previewed test fixtures are prospectively excluded from primary held-out
   metrics. No fitting or model selection used them; the full season is not fully blinded.
   Exact identifiers and the exception are recorded in `docs/source_review.json`.

@@ -8,7 +8,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sklearn.calibration import calibration_curve
 
-from .common import ROOT, now_utc, read_json, strategy, write_json
+from .common import REGISTRATION_TAG, ROOT, now_utc, read_json, strategy, write_json
 from .ledger import read_ledger, replay_account
 from .metrics import block_ci, deflated_sharpe, power_analysis, scores
 from .research import TRIALS, daily_returns, git
@@ -141,6 +141,25 @@ def generate():
         if not bets.empty
         else power_analysis([], []),
     }
+    closes = [r for r in records if r["kind"] == "closing_snapshot"]
+    report["closing_snapshots"] = len(closes)
+    report["closing_benchmark_counts"] = {
+        book: sum(r["bookmaker"] == book for r in closes)
+        for book in sorted({r["bookmaker"] for r in closes})
+    }
+    report["closing_gap_minutes"] = (
+        {
+            "min": min(r["snapshot_gap_minutes"] for r in closes),
+            "max": max(r["snapshot_gap_minutes"] for r in closes),
+            "mean": float(np.mean([r["snapshot_gap_minutes"] for r in closes])),
+        }
+        if closes
+        else None
+    )
+    usage = ROOT / "data/api_usage.json"
+    report["api_budget"] = read_json(usage) if usage.exists() else None
+    capture = ROOT / "results/latest_forward_run.json"
+    report["latest_capture"] = read_json(capture) if capture.exists() else None
     if resolved:
         from .metrics import devig
 
@@ -172,7 +191,9 @@ def generate():
     report["deflated_sharpe"] = deflated_sharpe(returns, trial_sharpes, trial_count)
     write_json(ROOT / "results/forward.json", report)
     figures(bets, resolved)
-    enabled = (ROOT / "config/fitted_model.json").exists() and bool(git("tag", "-l", "forward-v1"))
+    enabled = (ROOT / "config/fitted_model.json").exists() and bool(
+        git("tag", "-l", REGISTRATION_TAG)
+    )
     test_path = ROOT / "results/test.json"
     validation_path = ROOT / "results/validation.json"
     write_json(

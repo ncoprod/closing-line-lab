@@ -162,3 +162,19 @@ cluster design effect floored at one, for 5/10/25/50/100 log-CLV basis points. W
 observations report NOT_ESTIMABLE. The primary two-sided 95% lower-CI rule requires more
 power. Compare historical vs forward with coverage, source, cadence and frozen-model drift
 explicit. Publish a positive, negative or inconclusive result without changing the protocol.
+
+## Prospective identity amendment — `forward-v1.1`
+
+Before any forward forecast, a coverage check found three exact API/football-data name
+differences: Bolton Wanderers → Bolton, Cardiff City → Cardiff, Lincoln City → Lincoln.
+Add those aliases only. No league, forecast formula, parameter, staking rule, threshold,
+quote window or benchmark priority changes. No test re-evaluation or outcome-based tuning.
+The model artifact SHA remains the one produced under the original v1 procedure.
+
+The immutable `forward-v1` tag remains the original pre-test registration. The separate
+annotated `forward-v1.1` tag freezes these identity corrections, the active tag reference
+and exported parameter artifact before forward recording. Test metrics belong to original
+v1 and are not relabeled as an untouched test of the amended runtime. Forecast records
+name the active registration commit. The verifier's scientific-file comparison now uses
+that active tag and also freezes the parameter artifact. This is an explicit prospective
+amendment, not a moved tag or an invisible post-test model change.

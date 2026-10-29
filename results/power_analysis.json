@@ -1,0 +1,25 @@
+{
+  "primary_hypothesis": "mean log CLV > 0",
+  "selected_validation": {
+    "bets": 4,
+    "status": "ESTIMATED",
+    "alpha_one_sided": 0.05,
+    "power": 0.8,
+    "clv_sd": 0.062071353171463305,
+    "design_effect": 1.0,
+    "required_bets": {
+      "5": 95282,
+      "10": 23821,
+      "25": 3812,
+      "50": 953,
+      "100": 239
+    },
+    "assumption": "normal approximation; historical date clustering persists"
+  },
+  "held_out_test": {
+    "bets": 2,
+    "status": "NOT_ESTIMABLE",
+    "reason": "Need observed CLV across multiple dates"
+  },
+  "warning": "Only four validation and two held-out bets. The variance/design-effect estimates are too unstable to claim a reliable sample-size requirement. Forward planning will be updated descriptively without changing v1."
+}

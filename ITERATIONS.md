@@ -99,3 +99,12 @@ The close scores better and no positive CLV is established. Two dates do not sup
 power estimation; the bootstrap CI is extremely coarse. These results are final v1 evidence,
 not inputs to another threshold/model search. The test report refuses overwrite.
 The registry now has 11 entries, conservatively counting this fixed test evaluation.
+
+## Prospective engineering amendment — club identifiers
+
+Initial live coverage: all 20 EPL team names mapped; three of 24 Championship team names
+did not. This check should have preceded the original tag. Before the first forward record,
+add the three exact identity aliases in a separately tagged v1.1 amendment, retaining the
+original v1 tag and test results. No refit, test rerun, bet-rule change or metric selection.
+The parameter artifact is unchanged and is now explicitly frozen by the runtime tag too.
+This engineering correction is conservatively logged as an additional iteration/trial.

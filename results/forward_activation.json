@@ -1,8 +1,11 @@
 {
-  "status": "PARAMETERS_READY",
+  "status": "IDENTITY_AMENDMENT_READY",
   "model_artifact_sha": "9bf8b3928a8a547cd3b496e8a084b1f656aa00fbb1fe27b0e43c0830cdfb05d5",
   "trained_at": "2026-10-29T12:55:33.766465+00:00",
-  "coverage_check": [
+  "runtime_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "registration_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "first_eligible_forecast_not_backfilled": true,
+  "coverage_check_before_amendment": [
     {
       "sport": "soccer_epl",
       "teams": 20,
@@ -18,7 +21,18 @@
       ]
     }
   ],
-  "runtime_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
-  "registration_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
-  "first_eligible_forecast_not_backfilled": true
+  "coverage_check": [
+    {
+      "sport": "soccer_epl",
+      "teams": 20,
+      "unmapped_teams": []
+    },
+    {
+      "sport": "soccer_efl_champ",
+      "teams": 24,
+      "unmapped_teams": []
+    }
+  ],
+  "runtime_tag": "forward-v1.1",
+  "original_test_registration_tag": "forward-v1"
 }

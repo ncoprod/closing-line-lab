@@ -77,6 +77,13 @@ def main():
             )
         print(json.dumps({"status": "BLOCKED_DATA_PERMISSION", "reason": str(error)}))
         sys.exit(2)
+    if args.command in ("forward", "score"):
+        from .common import ROOT, now_utc, write_json
+
+        write_json(
+            ROOT / f"results/latest_{args.command}_run.json",
+            {"checked_at": now_utc().isoformat(), **result},
+        )
     print(json.dumps(result, indent=2, allow_nan=False))
 
 

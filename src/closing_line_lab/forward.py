@@ -4,7 +4,16 @@ from datetime import timedelta
 import numpy as np
 
 from .artifact import ARTIFACT, predict
-from .common import ROOT, digest, now_utc, read_json, strategy, timestamp, write_json
+from .common import (
+    REGISTRATION_TAG,
+    ROOT,
+    digest,
+    now_utc,
+    read_json,
+    strategy,
+    timestamp,
+    write_json,
+)
 from .ledger import LEDGER, REPO, append_event, read_ledger, replay_account, verify
 from .metrics import clv, devig
 from .odds import BudgetExhausted, OddsClient, forward_config, quote
@@ -67,7 +76,7 @@ def record_forecast(event, observed, entry, cfg, fc, artifact):
             "strategy_sha": digest(strategy()),
             "model_artifact_sha": artifact["artifact_sha"],
             "runtime_commit": git("rev-parse", "HEAD"),
-            "registration_commit": git("rev-list", "-n", "1", "forward-v1"),
+            "registration_commit": git("rev-list", "-n", "1", REGISTRATION_TAG),
             "fixture_sha": entry["sha256"],
             "decision_gap_minutes": (timestamp(event["commence_time"]) - decision).total_seconds()
             / 60,
