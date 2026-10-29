@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-29T15:22:57.640456+00:00",
+  "source_commit": "6f783c13aeba840a05dcdac209536035e6c13ccd",
+  "branch": "api-budget",
+  "path": "data/api_reservations.json",
+  "blob_sha": "83d35d87e57d69ff4d7ac1677c6097295919dc92",
+  "reserved_month_credits": {
+    "2026-10": 2
+  },
+  "remaining": 498,
+  "pending": null,
+  "status": "INITIALIZED_AND_READ_BACK",
+  "note": "No paid call made to test durability; runner-loss cases use synthetic transport tests."
+}

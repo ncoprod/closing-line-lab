@@ -1,23 +1,23 @@
 {
-  "source_commit": "786965347046a2218bdb12086334bf28ea65739c",
+  "source_commit": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
   "checks": [
     {
       "command": "make check test",
       "exit_code": 0,
       "environment": "macOS arm64 / Python 3.12",
-      "evidence_log": "runs/report_checks.log"
+      "evidence_log": "runs/review_all_tests.log"
     }
   ],
-  "tests": 38,
+  "tests": 59,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "data": "synthetic fixtures and attributed documentation transport sample; no research results inferred from tests",
-  "checked_at": "2026-10-29T13:27:32.979203+00:00",
+  "checked_at": "2026-10-29T15:22:57.700806+00:00",
+  "data": "Synthetic transport/failure cases and local unit properties; no market inference from tests",
   "ci": {
-    "run_id": 40882025897,
+    "run_id": 40900469164,
     "conclusion": "success",
-    "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40882025897",
-    "head_sha": "786965347046a2218bdb12086334bf28ea65739c"
+    "head_sha": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
+    "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40900469164"
   }
 }

@@ -1,12 +1,12 @@
 {
-  "source_commit": "d4a115962222ce58fdb0233ef252cb0e10591303",
+  "source_commit": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
   "data_sha256": "833b27f3b8fdd2924af1406e2594cd62f0bdd1e30a9673e49fd613de319f0311",
   "implementation_sha256": {
     "src/closing_line_lab/__init__.py": "4652ae3c6eaac501b674e43cdb460d80fd1d7927588d0423ebf67ed11531ed19",
     "src/closing_line_lab/artifact.py": "1c03a68d1ccf92dfa2730cc987f879274352c40192f28d1e1ba01fbaef99e793",
     "src/closing_line_lab/budget.py": "f33ec6728702ee0db9e27271ab2d66dd3ecd5c87141d9147e6933859fe1e6dd8",
     "src/closing_line_lab/cli.py": "88af5a3cfbaaafbedede277d18c23dda0daa60b87c7052e6094d456a25a6ea3a",
-    "src/closing_line_lab/common.py": "aed1cf1b3e7eafcbae889b1b085619c22161858f09b14d1d3cb3c529cfef133d",
+    "src/closing_line_lab/common.py": "c2de824eefecc2cd95cbda050719efaf40ee4b219ff61e3958ad56e58be79215",
     "src/closing_line_lab/data.py": "602070fc9a36e53a9b0fef11d1159c305a7311de5021c554947806a2ba427630",
     "src/closing_line_lab/forward.py": "12795a5276a173e87250893598065e731769852bb920b0bccc6f256b716acaa0",
     "src/closing_line_lab/ledger.py": "e74851ca3c8e42dc5c61134b4a90a583d3eb839613fa8325f93ec5ca60fc6e85",
@@ -14,7 +14,7 @@
     "src/closing_line_lab/models.py": "78cc4994822b2cbcd3831b6813d9d0c648eeae892d0d6a0c197af37c50f16a5a",
     "src/closing_line_lab/odds.py": "298914d4d2e55aa6f42df76bc8677fe285a3acebf3f5cdec0a9d36ed5c07151d",
     "src/closing_line_lab/replay.py": "2fe9d693175fc72d52a7cb2ab829f7347b5e05b488cdcc8230c5109df65b857e",
-    "src/closing_line_lab/report.py": "3f17d2e98819316e1c1cac958b1d49cab0a31ec3890ab70cfd824c7bd4f9f362",
+    "src/closing_line_lab/report.py": "576fb3c7671fbf6009b7a44472f7e00b5b1103b8a9dbfb6ba9ba2353b42abc18",
     "src/closing_line_lab/research.py": "0e360a20ddc830d063033093644bff845b46a72bee8df611773d615c101034fa",
     "src/closing_line_lab/security.py": "7a0ba1cd9ba48c1f248d7bbfdb9fed59d84fe5082a6146658463598756f2f628"
   },

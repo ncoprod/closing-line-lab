@@ -214,15 +214,15 @@ identify the fixes (the prospective v1.3 tag resolves to the exact correction co
 | Finding | Disposition / verification | Fix commit |
 |---|---|---|
 | 1 MAJOR, closing evidence | Fixed: mandatory latest receipted snapshot link; replay metadata and secondary CLV; absent/null-link attacks rejected; no-close P&L allowed | `d4a1159` |
-| 2 MAJOR, bootstrap evidence | Fixed: old quantiles labeled descriptive; both failed synthetic candidates retained; prospective v1.3 disables confirmation for all sample sizes | `forward-v1.3` |
-| 3 MAJOR, lost budget reservations | Fixed: remote CAS journal commits before HTTP; uncertain pending state blocks paid calls across fresh runners; first-league success/second failure and no-journal/no-HTTP tests | `forward-v1.3` |
+| 2 MAJOR, bootstrap evidence | Fixed: old quantiles labeled descriptive; both failed synthetic candidates retained; prospective v1.3 disables confirmation for all sample sizes | `8b59f2a` (`forward-v1.3`) |
+| 3 MAJOR, lost budget reservations | Fixed: remote CAS journal commits before HTTP; uncertain pending state blocks paid calls across fresh runners; first-league success/second failure and no-journal/no-HTTP tests | `8b59f2a` (`forward-v1.3`) |
 | 4 MAJOR, end-window close | Fixed: decision-time inclusion; existing forecasts still close after end; boundary integration test spans final decision, close and settlement | `d4a1159` |
 | 5 MAJOR, unresolved loss | Fixed: pending exposure retained before subsequent decisions; no realized loss/ROI/settled CLV; exposure-cap regression | `d4a1159` |
-| 6 MINOR, reproduction | Fixed: isolated full-feature replay; no reselection or registered-file overwrite; validation guard regression | `forward-v1.3` |
-| 7 MINOR, sparse DSR | Fixed: require 30 nonzero / 60 calendar days, expose counts, hide probability below threshold; preserve original arithmetic | `forward-v1.3` |
-| 8 MINOR, missingness label | Fixed: price/label/union separated, frozen original preserved, corrected companion + independent missingness tests | `d4a1159`, `forward-v1.3` |
-| 9 MINOR, scheduler claim | Fixed: configured versus observed wording; schedule and actual receipt acceptance remain separate pending checks | `forward-v1.3` |
-| 10 MINOR, secret scan | Fixed staged value patterns and all-reachable-history scan. Partially disagreed: ordinary JSON member fixture restoration conflicts with the owner's explicit mandatory legacy scan; retain escaped example member names and the exact legacy scan alongside stronger value detection | `forward-v1.3` |
+| 6 MINOR, reproduction | Fixed: isolated full-feature replay; no reselection or registered-file overwrite; validation guard regression | `8b59f2a` (`forward-v1.3`) |
+| 7 MINOR, sparse DSR | Fixed: require 30 nonzero / 60 calendar days, expose counts, hide probability below threshold; preserve original arithmetic | `8b59f2a` (`forward-v1.3`) |
+| 8 MINOR, missingness label | Fixed: price/label/union separated, frozen original preserved, corrected companion + independent missingness tests | `d4a1159`, `8b59f2a` (`forward-v1.3`) |
+| 9 MINOR, scheduler claim | Fixed: configured versus observed wording; schedule and actual receipt acceptance remain separate pending checks | `8b59f2a` (`forward-v1.3`) |
+| 10 MINOR, secret scan | Fixed staged value patterns and all-reachable-history scan. Partially disagreed: ordinary JSON member fixture restoration conflicts with the owner's explicit mandatory legacy scan; retain escaped example member names and the exact legacy scan alongside stronger value detection | `8b59f2a` (`forward-v1.3`) |
 
 The broad legacy false positive is retained solely because the owner explicitly requires that
 exact scan before every commit. Value patterns additionally cover NVIDIA/Kaggle/OpenAI,
@@ -235,3 +235,11 @@ restricting that check to validation restored the intended holdout error without
 in a synthetic directory. No experiment result was changed by this test-harness correction.
 The full-history value scan is clean. Frozen validation/test/selection/parameters remain
 byte-identical to v1.1; only the correction companion carries revised reporting semantics.
+
+Review completion: v1.3 resolves to `8b59f2a755a99fc3bc8399c3ef944002a0681cb8`.
+The frozen-source full-feature replay reproduces all original headline values, maximum
+probability deviation 1.1102230246251565e-16. No original test/validation or parameter bytes
+changed. CI 40900469164 and audit 40900469115 pass at that commit. The remote budget journal
+was initialized from the two prior smoke credits and read back (498 remaining, no pending
+reservation). The workflow is re-enabled; manual run 40900625519 passes free fixture
+discovery with zero forecasts. This is not genuine schedule or live receipt acceptance.
