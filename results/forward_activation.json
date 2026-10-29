@@ -1,8 +1,8 @@
 {
-  "status": "IDENTITY_AMENDMENT_READY",
+  "status": "LIVE_API_READY_AWAITING_FIRST_ELIGIBLE_WINDOW",
   "model_artifact_sha": "9bf8b3928a8a547cd3b496e8a084b1f656aa00fbb1fe27b0e43c0830cdfb05d5",
   "trained_at": "2026-10-29T12:55:33.766465+00:00",
-  "runtime_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "runtime_commit": "56ee1c6d790a369cb4bb80d59d587b29cf671dd5",
   "registration_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
   "first_eligible_forecast_not_backfilled": true,
   "coverage_check_before_amendment": [
@@ -33,6 +33,14 @@
       "unmapped_teams": []
     }
   ],
-  "runtime_tag": "forward-v1.1",
-  "original_test_registration_tag": "forward-v1"
+  "runtime_tag": "forward-v1.2",
+  "original_test_registration_tag": "forward-v1",
+  "next_decision_window": {
+    "opens_utc": "2026-10-29T19:00:00+00:00",
+    "closes_utc": "2026-10-29T21:00:00+00:00",
+    "kickoff_utc": "2026-10-30T20:00:00Z",
+    "source_retrieved_at": "2026-10-29T13:09:25.225168+00:00",
+    "source_sha256": "d00a85f6cde02ea1ead98316341713ae671ce0c3451b9ae23451cf00fd5d3179",
+    "note": "Schedule projection only; no odds or forecast acquired; kickoff may change."
+  }
 }

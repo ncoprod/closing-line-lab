@@ -332,8 +332,8 @@ def actions_evidence():
             r["event"] == "schedule" and r["conclusion"] == "success" for r in runs
         ),
         "note": (
-            "A readiness-gated schedule success proves scheduling only; "
-            "no data forecast was executed."
+            "The latest 50 runs are shown. Run success alone is not proof of an on-time "
+            "forecast; see ledger verification and actual forecast counts."
         ),
     }
     write_json(ROOT / "results/actions_evidence.json", evidence)

@@ -5,12 +5,12 @@ of a profitable strategy; a well-measured negative result is useful research.
 
 | Target | Threshold | Evidence now |
 |---|---|---|
-| Validation outcome log loss vs closing | gap ≤ 0.01 nats, on identical eligible matches | NOT_RUN: source permission |
-| Held-out CLV estimate | report mean, 95% date-block CI, missingness and count; no positivity requirement | UNEVALUATED |
+| Validation outcome log loss vs closing | gap ≤ 0.01 nats, on identical eligible matches | MET: 0.002929470706031445; `results/validation.json` |
+| Held-out CLV estimate | report mean, 95% date-block CI, missingness and count; no positivity requirement | MET: negative/inconclusive, two bets; `results/test.json`, `results/test_coverage.json` |
 | Primary forward hypothesis | lower 95% CLV CI endpoint > 0 | NOT_ESTIMABLE: no bets |
-| Forward pipeline on GitHub | real forecast pushed and server-receipt verified before kickoff | NOT_RUN: permission and freeze |
-| Scheduled execution | at least one `event=schedule` run succeeds | Check `results/actions_evidence.json`; gated runs only prove scheduling |
-| Code verification | ruff and required tests green on GitHub | CI run URL in actions evidence |
+| Forward pipeline on GitHub | real forecast pushed and server-receipt verified before kickoff | LIVE API workflow passes; first eligible quote window has not opened; no timing claim yet |
+| Scheduled execution | at least one `event=schedule` run succeeds | PENDING: active default-branch cron; no genuine scheduled run observed in `results/actions_evidence.json` |
+| Code verification | ruff and required tests green on GitHub | MET: 37 tests; `results/engineering.json` and CI run URLs |
 
 For research iterations: run validation → measure → diagnose → make one focused change
 on training/validation only → re-run. Stop when the calibration target is met or after two
@@ -128,3 +128,19 @@ that reserve. Prospectively fix reservation of both balances, add a failing-requ
 test, and retain earlier tags as v1.2 freezes this operational correction. No real API
 failure or overspend occurred. No model/refit/test re-evaluation. Log this conservatively
 as another engineering trial; no performance improvement is claimed.
+
+## Delivery status after the interrupted run
+
+All completed download/feature stages were reused. No killed fit needs restarting.
+Scientific iteration stopped because the predeclared calibration target was met, with no
+positive edge established. The trial registry has 13 entries including the held-out run
+and two prospective engineering amendments; the original test DSR retains its 11-trial
+count at evaluation, while subsequent forward reporting uses the full current registry.
+
+The hourly workflow has successfully queried live fixture discovery, without paid odds
+requests outside the registered windows. This does not meet the real-forecast timing
+target: the ledger is still empty. The prospective observation window and final CLV
+analysis remain pending; no extra observations or profitable result are invented.
+The default-branch workflow is active, but no genuine `schedule` event has yet appeared.
+Manual dispatches are retained as manual evidence. Schedules are best effort and can be
+delayed or dropped; see [GitHub documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).

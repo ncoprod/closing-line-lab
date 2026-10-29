@@ -1,17 +1,23 @@
 {
-  "source_commit": "cf5b5aa",
+  "source_commit": "56ee1c6d790a369cb4bb80d59d587b29cf671dd5",
   "checks": [
     {
       "command": "make check test",
       "exit_code": 0,
       "environment": "macOS arm64 / Python 3.12",
-      "evidence_log": "runs/amendment_checks.log"
+      "evidence_log": "runs/final_checks.log"
     }
   ],
-  "tests": 36,
+  "tests": 37,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
   "data": "synthetic fixtures and attributed documentation transport sample; no research results inferred from tests",
-  "checked_at": "2026-10-29T13:03:16.937210+00:00"
+  "checked_at": "2026-10-29T13:21:31.185903+00:00",
+  "ci": {
+    "run_id": 40879953070,
+    "conclusion": "success",
+    "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40879953070",
+    "head_sha": "56ee1c6d790a369cb4bb80d59d587b29cf671dd5"
+  }
 }

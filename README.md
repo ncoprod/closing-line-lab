@@ -62,7 +62,8 @@ not verified opening quotes; the provider's stale Pinnacle fields are excluded.
 
 Python 3.12 and uv: `make install`, `make check test`, `make verify`.
 The implementation includes Dixon–Coles with exponential time decay, Elo, and a regularized
-multinomial logistic blend anchored to market probabilities. Validation feature generation has completed; candidate metrics are pending.
+multinomial logistic blend anchored to market probabilities. All eight declared validation
+candidates and the frozen held-out result are reported above.
 
 ## Reproduce
 
