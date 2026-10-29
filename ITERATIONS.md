@@ -6,7 +6,7 @@ of a profitable strategy; a well-measured negative result is useful research.
 | Target | Threshold | Evidence now |
 |---|---|---|
 | Validation outcome log loss vs closing | gap ≤ 0.01 nats, on identical eligible matches | NOT_RUN: source permission |
-| Held-out CLV estimate | report mean, 95% date-block CI, missingness and count; no positivity requirement | UNOPENED |
+| Held-out CLV estimate | report mean, 95% date-block CI, missingness and count; no positivity requirement | UNEVALUATED |
 | Primary forward hypothesis | lower 95% CLV CI endpoint > 0 | NOT_ESTIMABLE: no bets |
 | Forward pipeline on GitHub | real forecast pushed and server-receipt verified before kickoff | NOT_RUN: permission and freeze |
 | Scheduled execution | at least one `event=schedule` run succeeds | Check `results/actions_evidence.json`; gated runs only prove scheduling |
@@ -31,7 +31,7 @@ Diagnosis: the live source's restricted terms do not establish permission for th
 automated training/collection and later redistribution. Its non-C quotes are snapshots,
 not timestamped opening quotes; Pinnacle is explicitly stale after July 2025.
 Focused change: gate source access and use AvgC as the planned closing benchmark, with
-same-book and de-vigged sensitivity checks. Preserve the held-out season unopened.
+same-book and de-vigged sensitivity checks. Keep held-out targets out of model selection; see the schema-preview exception below.
 Outcome: baseline blocked. See `results/trials.jsonl` and `results/status.json`.
 
 No second scientific iteration is manufactured without data. The permission-gated Actions

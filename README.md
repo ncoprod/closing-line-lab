@@ -28,7 +28,7 @@ flowchart LR
   A[Permission + source review] --> B[Immutable CSV cache + SHA manifest]
   B --> C[As-of Dixon-Coles + Elo + snapshot market]
   C --> D[Validation only: select and freeze]
-  D --> E[Untouched final season]
+  D --> E[Held-out test with declared exclusions]
   D --> F[Pre-kickoff paper forecasts]
   F --> G[Hash-chain ledger + GitHub receipt]
   G --> H[Closing prices + results]
@@ -80,6 +80,7 @@ workflow dispatch worked; it does **not** prove live data or paper forecasts wor
 | Local test results and source revision | `results/engineering.json` | `make check test` | `source_commit` in the result file |
 | GitHub CI, audit and scheduled-run evidence | `results/actions_evidence.json` | `uv run cll actions-evidence` | Each run's `headSha` and server URL |
 | Future validation/test estimates | `results/validation.json`, `results/test.json` (absent until run) | `cll backtest --stage validation/test` | `source_commit` in each result |
+| Backtest vs forward availability | `results/comparison.json` | `uv run cll report` | `source_commit` in the result file |
 | Forward CLV, paper profit and power | `results/forward.json` | `uv run cll report` | `source_commit` in the result file |
 
 ## Limits and interpretation

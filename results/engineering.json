@@ -1,12 +1,12 @@
 {
-  "source_commit": "4c987e31d48db5eeee903688ac9476a2cace30f1",
-  "checked_at": "2026-10-29T10:22:36.406263+00:00",
+  "source_commit": "4e8ebafafb60942b7d6d58004e757717435323af",
+  "checked_at": "2026-10-29T10:32:37.099645+00:00",
   "checks": [
     {
       "command": "make check test",
       "exit_code": 0,
       "environment": "GitHub Actions ubuntu-latest",
-      "evidence_url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40856660992"
+      "evidence_url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40857919905"
     }
   ],
   "tests": 29,

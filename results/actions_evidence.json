@@ -1,6 +1,26 @@
 {
-  "checked_at": "2026-10-29T10:28:57.709142+00:00",
+  "checked_at": "2026-10-29T10:33:06.877945+00:00",
   "runs": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-29T10:29:07Z",
+      "databaseId": 40857919905,
+      "event": "push",
+      "headSha": "4e8ebafafb60942b7d6d58004e757717435323af",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40857919905",
+      "workflowName": "CI"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-29T10:29:07Z",
+      "databaseId": 40857919904,
+      "event": "push",
+      "headSha": "4e8ebafafb60942b7d6d58004e757717435323af",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40857919904",
+      "workflowName": "Ledger audit"
+    },
     {
       "conclusion": "success",
       "createdAt": "2026-10-29T10:19:35Z",
