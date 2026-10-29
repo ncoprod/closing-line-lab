@@ -55,8 +55,9 @@ Requests stop when either guard binds; coverage losses are reported, never backf
 The two live odds smoke calls count against this same budget.
 
 At 24 short jobs/day the 31-day baseline is 744 one-minute runner jobs. Dependency caches
-and only one job per trigger keep normal use below 2,000 minutes; audit runs and CI consume
-extra minutes. This is a planning estimate, not a measured billing guarantee. Review actual
+keep the forecast job short; a separate scoring job starts only when scores are due,
+at most once per league/day. That adds at most 62 short scoring jobs in a 31-day month,
+before audit and CI minutes. This is a planning estimate, not a measured billing guarantee. Review actual
 durations and remaining minutes. Schedules can be delayed or dropped. No lateness is hidden.
 
 ## Publication and audit

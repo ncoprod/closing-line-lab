@@ -99,7 +99,8 @@ planning estimate of 23,821 bets for 10 log-CLV bp (one-sided 5%, 80% power). Tw
 cannot estimate power. The planned window is unlikely to establish a small edge for this
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
-Scheduled Actions run hourly at minute 17 UTC for EPL and Championship. Free fixture
+Scheduled forecasts run hourly at minute 17 UTC for EPL and Championship; a separate
+scoring job starts only when results are due. Free fixture
 discovery triggers league-wide EU/h2h requests only around decisions (23–25 hours before
 kickoff) or closing snapshots (15–75 minutes). **The closing line means the last observed
 pre-kickoff snapshot**, with bookmaker, source age and actual gap retained. Betfair EU is

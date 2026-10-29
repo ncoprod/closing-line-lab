@@ -178,3 +178,8 @@ v1 and are not relabeled as an untouched test of the amended runtime. Forecast r
 name the active registration commit. The verifier's scientific-file comparison now uses
 that active tag and also freezes the parameter artifact. This is an explicit prospective
 amendment, not a moved tag or an invisible post-test model change.
+
+Operational job layout: hourly forecast jobs emit a scoring-due flag; a separate scoring
+job runs only when needed, under the same at-most-once-per-league/day rule. This changes
+no quote window, API credit cap, model or staking rule. Its additional runner-minute budget
+is at most two short scoring jobs/day; source data is never fetched from football-data.
