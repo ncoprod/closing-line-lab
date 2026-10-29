@@ -356,7 +356,7 @@ def research_report():
             continue
         frame = pd.read_csv(path)
         close = frame[["AvgC" + s for s in "HDA"]].to_numpy(float)
-        mask = np.isfinite(close).all(1) & (close > 1).all(1)
+        mask = np.isfinite(close).all(1) & (close > 1).all(1) & frame.outcome.notna()
         frame, close = frame[mask], close[mask]
         probabilities = frame[["p" + s for s in "HDA"]].to_numpy(float)
         closing = devig(close)

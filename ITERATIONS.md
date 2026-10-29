@@ -108,3 +108,14 @@ add the three exact identity aliases in a separately tagged v1.1 amendment, reta
 original v1 tag and test results. No refit, test rerun, bet-rule change or metric selection.
 The parameter artifact is unchanged and is now explicitly frozen by the runtime tag too.
 This engineering correction is conservatively logged as an additional iteration/trial.
+
+## Reporting correction — same saved predictions, unchanged test metrics
+
+One historical test target has closing prices but no result. The original metric evaluator
+already excluded it and neither selected paper bet belongs to it. The calibration/paired-loss
+report initially cast that missing label and included it. Filter missing results before
+plotting; regenerate aggregates from saved predictions only, with no refit or re-evaluation
+of strategy choices. The corrected calibration count matches the 3,754 core scored rows.
+The test report field named missing_closing_triples counts all unscorable rows; its one
+excluded row is actually a missing result, not absent closing odds. Preserve the original
+test report and make that naming limitation explicit.

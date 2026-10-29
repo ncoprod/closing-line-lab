@@ -1,5 +1,5 @@
 {
-  "source_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "source_commit": "8a36e46a156d1114d33b85f6a8b4d3b414321bc6",
   "candidate": {
     "model": "blend",
     "min_edge": 0.05
@@ -199,15 +199,15 @@
         },
         {
           "side": "Home",
-          "predicted": 0.35655262463404963,
-          "observed": 0.34754797441364604,
+          "predicted": 0.35657372021294537,
+          "observed": 0.34541577825159914,
           "count": 469
         },
         {
           "side": "Home",
-          "predicted": 0.40735396590976325,
-          "observed": 0.41702127659574467,
-          "count": 470
+          "predicted": 0.40740624726304675,
+          "observed": 0.417910447761194,
+          "count": 469
         },
         {
           "side": "Home",
@@ -253,31 +253,31 @@
         },
         {
           "side": "Draw",
-          "predicted": 0.26940557791305964,
-          "observed": 0.2425531914893617,
-          "count": 470
-        },
-        {
-          "side": "Draw",
-          "predicted": 0.2801530319062939,
-          "observed": 0.302771855010661,
+          "predicted": 0.2693932548663183,
+          "observed": 0.24307036247334754,
           "count": 469
         },
         {
           "side": "Draw",
-          "predicted": 0.2907364939305177,
+          "predicted": 0.28013120152712456,
           "observed": 0.3006396588486141,
           "count": 469
         },
         {
           "side": "Draw",
-          "predicted": 0.30177829754824426,
-          "observed": 0.29637526652452023,
+          "predicted": 0.29071396674944505,
+          "observed": 0.3006396588486141,
           "count": 469
         },
         {
           "side": "Draw",
-          "predicted": 0.3229681647011418,
+          "predicted": 0.30175016971418617,
+          "observed": 0.29850746268656714,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.3229627527467295,
           "observed": 0.32340425531914896,
           "count": 470
         },
@@ -301,13 +301,13 @@
         },
         {
           "side": "Away",
-          "predicted": 0.25996955610469336,
-          "observed": 0.2553191489361702,
-          "count": 470
+          "predicted": 0.2599315948554332,
+          "observed": 0.255863539445629,
+          "count": 469
         },
         {
           "side": "Away",
-          "predicted": 0.2981685338689785,
+          "predicted": 0.2980884441505579,
           "observed": 0.2878464818763326,
           "count": 469
         },
@@ -330,15 +330,15 @@
           "count": 470
         }
       ],
-      "scored_matches": 3755,
+      "scored_matches": 3754,
       "log_loss_gap_ci": {
-        "mean": 0.0010100990327726346,
+        "mean": 0.0010033873760323126,
         "ci95": [
-          -0.001297599482251695,
-          0.003232727478634984
+          -0.001315084818684677,
+          0.003229395193819603
         ],
         "blocks": 232,
-        "observations": 3755
+        "observations": 3754
       },
       "monthly_bets": [
         {
