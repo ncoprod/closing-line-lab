@@ -1,5 +1,5 @@
 {
-  "source_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "source_commit": "214b8b87cdadcfc3f8cdee18c6fc6bcba649dc9c",
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -25,9 +25,26 @@
     "status": "NOT_ESTIMABLE",
     "reason": "Need observed CLV across multiple dates"
   },
+  "closing_snapshots": 0,
+  "closing_benchmark_counts": {},
+  "closing_gap_minutes": null,
+  "api_budget": {
+    "months": {
+      "2026-10": 2
+    },
+    "remaining": 498,
+    "provider_used": 2
+  },
+  "latest_capture": {
+    "checked_at": "2026-10-29T13:03:43.970287+00:00",
+    "status": "CAPTURED",
+    "new_forecasts": 0,
+    "new_closing_snapshots": 0,
+    "unknown_teams": 0
+  },
   "deflated_sharpe": {
     "probability": null,
-    "trials": 11,
+    "trials": 12,
     "reason": "insufficient variation"
   }
 }
