@@ -119,3 +119,12 @@ of strategy choices. The corrected calibration count matches the 3,754 core scor
 The test report field named missing_closing_triples counts all unscorable rows; its one
 excluded row is actually a missing result, not absent closing odds. Preserve the original
 test report and make that naming limitation explicit.
+
+## Pre-activation retry audit
+
+A boundary check found that failed API requests reserved local monthly credits but left
+the cached provider balance unchanged. Near the 100-credit reserve, a retry could consume
+that reserve. Prospectively fix reservation of both balances, add a failing-request regression
+test, and retain earlier tags as v1.2 freezes this operational correction. No real API
+failure or overspend occurred. No model/refit/test re-evaluation. Log this conservatively
+as another engineering trial; no performance improvement is claimed.

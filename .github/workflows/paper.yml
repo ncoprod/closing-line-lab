@@ -29,7 +29,7 @@ jobs:
           python - <<'PY'
           import os, pathlib, subprocess
           enabled = bool(os.environ.get('ODDS_API_KEY')) and pathlib.Path('config/fitted_model.json').exists()
-          enabled = enabled and bool(subprocess.check_output(['git', 'tag', '-l', 'forward-v1.1']).strip())
+          enabled = enabled and bool(subprocess.check_output(['git', 'tag', '-l', 'forward-v1.2']).strip())
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write(f'enabled={str(enabled).lower()}\n')
           print('READY' if enabled else 'WAITING_FOR_KEY_OR_FROZEN_MODEL; no provider request')

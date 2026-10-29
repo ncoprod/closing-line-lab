@@ -33,7 +33,7 @@ BLAS at one thread on the shared machine. These fits do not require heavy-ML loc
 ## Hosted collection
 
 The owner supplies ODDS_API_KEY as a GitHub Actions secret. Never print it or put it in
-command arguments. The hourly `:17` UTC job first checks key, active v1.1 runtime tag and model availability.
+command arguments. The hourly `:17` UTC job first checks key, active v1.2 runtime tag and model availability.
 It never downloads, restores or trains on football-data rows. Complete API responses are
 not committed. API hashes, sanitized endpoint parameters and quota headers are retained.
 
@@ -56,7 +56,8 @@ The two live odds smoke calls count against this same budget.
 
 At 24 short jobs/day the 31-day baseline is 744 one-minute runner jobs. Dependency caches
 keep the forecast job short; a separate scoring job starts only when scores are due,
-at most once per league/day. That adds at most 62 short scoring jobs in a 31-day month,
+at most once per league/day. With normally completed requests that adds at most 62 short
+scoring jobs in a 31-day month; failed/budget-blocked attempts can start additional jobs,
 before audit and CI minutes. This is a planning estimate, not a measured billing guarantee. Review actual
 durations and remaining minutes. Schedules can be delayed or dropped. No lateness is hidden.
 

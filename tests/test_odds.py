@@ -104,3 +104,21 @@ def test_credential_not_in_error_message(monkeypatch, tmp_path):
     with pytest.raises(RuntimeError, match="HTTP 401") as caught:
         odds.OddsClient().get("soccer_epl", "events")
     assert "synthetic-do-not-reveal" not in str(caught.value)
+
+
+def test_ambiguous_failure_reserves_provider_headroom_before_retry(tmp_path, monkeypatch):
+    monkeypatch.setenv("ODDS_API_KEY", "synthetic-not-a-real-credential")
+    monkeypatch.setattr(odds, "USAGE", tmp_path / "usage.json")
+    odds.USAGE.write_text('{"months":{},"remaining":101}')
+    monkeypatch.setattr(odds.time, "sleep", lambda _: None)
+    calls = []
+
+    def fail(request, **kw):
+        calls.append(1)
+        raise odds.urllib.error.HTTPError(request.full_url, 503, "unavailable", {}, None)
+
+    monkeypatch.setattr(odds.urllib.request, "urlopen", fail)
+    with pytest.raises(odds.BudgetExhausted):
+        odds.OddsClient().get("soccer_epl", "odds")
+    assert len(calls) == 1
+    assert json.loads(odds.USAGE.read_text())["remaining"] == 100

@@ -53,6 +53,7 @@ class OddsClient:
                 raise BudgetExhausted("Credit cap/reserve reached; no paid request made")
             # Reserve before transmission: failed/ambiguous calls also consume the local budget.
             self.usage["months"][month] = charged + expected
+            self.usage["remaining"] = remaining - expected
             write_json(USAGE, self.usage)
             query = urllib.parse.urlencode({**params, "apiKey": self.credential})
             request = urllib.request.Request(safe_url + "?" + query)

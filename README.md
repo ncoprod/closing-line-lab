@@ -84,7 +84,8 @@ make report
 
 `forward-v1` freezes the strategy before the held-out evaluation. The prospective
 `forward-v1.1` amendment adds three exact club-name aliases and freezes the exported
-parameters before activation; the original tag/test result remain intact. No forecast formula, coefficients or bet
+parameters before activation; `forward-v1.2` also fixes conservative retry accounting.
+The original tags and test result remain intact. No forecast formula, coefficients or bet
 rule were changed after seeing test metrics; the identity amendment is disclosed. See the explicit amendment in the protocol.
 
 For a fresh historical reproduction, check out `forward-v1` before generating test features:
@@ -122,7 +123,7 @@ is shared across the owner’s private repositories; it is not a separate allowa
 | Held-out scores, CLV, CI, P&L, DSR | [test.json](results/test.json) | `cll features --stage test`; `cll backtest --stage test` | `source_commit` = `7c16ca0`; original `forward-v1` |
 | Calibration bins, paths, paired loss CI | [historical_analysis.json](results/historical_analysis.json) | `cll research-report` (local saved predictions) | `source_commit` in result |
 | Planning power / insufficiency | [power_analysis.json](results/power_analysis.json) | Extract selected `power` from validation/test reports | Same source commits as reports above |
-| Exact forward parameters / identity coverage | [fitted_model.json](config/fitted_model.json), [activation](results/forward_activation.json) | `cll prepare-forward`; exact identity check | `source_commit` and artifact SHA; frozen in `forward-v1.1` |
+| Exact forward parameters / identity coverage | [fitted_model.json](config/fitted_model.json), [activation](results/forward_activation.json) | `cll prepare-forward`; exact identity check | `source_commit` and artifact SHA; frozen in `forward-v1.1` and `forward-v1.2` |
 | API availability / credits | [api_smoke.json](results/api_smoke.json), [usage](data/api_usage.json) | Client `/events` and `/odds` smoke checks | `c297fa0`; response hashes in API manifest |
 | Forward counts, CLV, P&L, gap/benchmark mix | [forward.json](results/forward.json) | `cll report` | `source_commit` in each result; ledger links runtime/registration SHAs |
 | Backtest vs forward | [comparison.json](results/comparison.json) | `cll report` | `source_commit` in result |

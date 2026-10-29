@@ -182,4 +182,16 @@ amendment, not a moved tag or an invisible post-test model change.
 Operational job layout: hourly forecast jobs emit a scoring-due flag; a separate scoring
 job runs only when needed, under the same at-most-once-per-league/day rule. This changes
 no quote window, API credit cap, model or staking rule. Its additional runner-minute budget
-is at most two short scoring jobs/day; source data is never fetched from football-data.
+is normally at most two short scoring jobs/day; failed or budget-blocked attempts can add
+jobs. Source data is never fetched from football-data.
+
+## Prospective retry-accounting amendment — `forward-v1.2`
+
+Before any forward record, reserve the provider remaining balance as well as the local
+monthly counter before transmitting a paid request. A failed/ambiguous request might have
+consumed a credit; a retry must not use the same stale balance near the 100-credit reserve.
+A regression test checks one failed request at balance 101 stops further paid attempts.
+The original v1/v1.1 tags stay intact. No forecast formula, fitted coefficient, threshold,
+benchmark, window or staking change; no test re-evaluation. This operational correction
+and active tag reference are frozen in v1.2. The artifact remains unchanged. Successful
+responses still replace the conservative estimate with actual provider quota headers.
