@@ -270,3 +270,10 @@ coverage value and failure status is identical; only source commit/fingerprints 
 `results/null_replay_check.json` records comparison hashes. The full historical replay's
 source fingerprints already match. Rebuild the paper manifest from the corrected committed
 inputs. No history rewrite, parameter adjustment or hidden new inference candidate.
+
+Final paper refresh uses corrected committed inputs at `9298f83`. All scientific null
+fields are unchanged, and every current experiment implementation hash now matches.
+The rebuilt PDF still has nine pages; rendered-page comparison finds only the intended
+source-commit text on page 8 changed, which was inspected again. All remaining pages are
+pixel-identical to the inspected version. `make check test` passes 59 tests. This completes
+the provenance correction without altering any original test/validation estimate or tag.
