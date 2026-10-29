@@ -1,5 +1,5 @@
 {
-  "source_commit": "6f783c13aeba840a05dcdac209536035e6c13ccd",
+  "source_commit": "161387a3366f22ef0cf38ed7999b453fe0cc6cd4",
   "test": {
     "forecast_rows": 3755,
     "missing_closing_triples": 0,
@@ -167,7 +167,7 @@
     "profit_units": 0.0,
     "roi": null,
     "deflated_sharpe": {
-      "trials": 20,
+      "trials": 22,
       "days": 0,
       "nonzero_days": 0,
       "probability": null,
