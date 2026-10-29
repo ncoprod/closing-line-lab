@@ -9,6 +9,9 @@ permissions:
 concurrency:
   group: paper-ledger
   cancel-in-progress: false
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
 jobs:
   forecast:
     runs-on: ubuntu-latest
@@ -33,6 +36,14 @@ jobs:
         if: steps.permission.outputs.enabled == 'true'
         with:
           enable-cache: true
+      - uses: actions/cache@v4
+        if: steps.permission.outputs.enabled == 'true'
+        with:
+          path: |
+            data/raw
+            data/processed
+          key: research-data-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: research-data-${{ runner.os }}-
       - if: steps.permission.outputs.enabled == 'true'
         run: uv sync --frozen
       - if: steps.permission.outputs.enabled == 'true'
@@ -53,6 +64,13 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data/raw
+            data/processed
+          key: research-data-${{ runner.os }}-${{ github.run_id }}-score
+          restore-keys: research-data-${{ runner.os }}-
       - run: uv sync --frozen
       - env:
           GH_TOKEN: ${{ github.token }}

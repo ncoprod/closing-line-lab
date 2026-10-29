@@ -3,9 +3,19 @@
 **Paper-only research.** No bookmaker account, bet placement or money handling.
 
 <!-- RESULTS:START -->
-**0 real matches analyzed; 0 forward forecasts; 0 paper bets.** Backtest and test-season
-results are **NOT_RUN**. Automated data access is **BLOCKED_DATA_PERMISSION** after a live
-terms review. These counts come from [results/status.json](results/status.json).
+**0 downloaded match rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
+Data status: **BLOCKED_DATA_PERMISSION**. Validation: **NOT_RUN**. Test season: **UNOPENED**.
+
+| Forward metric | Observed value |
+|---|---:|
+| Mean log CLV | NOT_ESTIMABLE |
+| 95% date-block bootstrap CI | NOT_ESTIMABLE |
+| Paper profit (initial account 100 units) | 0.0 |
+| Pending / void forecasts | 0 / 0 |
+
+Source: [status](results/status.json), [forward results](results/forward.json).
+![Cumulative forward CLV and paper profit](results/forward.png)
+![Forward calibration](results/calibration.png)
 <!-- RESULTS:END -->
 
 The research question is whether a pre-registered football model can obtain positive mean

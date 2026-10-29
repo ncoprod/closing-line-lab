@@ -1,0 +1,231 @@
+import json
+
+import matplotlib
+import numpy as np
+import pandas as pd
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from sklearn.calibration import calibration_curve
+
+from .common import ROOT, now_utc, read_json, strategy, write_json
+from .ledger import read_ledger, replay_account
+from .metrics import block_ci, power_analysis, scores
+from .research import git
+
+
+def forward_tables(records):
+    forecasts = {r["match_id"]: r for r in records if r["kind"] == "forecast"}
+    bets, resolved = [], []
+    for row in records:
+        if row["kind"] != "settlement" or row["status"] != "SETTLED":
+            continue
+        forecast = forecasts[row["match_id"]]
+        resolved.append(
+            {
+                "p": forecast["probabilities"],
+                "outcome": row["outcome"],
+                "closing": row["closing_prices"],
+            }
+        )
+        if forecast["bet"] is not None:
+            bets.append(
+                {
+                    "match_id": row["match_id"],
+                    "kickoff_utc": forecast["kickoff_utc"],
+                    "block": forecast["kickoff_utc"][:10],
+                    "recorded_at": row["recorded_at"],
+                    "log_clv": row["log_clv"],
+                    "profit_units": row["profit_units"],
+                    "stake_units": forecast["bet"]["stake_units"],
+                }
+            )
+    return pd.DataFrame(bets), resolved
+
+
+def figures(bets, resolved):
+    plt.rcParams.update({"font.size": 11, "axes.spines.top": False, "axes.spines.right": False})
+    fig, axes = plt.subplots(2, 1, figsize=(9, 6), layout="constrained")
+    if bets.empty:
+        for axis, label in zip(axes, ["Cumulative log CLV", "Paper profit (units)"], strict=True):
+            axis.set_ylabel(label)
+            axis.text(
+                0.5,
+                0.5,
+                "No settled forward paper bets",
+                transform=axis.transAxes,
+                ha="center",
+                va="center",
+            )
+            axis.set_xticks([])
+    else:
+        plotted = bets.sort_values(["recorded_at", "match_id"])
+        x = pd.to_datetime(plotted.recorded_at, utc=True)
+        axes[0].plot(x, plotted.log_clv.cumsum(), color="#235789")
+        axes[1].plot(x, plotted.profit_units.cumsum(), color="#975D17")
+        axes[0].set_ylabel("Cumulative log CLV")
+        axes[1].set_ylabel("Paper profit (units)")
+        axes[1].set_xlabel("Settlement recorded (UTC)")
+        for axis in axes:
+            axis.axhline(0, color="#555555", linewidth=0.8, linestyle="--")
+    fig.suptitle("Forward paper observations")
+    fig.savefig(ROOT / "results/forward.png", dpi=150)
+    plt.close(fig)
+    fig, axis = plt.subplots(figsize=(6, 5), layout="constrained")
+    axis.plot([0, 1], [0, 1], "--", color="#555555", label="Perfect calibration")
+    if resolved:
+        probabilities = np.array([r["p"] for r in resolved])
+        outcomes = np.array([r["outcome"] for r in resolved])
+        for side, label, color, marker in zip(
+            range(3),
+            ["Home", "Draw", "Away"],
+            ["#235789", "#975D17", "#A94D83"],
+            ["o", "s", "^"],
+            strict=True,
+        ):
+            observed, predicted = calibration_curve(
+                outcomes == side, probabilities[:, side], n_bins=8, strategy="quantile"
+            )
+            axis.plot(predicted, observed, marker=marker, color=color, label=label)
+    else:
+        axis.text(0.5, 0.3, "No settled forward forecasts", ha="center")
+    axis.set(
+        xlim=(0, 1),
+        ylim=(0, 1),
+        xlabel="Predicted probability",
+        ylabel="Observed frequency",
+        title="Forward calibration (descriptive; quantile bins)",
+    )
+    axis.legend()
+    fig.savefig(ROOT / "results/calibration.png", dpi=150)
+    plt.close(fig)
+
+
+def generate():
+    records, cfg = read_ledger(), strategy()
+    bets, resolved = forward_tables(records)
+    forecasts = [r for r in records if r["kind"] == "forecast"]
+    settlements = [r for r in records if r["kind"] == "settlement"]
+    report = {
+        "source_commit": git("rev-parse", "HEAD"),
+        "forecasts": len(forecasts),
+        "paper_bets": sum(r["bet"] is not None for r in forecasts),
+        "settled_bets": len(bets),
+        "settled_forecasts": len(resolved),
+        "void_forecasts": sum(r["status"].startswith("VOID") for r in settlements),
+        "pending_forecasts": len(forecasts) - len(settlements),
+        "clv": block_ci(bets.log_clv, bets.block, cfg["bootstrap_samples"], cfg["seed"])
+        if not bets.empty
+        else block_ci([], []),
+        "profit_units": float(bets.profit_units.sum()) if not bets.empty else 0.0,
+        "roi": float(bets.profit_units.sum() / bets.stake_units.sum()) if not bets.empty else None,
+        "account": replay_account(records),
+        "power": power_analysis(bets.log_clv, bets.block)
+        if not bets.empty
+        else power_analysis([], []),
+    }
+    if resolved:
+        from .metrics import devig
+
+        report["scores"] = scores(
+            [r["p"] for r in resolved],
+            [r["outcome"] for r in resolved],
+            devig([r["closing"] for r in resolved]),
+        )
+    write_json(ROOT / "results/forward.json", report)
+    figures(bets, resolved)
+    permission = read_json(ROOT / "config/data_permission.json")
+    enabled = all(permission.get(k) for k in ["automated_collection", "model_training", "evidence"])
+    test_path = ROOT / "results/test.json"
+    validation_path = ROOT / "results/validation.json"
+    status = {
+        "status": "PERMITTED" if enabled else "BLOCKED_DATA_PERMISSION",
+        "real_data_matches": read_json(ROOT / "results/data_quality.json")["matches"]
+        if (ROOT / "results/data_quality.json").exists()
+        else 0,
+        "forecasts": len(forecasts),
+        "paper_bets": report["paper_bets"],
+        "settled_bets": len(bets),
+        "backtest": "COMPLETE" if validation_path.exists() else "NOT_RUN",
+        "test_season": "EVALUATED_ONCE" if test_path.exists() else "UNOPENED",
+        "reason": None
+        if enabled
+        else (
+            "Provider permission for automated collection, training and "
+            "redistribution is not established."
+        ),
+    }
+    write_json(ROOT / "results/status.json", status)
+    lines = [
+        f"**{status['real_data_matches']} downloaded match rows; "
+        f"{len(forecasts)} forward forecasts; "
+        f"{report['paper_bets']} paper bets; {len(bets)} settled bets.**",
+        f"Data status: **{status['status']}**. Validation: **{status['backtest']}**. "
+        f"Test season: **{status['test_season']}**.",
+        "",
+        "| Forward metric | Observed value |",
+        "|---|---:|",
+        "| Mean log CLV | "
+        f"{report['clv']['mean'] if report['clv']['mean'] is not None else 'NOT_ESTIMABLE'} |",
+        f"| 95% date-block bootstrap CI | {report['clv']['ci95'] or 'NOT_ESTIMABLE'} |",
+        f"| Paper profit (initial account 100 units) | {report['profit_units']} |",
+        f"| Pending / void forecasts | {report['pending_forecasts']} / "
+        f"{report['void_forecasts']} |",
+        "",
+    ]
+    if test_path.exists():
+        test = read_json(test_path)["reports"][0]
+        lines += [
+            f"Held-out test: {test['model']['matches']} scored matches; "
+            f"log-loss gap to closing {test['log_loss_gap']}; "
+            f"mean log CLV {test['clv']['mean']}, 95% CI {test['clv']['ci95']}.",
+            "",
+        ]
+    lines += [
+        "Source: [status](results/status.json), [forward results](results/forward.json).",
+        "![Cumulative forward CLV and paper profit](results/forward.png)",
+        "![Forward calibration](results/calibration.png)",
+    ]
+    readme = ROOT / "README.md"
+    text = readme.read_text()
+    start, rest = text.split("<!-- RESULTS:START -->", 1)
+    _, end = rest.split("<!-- RESULTS:END -->", 1)
+    readme.write_text(
+        start + "<!-- RESULTS:START -->\n" + "\n".join(lines) + "\n<!-- RESULTS:END -->" + end
+    )
+    return status
+
+
+def actions_evidence():
+    import subprocess
+
+    from .ledger import REPO
+
+    output = subprocess.check_output(
+        [
+            "gh",
+            "run",
+            "list",
+            "--repo",
+            REPO,
+            "--limit",
+            "50",
+            "--json",
+            "databaseId,workflowName,event,headSha,createdAt,status,conclusion,url",
+        ],
+        text=True,
+    )
+    runs = json.loads(output)
+    evidence = {
+        "checked_at": now_utc().isoformat(),
+        "runs": runs,
+        "successful_scheduled_runs": sum(
+            r["event"] == "schedule" and r["conclusion"] == "success" for r in runs
+        ),
+        "note": (
+            "A permission-gated schedule success proves scheduling only; "
+            "no data forecast was executed."
+        ),
+    }
+    write_json(ROOT / "results/actions_evidence.json", evidence)
+    return evidence

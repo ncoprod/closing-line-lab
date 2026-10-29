@@ -1,0 +1,27 @@
+{
+  "source_commit": "931886f159c077c5ed9acb059be971a78a39d202",
+  "forecasts": 0,
+  "paper_bets": 0,
+  "settled_bets": 0,
+  "settled_forecasts": 0,
+  "void_forecasts": 0,
+  "pending_forecasts": 0,
+  "clv": {
+    "mean": null,
+    "ci95": null,
+    "blocks": 0,
+    "observations": 0
+  },
+  "profit_units": 0.0,
+  "roi": null,
+  "account": {
+    "cash": 100.0,
+    "open_stakes": 0,
+    "pending": {},
+    "equity_at_cost": 100.0
+  },
+  "power": {
+    "status": "NOT_ESTIMABLE",
+    "reason": "Need observed CLV across multiple dates"
+  }
+}

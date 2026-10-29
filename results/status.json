@@ -6,5 +6,5 @@
   "settled_bets": 0,
   "backtest": "NOT_RUN",
   "test_season": "UNOPENED",
-  "reason": "Provider permission for automated collection/training/redistribution is not established."
+  "reason": "Provider permission for automated collection, training and redistribution is not established."
 }

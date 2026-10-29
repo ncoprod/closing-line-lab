@@ -1,0 +1,214 @@
+import json
+import subprocess
+from pathlib import Path
+
+import numpy as np
+
+from .common import ROOT, canonical, digest, now_utc, timestamp, write_json
+
+LEDGER = ROOT / "data/ledger.jsonl"
+ZERO = "0" * 64
+REPO = "ncoprod/closing-line-lab"
+
+
+def read_ledger(path=LEDGER):
+    path = Path(path)
+    if not path.exists():
+        return []
+    payload = path.read_text()
+    if payload and not payload.endswith("\n"):
+        raise ValueError("Truncated ledger")
+    records = [json.loads(line) for line in payload.splitlines()]
+    check_chain(records)
+    return records
+
+
+def check_chain(records):
+    previous = ZERO
+    for sequence, record in enumerate(records, 1):
+        unsigned = {k: v for k, v in record.items() if k != "hash"}
+        if record.get("sequence") != sequence or record.get("previous_hash") != previous:
+            raise ValueError("Ledger sequence/parent mismatch")
+        if digest(unsigned) != record.get("hash"):
+            raise ValueError("Ledger hash mismatch")
+        previous = record["hash"]
+
+
+def append_event(payload, path=LEDGER):
+    records = read_ledger(path)
+    event = {
+        **payload,
+        "sequence": len(records) + 1,
+        "previous_hash": records[-1]["hash"] if records else ZERO,
+    }
+    event["hash"] = digest(event)
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a") as handle:
+        handle.write(canonical(event) + "\n")
+    return event
+
+
+def verify_records(records, receipts):
+    """A receipt binds server creation time to the exact ledger hashes at its head SHA."""
+    check_chain(records)
+    forecasts, settlements = {}, set()
+    for record in records:
+        match_id = record["match_id"]
+        if record["kind"] == "forecast":
+            if match_id in forecasts:
+                raise ValueError("Duplicate forecast")
+            forecasts[match_id] = record
+            kickoff = timestamp(record["kickoff_utc"])
+            decision, recorded = timestamp(record["decision_at"]), timestamp(record["recorded_at"])
+            observed = timestamp(record["quote_retrieved_at"])
+            feature_max = timestamp(record["feature_max_available"])
+            if not observed <= decision <= recorded < kickoff or feature_max >= decision:
+                raise ValueError("Forecast or features are not strictly pre-kickoff/as-of")
+            p = np.array(record["probabilities"], dtype=float)
+            prices = np.array(record["prices"], dtype=float)
+            if (
+                p.shape != (3,)
+                or (p <= 0).any()
+                or not np.isfinite(p).all()
+                or not np.isclose(p.sum(), 1)
+            ):
+                raise ValueError("Invalid probabilities")
+            if prices.shape != (3,) or not np.isfinite(prices).all() or (prices <= 1).any():
+                raise ValueError("Invalid prices")
+            bet = record["bet"]
+            if bet is not None:
+                if bet["side_index"] not in (0, 1, 2) or bet["odds"] != prices[bet["side_index"]]:
+                    raise ValueError("Bet price differs from recorded quote")
+                if not 0 < bet["stake_units"] <= record["stake_cap_units"] + 1e-9:
+                    raise ValueError("Invalid stake")
+            evidence = [
+                receipt
+                for receipt in receipts
+                if record["hash"] in receipt["ledger_hashes"]
+                and recorded <= timestamp(receipt["created_at"]) < kickoff
+            ]
+            if not evidence:
+                raise ValueError(f"No pre-kickoff GitHub server receipt: {match_id}")
+        elif record["kind"] == "settlement":
+            if match_id not in forecasts or match_id in settlements:
+                raise ValueError("Orphan or duplicate settlement")
+            if record["forecast_hash"] != forecasts[match_id]["hash"]:
+                raise ValueError("Settlement points to a different forecast")
+            if timestamp(record["recorded_at"]) < timestamp(forecasts[match_id]["kickoff_utc"]):
+                raise ValueError("Settlement before kickoff")
+            if record["status"] not in ("SETTLED", "VOID_SCHEDULE_CHANGED"):
+                raise ValueError("Unknown settlement status")
+            forecast = forecasts[match_id]
+            bet = forecast["bet"]
+            expected_profit, expected_clv = 0.0, None
+            if record["status"] == "SETTLED":
+                if record["result_kickoff_utc"] != forecast["kickoff_utc"]:
+                    raise ValueError("Changed kickoff must be voided")
+                closing = np.asarray(record["closing_prices"], dtype=float)
+                if closing.shape != (3,) or (closing <= 1).any() or not np.isfinite(closing).all():
+                    raise ValueError("Invalid settlement closing prices")
+                if record["outcome"] not in (0, 1, 2):
+                    raise ValueError("Invalid result")
+                if bet:
+                    won = bet["side_index"] == record["outcome"]
+                    expected_profit = bet["stake_units"] * (bet["odds"] - 1 if won else -1)
+                    expected_clv = float(np.log(bet["odds"] / closing[bet["side_index"]]))
+            if not np.isclose(record["profit_units"], expected_profit):
+                raise ValueError("Settlement profit does not replay")
+            if (expected_clv is None and record["log_clv"] is not None) or (
+                expected_clv is not None and not np.isclose(record["log_clv"], expected_clv)
+            ):
+                raise ValueError("Settlement CLV does not replay")
+            settlements.add(match_id)
+        else:
+            raise ValueError("Unknown ledger event")
+    return {
+        "status": "VERIFIED" if forecasts else "NO_FORECASTS",
+        "events": len(records),
+        "forecasts": len(forecasts),
+        "settlements": len(settlements),
+        "chain_head": records[-1]["hash"] if records else ZERO,
+    }
+
+
+def github_receipts():
+    output = subprocess.check_output(
+        [
+            "gh",
+            "api",
+            "--paginate",
+            "--slurp",
+            f"repos/{REPO}/actions/workflows/audit.yml/runs?per_page=100",
+        ],
+        text=True,
+        cwd=ROOT,
+    )
+    receipts = []
+    for page in json.loads(output):
+        for run in page["workflow_runs"]:
+            if run["event"] not in ("push", "workflow_dispatch", "schedule"):
+                continue
+            if run["head_repository"]["full_name"] != REPO or run["head_branch"] != "main":
+                continue
+            try:
+                ledger = subprocess.check_output(
+                    ["git", "show", f"{run['head_sha']}:data/ledger.jsonl"],
+                    cwd=ROOT,
+                    text=True,
+                    stderr=subprocess.DEVNULL,
+                )
+            except subprocess.CalledProcessError:
+                continue
+            records = [json.loads(line) for line in ledger.splitlines()]
+            check_chain(records)
+            receipts.append(
+                {
+                    "run_id": run["id"],
+                    "created_at": run["created_at"],
+                    "head_sha": run["head_sha"],
+                    "event": run["event"],
+                    "url": run["html_url"],
+                    "ledger_hashes": [x["hash"] for x in records],
+                }
+            )
+    return receipts
+
+
+def verify():
+    records = read_ledger()
+    receipts = github_receipts() if records else []
+    report = verify_records(records, receipts)
+    report["checked_at"] = now_utc().isoformat()
+    report["receipt_runs"] = [
+        {k: v for k, v in x.items() if k != "ledger_hashes"} for x in receipts
+    ]
+    write_json(ROOT / "results/verification.json", report)
+    return report
+
+
+def replay_account(records):
+    """Cash and pending stakes; open risk is valued at cost, never at future odds."""
+    cash, pending = 100.0, {}
+    forecasts = {}
+    for record in records:
+        match_id = record["match_id"]
+        if record["kind"] == "forecast":
+            forecasts[match_id] = record
+            if record["bet"]:
+                stake = record["bet"]["stake_units"]
+                cash -= stake
+                pending[match_id] = stake
+        else:
+            if match_id not in forecasts:
+                raise ValueError("Orphan account settlement")
+            stake = pending.pop(match_id, 0)
+            cash += stake + record["profit_units"]
+        if cash < -1e-8:
+            raise ValueError("Paper account spent unavailable cash")
+    return {
+        "cash": cash,
+        "open_stakes": sum(pending.values()),
+        "pending": pending,
+        "equity_at_cost": cash + sum(pending.values()),
+    }
