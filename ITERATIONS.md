@@ -10,7 +10,7 @@ of a profitable strategy; a well-measured negative result is useful research.
 | Primary forward hypothesis | lower 95% CLV CI endpoint > 0 | NOT_ESTIMABLE: no bets |
 | Forward pipeline on GitHub | real forecast pushed and server-receipt verified before kickoff | LIVE API workflow passes; first eligible quote window has not opened; no timing claim yet |
 | Scheduled execution | at least one `event=schedule` run succeeds | PENDING: active default-branch cron; no genuine scheduled run observed in `results/actions_evidence.json` |
-| Code verification | ruff and required tests green on GitHub | MET: 37 tests; `results/engineering.json` and CI run URLs |
+| Code verification | ruff and required tests green on GitHub | MET: 38 tests; `results/engineering.json` and CI run URLs |
 
 For research iterations: run validation → measure → diagnose → make one focused change
 on training/validation only → re-run. Stop when the calibration target is met or after two
@@ -133,8 +133,8 @@ as another engineering trial; no performance improvement is claimed.
 
 All completed download/feature stages were reused. No killed fit needs restarting.
 Scientific iteration stopped because the predeclared calibration target was met, with no
-positive edge established. The trial registry has 13 entries including the held-out run
-and two prospective engineering amendments; the original test DSR retains its 11-trial
+positive edge established. The trial registry has 15 entries including the held-out run,
+two prospective engineering amendments and two reporting corrections; the original test DSR retains its 11-trial
 count at evaluation, while subsequent forward reporting uses the full current registry.
 
 The hourly workflow has successfully queried live fixture discovery, without paid odds
@@ -144,3 +144,14 @@ analysis remain pending; no extra observations or profitable result are invented
 The default-branch workflow is active, but no genuine `schedule` event has yet appeared.
 Manual dispatches are retained as manual evidence. Schedules are best effort and can be
 delayed or dropped; see [GitHub documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+
+## Forward reporting completion — before any forward record
+
+The forward report lacked the closing outcome-score baseline and registered secondary
+CLV summaries, despite retaining the underlying fields. Add the paired closing baseline,
+log-loss gap, secondary CLV date-block summaries, and separate settled versus scoreable
+forecast counts. A synthetic missing-close regression verifies identical scoring coverage
+and that paper P&L still includes settlements without closes. All 38 tests pass. No model,
+forecast, staking, historical selection or original test metric changes. Both this change
+and the earlier saved-prediction reporting correction are conservatively added to the trial
+registry now, without backdating their registration or changing the original test report.

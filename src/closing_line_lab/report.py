@@ -38,6 +38,8 @@ def forward_tables(records):
                     "recorded_at": row["recorded_at"],
                     "settled_at": row["recorded_at"],
                     "log_clv": row["log_clv"],
+                    "fair_log_clv": row.get("fair_log_clv"),
+                    "same_book_log_clv": row.get("same_book_log_clv"),
                     "profit_units": row["profit_units"],
                     "stake_units": forecast["bet"]["stake_units"],
                 }
@@ -120,7 +122,8 @@ def generate():
         "forecasts": len(forecasts),
         "paper_bets": sum(r["bet"] is not None for r in forecasts),
         "settled_bets": len(bets),
-        "settled_forecasts": len(resolved),
+        "settled_forecasts": sum(r["status"] == "SETTLED" for r in settlements),
+        "scored_forecasts": len(resolved),
         "void_forecasts": sum(r["status"].startswith("VOID") for r in settlements),
         "pending_forecasts": len(forecasts) - len(settlements),
         "clv_missing": int(bets.log_clv.isna().sum()) if not bets.empty else 0,
@@ -141,6 +144,11 @@ def generate():
         if not bets.empty
         else power_analysis([], []),
     }
+    for metric in ["fair_log_clv", "same_book_log_clv"]:
+        eligible = bets[bets[metric].notna()] if not bets.empty else bets
+        report[metric] = (
+            block_ci(eligible[metric], eligible.block) if len(eligible) else block_ci([], [])
+        )
     closes = [r for r in records if r["kind"] == "closing_snapshot"]
     report["closing_snapshots"] = len(closes)
     report["closing_benchmark_counts"] = {
@@ -163,10 +171,12 @@ def generate():
     if resolved:
         from .metrics import devig
 
-        report["scores"] = scores(
-            [r["p"] for r in resolved],
-            [r["outcome"] for r in resolved],
-            devig([r["closing"] for r in resolved]),
+        closing = devig([r["closing"] for r in resolved])
+        outcomes = [r["outcome"] for r in resolved]
+        report["scores"] = scores([r["p"] for r in resolved], outcomes, closing)
+        report["closing_baseline"] = scores(closing, outcomes, closing)
+        report["log_loss_gap"] = (
+            report["scores"]["log_loss"] - report["closing_baseline"]["log_loss"]
         )
     validation = ROOT / "results/validation.json"
     trial_sharpes = (
