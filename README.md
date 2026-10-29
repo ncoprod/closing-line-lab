@@ -4,7 +4,7 @@
 
 <!-- RESULTS:START -->
 **55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **PREPARING_MODEL**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
+Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
 
 | Forward metric | Observed value |
 |---|---:|
@@ -15,7 +15,7 @@ Data status: **PREPARING_MODEL**. Validation: **COMPLETE**. Test season: **EVALU
 | Pending / void forecasts | 0 / 0 |
 
 Validation selected **blend / 0.05 minimum edge**: 11486 scored matches, log loss 1.0057639497705855 versus closing 1.002834479064554 (gap 0.002929470706031445).
-Only 4 paper bets; mean log CLV -0.0398891288028935, descriptive date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617]. These are not calibrated confidence limits. the selected rule's sparse bets severely limit forward power.
+Only 4 paper bets; mean log CLV -0.0398891288028935, descriptive date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617]. These are not calibrated confidence limits. The selected rule's sparse bets severely limit forward power.
 
 | Validation model | Minimum edge | Log loss | Paper bets | Mean log CLV |
 |---|---:|---:|---:|---:|
