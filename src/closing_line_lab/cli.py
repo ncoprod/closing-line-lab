@@ -17,6 +17,7 @@ def main():
         "score",
         "actions-evidence",
         "prepare-forward",
+        "research-report",
     ]:
         sub.add_parser(name)
     for name in ["features", "backtest"]:
@@ -47,6 +48,10 @@ def main():
             from .ledger import verify
 
             result = verify()
+        elif args.command == "research-report":
+            from .report import research_report
+
+            result = research_report()
         elif args.command in ("report", "actions-evidence"):
             from .report import actions_evidence, generate
 

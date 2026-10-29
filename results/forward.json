@@ -1,5 +1,5 @@
 {
-  "source_commit": "321e8762de1ee35e4ced19a55385f0330885be75",
+  "source_commit": "392d2f7907dc69f2376519888e1d31c88ac3bed4",
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -27,7 +27,7 @@
   },
   "deflated_sharpe": {
     "probability": null,
-    "trials": 1,
+    "trials": 10,
     "reason": "insufficient variation"
   }
 }

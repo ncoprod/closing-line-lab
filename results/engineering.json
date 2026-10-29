@@ -1,18 +1,20 @@
 {
-  "source_commit": "4e8ebafafb60942b7d6d58004e757717435323af",
-  "checked_at": "2026-10-29T10:32:37.099645+00:00",
+  "source_commit": "392d2f7907dc69f2376519888e1d31c88ac3bed4",
   "checks": [
     {
-      "command": "make check test",
+      "command": "GITHUB_ACTIONS=true OPENBLAS_NUM_THREADS=1 uv run pytest -q",
       "exit_code": 0,
-      "environment": "GitHub Actions ubuntu-latest",
-      "evidence_url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40857919905"
+      "environment": "local emulation of hosted environment",
+      "evidence_log": "runs/hosted-tests.log"
+    },
+    {
+      "command": "make check",
+      "exit_code": 0
     }
   ],
-  "tests": 29,
+  "tests": 35,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "data": "synthetic local test fixtures only",
-  "research_metrics": "NOT_RUN"
+  "data": "synthetic fixtures and attributed documentation transport sample; no research results inferred from tests"
 }

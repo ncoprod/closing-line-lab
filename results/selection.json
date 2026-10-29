@@ -1,0 +1,10 @@
+{
+  "status": "SELECTED",
+  "candidate": {
+    "model": "blend",
+    "min_edge": 0.05
+  },
+  "strategy_sha": "d06032d287de30f90c51d099babd95d57dc330c6d2f68689b084633f818ce699",
+  "validation_sha": "7f4aa7ee66ffd231d1a8bc24956b227478fb5c08fbd051feb8c9f86e74d33b3d",
+  "selection_rule": "lowest validation outcome log loss; ties choose higher edge threshold"
+}

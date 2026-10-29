@@ -1,9 +1,19 @@
 # Forward protocol v1
 
-**Status: DRAFT pending validation selection and the annotated `forward-v1` tag.**
-The tag must contain this protocol, exact scientific code, configs, validation and selection.
+**Status: FROZEN by the annotated `forward-v1` tag, created prospectively on 29 October 2026.**
+The tag contains this protocol, exact scientific code, configs, validation and selection.
 No forecasts may be emitted until it exists. A fitted parameter export follows the frozen
 test evaluation and is committed before the first forecast. No test/forward tuning is allowed.
+
+Selected model: market-anchored multinomial logistic blend; minimum edge 0.05.
+Validation: 11486 matched closing-price observations, log loss
+1.0057639497705855 versus closing 1.002834479064554.
+The 4 selected paper bets have mean log CLV -0.0398891288028935,
+95% date-block CI [-0.08678290542845579, 0.016520650702510617]. This is not positive-edge evidence.
+The calibration target (gap at most 0.01 nats) is met; no further scientific tuning occurs.
+The sparse selected bets imply weak power for the planned forward window. Retain the rule
+and report inconclusive results if insufficient bets accrue. Selection and validation hashes
+are bound in results/selection.json. No held-out score was inspected before freezing.
 
 ## Hypothesis and window
 

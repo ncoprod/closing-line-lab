@@ -4,7 +4,7 @@
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
-  "backtest": "NOT_RUN",
+  "backtest": "COMPLETE",
   "test_season": "UNEVALUATED",
   "reason": "Local research authorized; forward model export/freeze not yet complete."
 }

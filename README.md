@@ -4,7 +4,7 @@
 
 <!-- RESULTS:START -->
 **55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **PREPARING_MODEL**. Validation: **NOT_RUN**. Test season: **UNEVALUATED**.
+Data status: **PREPARING_MODEL**. Validation: **COMPLETE**. Test season: **UNEVALUATED**.
 
 | Forward metric | Observed value |
 |---|---:|
@@ -13,7 +13,21 @@ Data status: **PREPARING_MODEL**. Validation: **NOT_RUN**. Test season: **UNEVAL
 | Paper profit (initial account 100 units) | 0.0 |
 | Pending / void forecasts | 0 / 0 |
 
-Source: [status](results/status.json), [forward results](results/forward.json).
+Validation selected **blend / 0.05 minimum edge**: 11486 scored matches, log loss 1.0057639497705855 versus closing 1.002834479064554 (gap 0.002929470706031445).
+Only 4 paper bets; mean log CLV -0.0398891288028935, 95% date-block CI [-0.08678290542845579, 0.016520650702510617]. This does not establish an edge; the selected rule's sparse bets severely limit forward power.
+
+| Validation model | Minimum edge | Log loss | Paper bets | Mean log CLV |
+|---|---:|---:|---:|---:|
+| market | 0.03 | 1.0063675492486361 | 0 | None |
+| market | 0.05 | 1.0063675492486361 | 0 | None |
+| dc | 0.03 | 1.0259169666789891 | 3401 | -0.0043107974661079 |
+| dc | 0.05 | 1.0259169666789891 | 3192 | -0.004204388069203356 |
+| elo | 0.03 | 1.0259362847864204 | 3465 | -0.007974626992547858 |
+| elo | 0.05 | 1.0259362847864204 | 3272 | -0.007093607128997683 |
+| blend | 0.03 | 1.0057639497705855 | 14 | -0.04823819541359959 |
+| blend | 0.05 | 1.0057639497705855 | 4 | -0.0398891288028935 |
+
+Sources: [status](results/status.json), [validation](results/validation.json), [test](results/test.json), [forward](results/forward.json).
 ![Cumulative forward CLV and paper profit](results/forward.png)
 ![Forward calibration](results/calibration.png)
 <!-- RESULTS:END -->

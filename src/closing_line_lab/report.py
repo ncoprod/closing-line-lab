@@ -231,16 +231,46 @@ def generate():
         f"{report['void_forecasts']} |",
         "",
     ]
+    if validation_path.exists():
+        selection = read_json(ROOT / "results/selection.json")["candidate"]
+        validation = read_json(validation_path)
+        selected = next(r for r in validation["reports"] if r["candidate"] == selection)
+        lines += [
+            f"Validation selected **{selection['model']} / {selection['min_edge']} minimum edge**: "
+            f"{selected['model']['matches']} scored matches, log loss "
+            f"{selected['model']['log_loss']} versus closing "
+            f"{selected['closing_baseline']['log_loss']} "
+            f"(gap {selected['log_loss_gap']}).",
+            f"Only {selected['bets']} paper bets; mean log CLV {selected['clv']['mean']}, "
+            f"95% date-block CI {selected['clv']['ci95']}. This does not establish an edge; "
+            "the selected rule's sparse bets severely limit forward power.",
+            "",
+            "| Validation model | Minimum edge | Log loss | Paper bets | Mean log CLV |",
+            "|---|---:|---:|---:|---:|",
+            *[
+                f"| {r['candidate']['model']} | {r['candidate']['min_edge']} | "
+                f"{r['model']['log_loss']} | {r['bets']} | {r['clv']['mean']} |"
+                for r in validation["reports"]
+            ],
+            "",
+        ]
     if test_path.exists():
         test = read_json(test_path)["reports"][0]
         lines += [
             f"Held-out test: {test['model']['matches']} scored matches; "
             f"log-loss gap to closing {test['log_loss_gap']}; "
-            f"mean log CLV {test['clv']['mean']}, 95% CI {test['clv']['ci95']}.",
+            f"{test['bets']} paper bets; mean log CLV {test['clv']['mean']}, "
+            f"95% CI {test['clv']['ci95']}. "
+            f"Paper P&L {test['profit_units']} units; ROI {test['roi']}.",
+            f"Test DSR (descriptive): {test['deflated_sharpe']['probability']}. "
+            "Power planning (one-sided 5%, 80%): "
+            f"{test['power'].get('required_bets', 'NOT_ESTIMABLE')} "
+            "bets by log-CLV basis-point effect; sparse-sample estimates are unstable.",
             "",
         ]
     lines += [
-        "Source: [status](results/status.json), [forward results](results/forward.json).",
+        "Sources: [status](results/status.json), [validation](results/validation.json), "
+        "[test](results/test.json), [forward](results/forward.json).",
         "![Cumulative forward CLV and paper profit](results/forward.png)",
         "![Forward calibration](results/calibration.png)",
     ]
@@ -287,3 +317,91 @@ def actions_evidence():
     }
     write_json(ROOT / "results/actions_evidence.json", evidence)
     return evidence
+
+
+def research_report():
+    """Publish aggregate bins and monthly paths; historical rows remain local."""
+    from .metrics import devig
+
+    selection = read_json(ROOT / "results/selection.json")["candidate"]
+    summaries = {}
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.8), layout="constrained")
+    path_fig, path_axes = plt.subplots(2, 1, figsize=(9, 6), layout="constrained")
+    for stage, axis in zip(["validation", "test"], axes, strict=True):
+        name = f"{stage}_{selection['model']}_{selection['min_edge']:.2f}"
+        path = ROOT / f"results/{name}_predictions.csv.gz"
+        if not path.exists():
+            axis.text(0.5, 0.5, f"{stage}: not evaluated", transform=axis.transAxes, ha="center")
+            continue
+        frame = pd.read_csv(path)
+        close = frame[["AvgC" + s for s in "HDA"]].to_numpy(float)
+        mask = np.isfinite(close).all(1) & (close > 1).all(1)
+        frame, close = frame[mask], close[mask]
+        probabilities = frame[["p" + s for s in "HDA"]].to_numpy(float)
+        closing = devig(close)
+        labels = frame.outcome.to_numpy(int)
+        bins = []
+        for side, label, color in zip(
+            range(3), ["Home", "Draw", "Away"], ["#235789", "#975D17", "#A94D83"], strict=True
+        ):
+            groups = pd.qcut(probabilities[:, side], q=8, duplicates="drop")
+            data = pd.DataFrame(
+                {"predicted": probabilities[:, side], "observed": labels == side, "bin": groups}
+            )
+            grouped = data.groupby("bin", observed=True).agg(
+                predicted=("predicted", "mean"),
+                observed=("observed", "mean"),
+                count=("observed", "size"),
+            )
+            axis.plot(grouped.predicted, grouped.observed, "o-", color=color, label=label)
+            bins += [{"side": label, **r} for r in grouped.to_dict("records")]
+        axis.plot([0, 1], [0, 1], "--", color="#666666", linewidth=0.8)
+        axis.set(
+            xlim=(0, 1),
+            ylim=(0, 1),
+            xlabel="Predicted probability",
+            ylabel="Observed frequency",
+            title=f"{stage.capitalize()} calibration; quantile bins",
+        )
+        axis.legend()
+        per_match_gap = -np.log(probabilities[np.arange(len(labels)), labels]) + np.log(
+            closing[np.arange(len(labels)), labels]
+        )
+        summaries[stage] = {
+            "calibration_bins": bins,
+            "scored_matches": len(frame),
+            "log_loss_gap_ci": block_ci(per_match_gap, frame.kickoff_utc.str[:10]),
+        }
+        bets = pd.read_csv(ROOT / f"results/{name}_bets.csv")
+        if bets.empty:
+            continue
+        monthly = (
+            bets.assign(month=bets.kickoff_utc.str[:7])
+            .groupby("month")
+            .agg(
+                bets=("log_clv", "size"), clv_sum=("log_clv", "sum"), profit=("profit_units", "sum")
+            )
+        )
+        summaries[stage]["monthly_bets"] = monthly.reset_index().to_dict("records")
+        x = pd.to_datetime(monthly.index + "-01")
+        path_axes[0].plot(x, monthly.clv_sum.cumsum(), "o-", label=stage)
+        path_axes[1].plot(x, monthly.profit.cumsum(), "o-", label=stage)
+    fig.savefig(ROOT / "results/historical_calibration.png", dpi=150)
+    plt.close(fig)
+    path_axes[0].set_ylabel("Cumulative log CLV")
+    path_axes[1].set_ylabel("Paper profit (units)")
+    path_axes[1].set_xlabel("Kickoff month (UTC); months with bets")
+    for axis in path_axes:
+        axis.axhline(0, color="#666666", linewidth=0.8)
+        axis.legend()
+    path_fig.suptitle("Selected strategy: historical snapshot proxies")
+    path_fig.savefig(ROOT / "results/historical_paths.png", dpi=150)
+    plt.close(path_fig)
+    result = {
+        "source_commit": git("rev-parse", "HEAD"),
+        "candidate": selection,
+        "stages": summaries,
+        "warning": "Historical timing proxies; sparse bets limit inference",
+    }
+    write_json(ROOT / "results/historical_analysis.json", result)
+    return result

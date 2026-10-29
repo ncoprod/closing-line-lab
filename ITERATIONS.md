@@ -71,3 +71,18 @@ The first post-split CI run failed: a local-permission unit test inherited Actio
 runner environment. Its fixture now explicitly simulates local execution; a separate test
 continues to reject real hosted football-data access. This changes no research model.
 An additional ledger test rejects closing snapshots without their own on-time server receipt.
+
+## Iteration 2 measurement and stopping decision
+
+Validation evaluated eight predeclared candidates on 11486 common
+closing-price rows. The deterministic winner is blend / 0.05: outcome log-loss gap
+0.002929470706031445 nats, below the predeclared 0.01 target. Only 4 bets
+were selected; mean log CLV -0.0398891288028935 with 95% date-block CI
+[-0.08678290542845579, 0.016520650702510617]. Calibration proximity is not an edge: the close scores better,
+and CLV is negative and inconclusive. No extra threshold/league/model search is justified.
+Stop scientific iteration at the target and freeze before evaluating 2025/26. All candidates,
+including the substantially negative standalone DC/Elo results, remain in validation.json.
+The trial registry contains 10 entries before opening test.
+
+The reboot killed the uncommitted command sequence, but completed raw caches and validation
+features survived. They were reused exactly; no historical source file was redownloaded.

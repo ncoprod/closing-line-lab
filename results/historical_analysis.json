@@ -1,0 +1,188 @@
+{
+  "source_commit": "392d2f7907dc69f2376519888e1d31c88ac3bed4",
+  "candidate": {
+    "model": "blend",
+    "min_edge": 0.05
+  },
+  "stages": {
+    "validation": {
+      "calibration_bins": [
+        {
+          "side": "Home",
+          "predicted": 0.19800674150665198,
+          "observed": 0.19011142061281336,
+          "count": 1436
+        },
+        {
+          "side": "Home",
+          "predicted": 0.3007262287674665,
+          "observed": 0.2966573816155989,
+          "count": 1436
+        },
+        {
+          "side": "Home",
+          "predicted": 0.3579806440833188,
+          "observed": 0.34355400696864113,
+          "count": 1435
+        },
+        {
+          "side": "Home",
+          "predicted": 0.4052132692751237,
+          "observed": 0.40947075208913647,
+          "count": 1436
+        },
+        {
+          "side": "Home",
+          "predicted": 0.4497590126627333,
+          "observed": 0.44080779944289694,
+          "count": 1436
+        },
+        {
+          "side": "Home",
+          "predicted": 0.5030412639255055,
+          "observed": 0.5031358885017422,
+          "count": 1435
+        },
+        {
+          "side": "Home",
+          "predicted": 0.5686551015502651,
+          "observed": 0.5821727019498607,
+          "count": 1436
+        },
+        {
+          "side": "Home",
+          "predicted": 0.7009400223460052,
+          "observed": 0.7172701949860725,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.17517934458718035,
+          "observed": 0.16434540389972144,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.23559625536684403,
+          "observed": 0.25835654596100277,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.25755662658129813,
+          "observed": 0.23902439024390243,
+          "count": 1435
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2712302464344248,
+          "observed": 0.2764623955431755,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2819516234807369,
+          "observed": 0.27158774373259054,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2926661370037991,
+          "observed": 0.30452961672473866,
+          "count": 1435
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.30305261841215225,
+          "observed": 0.3084958217270195,
+          "count": 1436
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.3239516104415781,
+          "observed": 0.32590529247910865,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.11195267620624938,
+          "observed": 0.09540389972144847,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.1778820425854877,
+          "observed": 0.1789693593314763,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.22047161731041184,
+          "observed": 0.21742160278745645,
+          "count": 1435
+        },
+        {
+          "side": "Away",
+          "predicted": 0.26031284539896155,
+          "observed": 0.24512534818941503,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.29841364335158305,
+          "observed": 0.28481894150417825,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.3431146205717339,
+          "observed": 0.34843205574912894,
+          "count": 1435
+        },
+        {
+          "side": "Away",
+          "predicted": 0.407557990022741,
+          "observed": 0.4254874651810585,
+          "count": 1436
+        },
+        {
+          "side": "Away",
+          "predicted": 0.5547702909059339,
+          "observed": 0.5724233983286908,
+          "count": 1436
+        }
+      ],
+      "scored_matches": 11486,
+      "log_loss_gap_ci": {
+        "mean": 0.0029294707060315197,
+        "ci95": [
+          0.0016042149813209705,
+          0.004300770044003976
+        ],
+        "blocks": 725,
+        "observations": 11486
+      },
+      "monthly_bets": [
+        {
+          "month": "2023-05",
+          "bets": 2,
+          "clv_sum": -0.1393601327003808,
+          "profit": 1.130881157226731
+        },
+        {
+          "month": "2023-06",
+          "bets": 1,
+          "clv_sum": -0.0633358751718107,
+          "profit": 1.5700543338878394
+        },
+        {
+          "month": "2024-05",
+          "bets": 1,
+          "clv_sum": 0.0431394926606177,
+          "profit": -0.3939424846657899
+        }
+      ]
+    }
+  },
+  "warning": "Historical timing proxies; sparse bets limit inference"
+}
