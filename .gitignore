@@ -7,6 +7,8 @@ __pycache__/
 runs/
 data/raw/
 data/processed/
+results/*_predictions.csv.gz
+results/*_bets.csv
 *.egg-info/
 .DS_Store
 .env

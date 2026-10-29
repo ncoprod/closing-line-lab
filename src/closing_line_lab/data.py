@@ -22,12 +22,14 @@ class PermissionMissing(RuntimeError):
     pass
 
 
-def require_permission(training=False):
+def require_permission(training=False, publishing=False):
     permission = read_json(PERMISSION)
     if not permission.get("evidence") or not permission.get("automated_collection"):
         raise PermissionMissing("Automated source access needs documented provider permission")
     if training and not permission.get("model_training"):
         raise PermissionMissing("Model training is outside the documented permission")
+    if publishing and not permission.get("ledger_publication"):
+        raise PermissionMissing("Publishing provider quotes in the ledger needs permission")
 
 
 def cached_download(relative, refresh=False):

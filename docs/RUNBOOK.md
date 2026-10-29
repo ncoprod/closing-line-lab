@@ -19,6 +19,8 @@ Read DATA_NOTICE.md and obtain permission that covers automated research, traini
 GitHub-hosted collection and any intended redistribution. Record a non-sensitive reference
 and exact scope in `config/data_permission.json`. Collection and training are separate
 flags; keep redistribution false unless permitted. Do not interpret booleans as a licence.
+Set `ledger_publication` only when the permission covers hosted forecast quotes and match
+metadata. This is distinct from permission to redistribute entire historical CSV files.
 The scheduled workflow checks the gate before installing dependencies or calling the source.
 
 ## Research sequence
@@ -48,6 +50,8 @@ exact reproduction of the original experiment. Restore the archived snapshot for
 5. If redistribution is permitted, `git add -f data/processed/` and archive the exact raw
    snapshots as well, within the permission scope. Otherwise do not claim full public
    data replay: privately retain snapshots and restore the GitHub Actions data cache.
+   Row-level prediction/bet files in `results/` are ignored too; force-add those only within
+   the permitted scope. Summary metrics do not substitute for an exact data replay archive.
 6. Finalize PREREGISTRATION.md with the measured selection, actual freeze date and result
    paths. Change its status to FROZEN. Commit and push after the required secret scan.
    Create the annotated tag only now: `git tag -a forward-v1 -m 'Freeze forward protocol v1'`

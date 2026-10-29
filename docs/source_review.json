@@ -1,0 +1,16 @@
+{
+  "reviewed_on": "2026-10-29",
+  "provider": "football-data.co.uk",
+  "permission_status": "UNRESOLVED",
+  "data_url": "https://football-data.co.uk/data.php",
+  "schema_url": "https://football-data.co.uk/notes.txt",
+  "fixtures_notes_url": "https://football-data.co.uk/matches.php",
+  "bulk_data_downloaded": false,
+  "pinnacle_stale_since": "2025-07-23",
+  "pre_closing_is_not_opening": true,
+  "terms_are_not_an_open_data_license": true,
+  "local_document_hashes": {
+    "source-terms.html": "5888bdbe0334d79de71977de06b6b4a0c3f7402ac38c8b7bd08be1dff5d5b637",
+    "source-notes.txt": "6ecd41a98ad2751372817e7e6f1709bfeb433c53dd9aeda330fd926a5471452d"
+  }
+}

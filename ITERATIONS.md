@@ -36,3 +36,14 @@ Outcome: baseline blocked. See `results/trials.jsonl` and `results/status.json`.
 
 No second scientific iteration is manufactured without data. The permission-gated Actions
 run and synthetic tests are engineering checks; they do not close the live-forecast target.
+
+## Engineering verification — 2026-10-29
+
+The initial property-test setup failed because a generated argument was bound positionally;
+keyword binding fixed it. NumPy was bounded below 2.5 after pandas compatibility warnings.
+A final source audit tightened the holdout gate, frozen-runtime coverage and settlement replay.
+A one-off documentation-generation command failed on quoting and was rerun successfully.
+See `results/engineering.json` for the measured test counts. These fixes used synthetic data
+only; no research metric improved or deteriorated because none was estimated. The first
+manual paper workflow succeeded through the permission gate; cron evidence is recorded
+separately in `results/actions_evidence.json`.

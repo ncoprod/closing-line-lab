@@ -3,7 +3,7 @@
 **Paper-only research.** No bookmaker account, bet placement or money handling.
 
 <!-- RESULTS:START -->
-**0 downloaded match rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
+**0 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
 Data status: **BLOCKED_DATA_PERMISSION**. Validation: **NOT_RUN**. Test season: **UNOPENED**.
 
 | Forward metric | Observed value |

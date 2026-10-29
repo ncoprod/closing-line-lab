@@ -46,7 +46,7 @@ def training_features(history, cfg):
 
 
 def forecast():
-    require_permission(training=True)
+    require_permission(training=True, publishing=True)
     cfg = frozen_runtime()
     if not timestamp(cfg["forward_start"]) <= now_utc() < timestamp(cfg["forward_end"]):
         return {"status": "OUTSIDE_REGISTERED_WINDOW", "new_forecasts": 0}
@@ -159,7 +159,7 @@ def forecast():
 
 
 def settle():
-    require_permission()
+    require_permission(publishing=True)
     frozen_runtime()
     records = read_ledger()
     settled = {r["match_id"] for r in records if r["kind"] == "settlement"}
@@ -223,6 +223,7 @@ def settle():
 
 
 def publish(settlements_only=False):
+    require_permission(publishing=True)
     if git("branch", "--show-current") != "main":
         raise RuntimeError("Publish requires main")
     subprocess.run(["git", "fetch", "origin", "main"], check=True, cwd=ROOT)

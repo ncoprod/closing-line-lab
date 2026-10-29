@@ -2,6 +2,7 @@
   "provider": "football-data.co.uk",
   "automated_collection": false,
   "model_training": false,
+  "ledger_publication": false,
   "redistribution": false,
   "evidence": null,
   "reviewed_at": "2026-10-29",

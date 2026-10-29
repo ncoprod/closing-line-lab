@@ -27,7 +27,7 @@ jobs:
           python - <<'PY'
           import json, os
           p = json.load(open('config/data_permission.json'))
-          enabled = bool(p.get('evidence') and p.get('automated_collection') and p.get('model_training'))
+          enabled = all(p.get(k) for k in ['evidence', 'automated_collection', 'model_training', 'ledger_publication'])
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write(f'enabled={str(enabled).lower()}\n')
           print('Permission gate: ' + ('enabled' if enabled else 'BLOCKED_DATA_PERMISSION; no data requested'))

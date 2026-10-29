@@ -16,7 +16,11 @@ No provider dataset is included. Small synthetic fixtures used in tests are gene
 locally and are never reported as research results. Initial terms/schema checks inspected
 the provider's documentation and a few CSV header/sample lines; these are not a backtest.
 
-`config/data_permission.json` records collection, training and redistribution separately.
+`config/data_permission.json` records collection, training, ledger publication and bulk
+redistribution separately. Publishing team names and indicative quotes in a private GitHub
+ledger still needs a permission scope that covers hosted publication. Training permission
+alone cannot enable the forward publisher. Row-level research prediction/bet files are
+ignored by default, because they also contain provider data; aggregate results remain separate.
 An actual permission reference belongs in its `evidence` field; merely changing a boolean
 does not establish permission. Do not commit private correspondence or personal data.
 
@@ -27,6 +31,8 @@ unless redistribution is explicitly allowed. If allowed, commit the exact proces
 snapshot with `git add -f data/processed/` so a mutable upstream URL is not the only replay
 path. If not allowed, reproducibility is conditional on access to the original snapshot;
 the repository must state that limitation. A changed source response gets a new hash.
+Only when permitted, also archive row-level files with `git add -f results/*_predictions.csv.gz
+results/*_bets.csv`; these are never automatically staged by a broad `git add .`.
 
 ## Interpretation
 

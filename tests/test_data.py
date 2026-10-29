@@ -15,6 +15,17 @@ def test_permission_gate_precedes_network(monkeypatch, tmp_path):
         data.cached_download("fixtures.csv")
 
 
+def test_training_permission_does_not_authorize_ledger_publication(monkeypatch, tmp_path):
+    permission = tmp_path / "permission.json"
+    permission.write_text(
+        '{"automated_collection":true,"model_training":true,"evidence":"synthetic"}'
+    )
+    monkeypatch.setattr(data, "PERMISSION", permission)
+    data.require_permission(training=True)
+    with pytest.raises(data.PermissionMissing, match="ledger"):
+        data.require_permission(publishing=True)
+
+
 def test_normalize_timezone_and_missing_values(tmp_path):
     path = tmp_path / "fixture.csv"
     path.write_text(

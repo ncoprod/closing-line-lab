@@ -89,7 +89,13 @@ def figures(bets, resolved):
             )
             axis.plot(predicted, observed, marker=marker, color=color, label=label)
     else:
-        axis.text(0.5, 0.3, "No settled forward forecasts", ha="center")
+        axis.text(
+            0.5,
+            0.3,
+            "No settled forward forecasts",
+            ha="center",
+            bbox={"facecolor": "white", "edgecolor": "none", "pad": 4},
+        )
     axis.set(
         xlim=(0, 1),
         ylim=(0, 1),
@@ -158,7 +164,7 @@ def generate():
     }
     write_json(ROOT / "results/status.json", status)
     lines = [
-        f"**{status['real_data_matches']} downloaded match rows; "
+        f"**{status['real_data_matches']} research dataset rows; "
         f"{len(forecasts)} forward forecasts; "
         f"{report['paper_bets']} paper bets; {len(bets)} settled bets.**",
         f"Data status: **{status['status']}**. Validation: **{status['backtest']}**. "
