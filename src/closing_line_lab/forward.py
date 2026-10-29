@@ -24,11 +24,7 @@ from .research import assert_frozen, choose_bet, git, load_features
 
 def frozen_runtime():
     selection = assert_frozen()
-    cfg = {**strategy(), **selection["candidate"]}
-    for filename in ["data.py", "forward.py", "ledger.py", "metrics.py"]:
-        if git("diff", "forward-v1", "--", f"src/closing_line_lab/{filename}"):
-            raise RuntimeError("Forward runtime differs from the registered tag")
-    return cfg
+    return {**strategy(), **selection["candidate"]}
 
 
 def training_features(history, cfg):

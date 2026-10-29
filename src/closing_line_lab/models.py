@@ -13,7 +13,9 @@ def as_of(history, cutoff):
     cutoff = pd.Timestamp(cutoff)
     if cutoff.tzinfo is None:
         raise ValueError("Cutoff must be timezone aware")
-    return history[(history.available_at < cutoff) & history.outcome.notna()].copy()
+    return history[
+        (history.available_at < cutoff) & (history.kickoff_utc < cutoff) & history.outcome.notna()
+    ].copy()
 
 
 class DixonColes:

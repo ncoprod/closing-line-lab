@@ -24,6 +24,18 @@ def test_asof_excludes_cutoff_and_future(seconds):
     assert as_of(frame, cutoff).outcome.tolist() == [0]
 
 
+def test_future_kickoff_cannot_be_made_available_by_bad_source_timestamp():
+    cutoff = pd.Timestamp("2026-01-01", tz="UTC")
+    frame = pd.DataFrame(
+        {
+            "kickoff_utc": [cutoff + pd.Timedelta(days=1)],
+            "available_at": [cutoff - pd.Timedelta(days=1)],
+            "outcome": [0],
+        }
+    )
+    assert as_of(frame, cutoff).empty
+
+
 def test_dixon_coles_probabilities_and_cutoff(history, cfg):
     cutoff = pd.Timestamp("2019-06-01", tz="UTC")
     model = DixonColes(cfg).fit(history, cutoff)

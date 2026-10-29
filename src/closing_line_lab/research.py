@@ -354,13 +354,18 @@ def assert_frozen():
         raise RuntimeError("Configuration/selection differs from forward-v1")
     if selection["strategy_sha"] != digest(cfg):
         raise RuntimeError("Selection was made under a different strategy")
+    if selection["validation_sha"] != file_sha(ROOT / "results/validation.json"):
+        raise RuntimeError("Validation artifact differs from the frozen selection")
     # Implementation files are frozen too; a post-tag model edit requires a new protocol.
     changed = git(
         "diff",
         "forward-v1",
         "--",
-        "src/closing_line_lab/models.py",
-        "src/closing_line_lab/research.py",
+        *[
+            str(path.relative_to(ROOT))
+            for path in (ROOT / "src/closing_line_lab").glob("*.py")
+            if path.name not in ("report.py", "cli.py")
+        ],
         "config/strategy.json",
     )
     if changed:
