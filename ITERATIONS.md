@@ -86,3 +86,16 @@ The trial registry contains 10 entries before opening test.
 
 The reboot killed the uncommitted command sequence, but completed raw caches and validation
 features survived. They were reused exactly; no historical source file was redownloaded.
+
+## Frozen held-out evaluation — no further model changes
+
+`forward-v1` was pushed before the first test-feature generation/evaluation. The frozen
+blend scores 3754 complete-price test matches after the two predeclared
+exclusions and missing-price filtering. Log-loss gap to closing is 0.0010033873760322276,
+summed multiclass Brier 0.6034158390490296 versus closing 0.602787224497548.
+Only 2 paper bets occurred. Mean log CLV -0.02607313191949432, 95% date-block
+CI [-0.15984870094189613, 0.10770243710290749]; P&L -0.8326864888550614 fictional units and ROI -1.0.
+The close scores better and no positive CLV is established. Two dates do not support useful
+power estimation; the bootstrap CI is extremely coarse. These results are final v1 evidence,
+not inputs to another threshold/model search. The test report refuses overwrite.
+The registry now has 11 entries, conservatively counting this fixed test evaluation.

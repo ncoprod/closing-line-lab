@@ -1,5 +1,5 @@
 {
-  "source_commit": "392d2f7907dc69f2376519888e1d31c88ac3bed4",
+  "source_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
   "candidate": {
     "model": "blend",
     "min_edge": 0.05
@@ -180,6 +180,172 @@
           "bets": 1,
           "clv_sum": 0.0431394926606177,
           "profit": -0.3939424846657899
+        }
+      ]
+    },
+    "test": {
+      "calibration_bins": [
+        {
+          "side": "Home",
+          "predicted": 0.20053101780344076,
+          "observed": 0.1829787234042553,
+          "count": 470
+        },
+        {
+          "side": "Home",
+          "predicted": 0.29957040450609584,
+          "observed": 0.2814498933901919,
+          "count": 469
+        },
+        {
+          "side": "Home",
+          "predicted": 0.35655262463404963,
+          "observed": 0.34754797441364604,
+          "count": 469
+        },
+        {
+          "side": "Home",
+          "predicted": 0.40735396590976325,
+          "observed": 0.41702127659574467,
+          "count": 470
+        },
+        {
+          "side": "Home",
+          "predicted": 0.45026402194413695,
+          "observed": 0.44989339019189767,
+          "count": 469
+        },
+        {
+          "side": "Home",
+          "predicted": 0.5038259481096389,
+          "observed": 0.5138592750533049,
+          "count": 469
+        },
+        {
+          "side": "Home",
+          "predicted": 0.5678081738015349,
+          "observed": 0.5671641791044776,
+          "count": 469
+        },
+        {
+          "side": "Home",
+          "predicted": 0.6946335178736469,
+          "observed": 0.723404255319149,
+          "count": 470
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.17878931745196158,
+          "observed": 0.16595744680851063,
+          "count": 470
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.23506102617481256,
+          "observed": 0.2281449893390192,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2556649492615774,
+          "observed": 0.2515991471215352,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.26940557791305964,
+          "observed": 0.2425531914893617,
+          "count": 470
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2801530319062939,
+          "observed": 0.302771855010661,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.2907364939305177,
+          "observed": 0.3006396588486141,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.30177829754824426,
+          "observed": 0.29637526652452023,
+          "count": 469
+        },
+        {
+          "side": "Draw",
+          "predicted": 0.3229681647011418,
+          "observed": 0.32340425531914896,
+          "count": 470
+        },
+        {
+          "side": "Away",
+          "predicted": 0.11502495308893876,
+          "observed": 0.10851063829787234,
+          "count": 470
+        },
+        {
+          "side": "Away",
+          "predicted": 0.18051171256057924,
+          "observed": 0.17484008528784648,
+          "count": 469
+        },
+        {
+          "side": "Away",
+          "predicted": 0.22171172352068935,
+          "observed": 0.24093816631130063,
+          "count": 469
+        },
+        {
+          "side": "Away",
+          "predicted": 0.25996955610469336,
+          "observed": 0.2553191489361702,
+          "count": 470
+        },
+        {
+          "side": "Away",
+          "predicted": 0.2981685338689785,
+          "observed": 0.2878464818763326,
+          "count": 469
+        },
+        {
+          "side": "Away",
+          "predicted": 0.3464289489485896,
+          "observed": 0.3624733475479744,
+          "count": 469
+        },
+        {
+          "side": "Away",
+          "predicted": 0.41008088899745015,
+          "observed": 0.44562899786780386,
+          "count": 469
+        },
+        {
+          "side": "Away",
+          "predicted": 0.5530035681204052,
+          "observed": 0.5297872340425532,
+          "count": 470
+        }
+      ],
+      "scored_matches": 3755,
+      "log_loss_gap_ci": {
+        "mean": 0.0010100990327726346,
+        "ci95": [
+          -0.001297599482251695,
+          0.003232727478634984
+        ],
+        "blocks": 232,
+        "observations": 3755
+      },
+      "monthly_bets": [
+        {
+          "month": "2026-05",
+          "bets": 2,
+          "clv_sum": -0.052146263838988696,
+          "profit": -0.8326864888550614
         }
       ]
     }

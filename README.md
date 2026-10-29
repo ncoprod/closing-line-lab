@@ -4,7 +4,7 @@
 
 <!-- RESULTS:START -->
 **55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
-Data status: **PREPARING_MODEL**. Validation: **COMPLETE**. Test season: **UNEVALUATED**.
+Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
 
 | Forward metric | Observed value |
 |---|---:|
@@ -26,6 +26,9 @@ Only 4 paper bets; mean log CLV -0.0398891288028935, 95% date-block CI [-0.08678
 | elo | 0.05 | 1.0259362847864204 | 3272 | -0.007093607128997683 |
 | blend | 0.03 | 1.0057639497705855 | 14 | -0.04823819541359959 |
 | blend | 0.05 | 1.0057639497705855 | 4 | -0.0398891288028935 |
+
+Held-out test: 3754 scored matches; log-loss gap to closing 0.0010033873760322276; 2 paper bets; mean log CLV -0.02607313191949432, 95% CI [-0.15984870094189613, 0.10770243710290749]. Paper P&L -0.8326864888550614 units; ROI -1.0.
+Test DSR (descriptive): 3.571438898945635e-11. Power planning (one-sided 5%, 80%): NOT_ESTIMABLE bets by log-CLV basis-point effect; sparse-sample estimates are unstable.
 
 Sources: [status](results/status.json), [validation](results/validation.json), [test](results/test.json), [forward](results/forward.json).
 ![Cumulative forward CLV and paper profit](results/forward.png)

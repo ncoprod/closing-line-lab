@@ -1,0 +1,132 @@
+{
+  "status": "COMPLETE",
+  "stage": "test",
+  "strategy_sha": "d06032d287de30f90c51d099babd95d57dc330c6d2f68689b084633f818ce699",
+  "source_commit": "7c16ca0b79f71a30f7820e26289d651d22ecbb58",
+  "data_sha": "833b27f3b8fdd2924af1406e2594cd62f0bdd1e30a9673e49fd613de319f0311",
+  "trial_count": 11,
+  "predeclared_test_excluded_ids": [
+    "349f24de957d98b3272f623e",
+    "8c386056bd09cbfd334ac31c"
+  ],
+  "reports": [
+    {
+      "forecast_rows": 3755,
+      "missing_closing_triples": 1,
+      "model": {
+        "matches": 3754,
+        "log_loss": 1.0079610672878487,
+        "brier": 0.6034158390490296,
+        "closing_cross_entropy": 1.0236915169744454,
+        "closing_probability_mse": 0.0018199729685239234
+      },
+      "closing_baseline": {
+        "matches": 3754,
+        "log_loss": 1.0069576799118165,
+        "brier": 0.602787224497548,
+        "closing_cross_entropy": 1.0208662504380748,
+        "closing_probability_mse": 0.0
+      },
+      "log_loss_gap": 0.0010033873760322276,
+      "bets": 2,
+      "clv_missing": 0,
+      "clv": {
+        "mean": -0.02607313191949432,
+        "ci95": [
+          -0.15984870094189613,
+          0.10770243710290749
+        ],
+        "blocks": 2,
+        "observations": 2
+      },
+      "profit_units": -0.8326864888550614,
+      "stake_units": 0.8326864888550614,
+      "roi": -1.0,
+      "fair_log_clv": -0.08939808910075733,
+      "same_book_log_clv": -0.05004172927849128,
+      "power": {
+        "status": "NOT_ESTIMABLE",
+        "reason": "Need observed CLV across multiple dates"
+      },
+      "by_league": {
+        "D1": {
+          "bets": 2,
+          "clv_missing": 0,
+          "clv": {
+            "mean": -0.02607313191949432,
+            "ci95": [
+              -0.15984870094189613,
+              0.10770243710290749
+            ],
+            "blocks": 2,
+            "observations": 2
+          },
+          "profit_units": -0.8326864888550614,
+          "stake_units": 0.8326864888550614,
+          "roi": -1.0,
+          "fair_log_clv": -0.08939808910075733,
+          "same_book_log_clv": -0.05004172927849128,
+          "power": {
+            "status": "NOT_ESTIMABLE",
+            "reason": "Need observed CLV across multiple dates"
+          }
+        }
+      },
+      "by_side": {
+        "A": {
+          "bets": 1,
+          "clv_missing": 0,
+          "clv": {
+            "mean": 0.10770243710290749,
+            "ci95": null,
+            "blocks": 1,
+            "observations": 1
+          },
+          "profit_units": -0.27152729451799124,
+          "stake_units": 0.27152729451799124,
+          "roi": -1.0,
+          "fair_log_clv": 0.04695626390553615,
+          "same_book_log_clv": 0.05406722127027579,
+          "power": {
+            "status": "NOT_ESTIMABLE",
+            "reason": "Need observed CLV across multiple dates"
+          }
+        },
+        "H": {
+          "bets": 1,
+          "clv_missing": 0,
+          "clv": {
+            "mean": -0.15984870094189613,
+            "ci95": null,
+            "blocks": 1,
+            "observations": 1
+          },
+          "profit_units": -0.5611591943370702,
+          "stake_units": 0.5611591943370702,
+          "roi": -1.0,
+          "fair_log_clv": -0.2257524421070508,
+          "same_book_log_clv": -0.15415067982725836,
+          "power": {
+            "status": "NOT_ESTIMABLE",
+            "reason": "Need observed CLV across multiple dates"
+          }
+        }
+      },
+      "trial_id": "1ef660dba86b27b29fa761f5eb85d4d8cfccf6dbe65db39f7eb784eec721ea67",
+      "candidate": {
+        "model": "blend",
+        "min_edge": 0.05
+      },
+      "deflated_sharpe": {
+        "probability": 3.571438898945635e-11,
+        "daily_sharpe": -0.07642779989757632,
+        "null_benchmark": 0.1014179216482234,
+        "trial_sharpe_variance": 0.003908592833718299,
+        "trials": 11,
+        "days": 306,
+        "assumption": "independent trials and daily returns; descriptive under dependence"
+      }
+    }
+  ],
+  "warning": "Historical quote timing and availability are proxies, not execution proof"
+}
