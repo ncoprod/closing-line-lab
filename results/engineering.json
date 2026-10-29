@@ -1,20 +1,17 @@
 {
-  "source_commit": "392d2f7907dc69f2376519888e1d31c88ac3bed4",
+  "source_commit": "cf5b5aa",
   "checks": [
     {
-      "command": "GITHUB_ACTIONS=true OPENBLAS_NUM_THREADS=1 uv run pytest -q",
+      "command": "make check test",
       "exit_code": 0,
-      "environment": "local emulation of hosted environment",
-      "evidence_log": "runs/hosted-tests.log"
-    },
-    {
-      "command": "make check",
-      "exit_code": 0
+      "environment": "macOS arm64 / Python 3.12",
+      "evidence_log": "runs/amendment_checks.log"
     }
   ],
-  "tests": 35,
+  "tests": 36,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "data": "synthetic fixtures and attributed documentation transport sample; no research results inferred from tests"
+  "data": "synthetic fixtures and attributed documentation transport sample; no research results inferred from tests",
+  "checked_at": "2026-10-29T13:03:16.937210+00:00"
 }
