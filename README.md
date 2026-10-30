@@ -130,7 +130,7 @@ cannot estimate power. The planned window is unlikely to establish a small edge 
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 <!-- OPERATIONS:START -->
-GitHub: **2 successful scheduled runs**, checked 2026-10-30T06:05:14.011297+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T07:05:14.585691+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
 <!-- OPERATIONS:END -->
 
 The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
