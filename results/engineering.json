@@ -1,18 +1,18 @@
 {
-  "source_commit": "c1a294e8ebb3c176c9fbeecf160077cf17c0f785",
+  "source_commit": "ff27fd1feb67e6abe93cd1bd05fc8946bec28d5e",
   "checks": [
     {
-      "command": "make check test",
+      "command": "./scripts/ci_local.sh (pre-push hook)",
       "exit_code": 0,
-      "environment": "macOS arm64 / Python 3.12",
-      "evidence_log": "runs/final_review_tests.log"
+      "receipt": "results/ci_local/ff27fd1.json",
+      "environment": "Darwin 27.0.0 arm64"
     }
   ],
-  "tests": 67,
+  "tests": 72,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "checked_at": "2026-10-30T05:09:36.937887+00:00",
+  "checked_at": "2026-10-30T13:28:56.950130+00:00",
   "data": "Synthetic engineering tests; no new market experiment",
   "ci": {
     "conclusion": "failure",
@@ -28,10 +28,9 @@
   ],
   "ci_jobs_started_steps": 0,
   "tested_source_sha256": {
-    "ops/run_cycle.py": "a1b1db51a497599b176b7d5008c34303b45270e55981333b8bfba42a21f34ce3",
-    "ops/install_launchd.py": "9a7ebb41d9cc3486a55d6e873829b7042463b6da14f5ce3e7f53fb8069020757",
-    "ops/launchd.zsh": "b1019dcac415a5a431e86fd404a08bb31901047f9df17a67dd2c01ccbbd85a81",
-    "src/closing_line_lab/report.py": "1db0e7afbdfc457480099d4a948a862214611a8b653d35a491d089acca23ef8a",
-    "tests/test_runner.py": "272b351db60f371fb134736e6e924dbe9fd92ded858d1dfcebca7d1fb90dffd1"
-  }
+    "ops/check_forward.py": "a50200ea8e3425a0819f9b6f8855c84844b257a05a1847c69d724c56f5b427a9",
+    "src/closing_line_lab/report.py": "96702f91e885044176ca35acbbc118c12aa3f4c2b2a97c5151cc1d1527a5a195",
+    "scripts/ci_local.sh": "69493842afbee878b20385f039062b2de23f41f1c9e8e2732c2a6df898df6591"
+  },
+  "local_ci_preserves_tracked_tree": true
 }

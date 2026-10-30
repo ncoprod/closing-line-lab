@@ -69,5 +69,8 @@
     "results/test.json": "c13d9e2396bac48bc5ee78e41aa4b37fa14f9df0eba1df2dd5ca08244f30c402",
     "results/validation.json": "7f4aa7ee66ffd231d1a8bc24956b227478fb5c08fbd051feb8c9f86e74d33b3d",
     "results/selection.json": "39444c8beb0c224e9766e0054d91ba9eb8a1e863a00c8206e141865828d5c5ca"
-  }
+  },
+  "verified_code_commit": "ff27fd1feb67e6abe93cd1bd05fc8946bec28d5e",
+  "clean_commit_ci_receipt": "results/ci_local/ff27fd1.json",
+  "local_ci_preserves_tracked_tree": true
 }

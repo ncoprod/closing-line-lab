@@ -385,3 +385,10 @@ CI itself from making a clean runner checkout dirty. The original owner's d017ce
 is preserved and explicitly committed. Tests cover missing cycles, unknown freshness,
 receipt timing, empty dashboard and differing P&L/CLV denominators. Stop after verification:
 further model selection or new tuning would fragment the ongoing registered pilot.
+
+Round-3 milestone `ff27fd1` passed its pre-push local CI on a clean committed tree:
+72 tests, lint/format and the four-forecast receipt audit all pass. The hook leaves tracked
+files unchanged; its receipt is results/ci_local/ff27fd1.json. No provider call was made
+by this round, so balance remains 496. The model and historical metrics are unchanged.
+The updated paper will distinguish four recorded forecasts from the zero settled-bet
+CLV denominator. Further work now depends on prospective observations, not another tune.
