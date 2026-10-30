@@ -1,5 +1,11 @@
 # closing-line-lab
 
+<!-- TLDR:START -->
+**TL;DR:** Held-out blend log loss 1.007961; closing benchmark 1.006958.
+2 historical paper bets; mean log CLV -0.026073; no demonstrated edge.
+Forward: 0 forecasts, 0 settled bets; 2 successful GitHub schedule runs. [Sources](results/review_corrections.json) · [Forward](results/forward.json) · [Operations](results/actions_evidence.json).
+<!-- TLDR:END -->
+
 [Read the paper (PDF)](paper/main.pdf) · [LaTeX source](paper/main.tex)
 
 **Paper-only research.** No bookmaker account, bet placement or money handling.
@@ -123,9 +129,31 @@ planning estimate of 23,821 bets for 10 log-CLV bp (one-sided 5%, 80% power). Tw
 cannot estimate power. The planned window is unlikely to establish a small edge for this
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
-The workflow is configured hourly at minute 17 UTC for EPL and Championship; genuine
-scheduled execution has not yet been observed. A separate scoring job starts when results
-are due. Actual forecast, close and settlement receipts are separate pending acceptance checks. Free fixture
+<!-- OPERATIONS:START -->
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T05:00:36.383530+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs.
+<!-- OPERATIONS:END -->
+
+The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
+logged in and the Mac is awake. GitHub Actions remains an hourly fallback at minute 17 UTC.
+Both execute `ops/run_cycle.py`, acquire a compare-and-swap lease in the **same `api-budget`
+branch**, refresh main, and skip an already completed UTC hour. Existing match IDs also
+deduplicate forecasts across decision windows. Paid calls still reserve credits durably
+before transmission; adding a runner does not increase the cap. Forecasts are published
+before settlement processing using the existing deadline checks, secret scans and audit dispatch.
+
+Install on this Mac with `uv run python ops/install_launchd.py`. It creates a separate checkout
+under `~/Library/Application Support/closing-line-lab/checkout`, preserving the development
+working tree. The installer stores the inherited `ODDS_API_KEY` in the login Keychain through
+Security.framework. Runtime uses the environment first, then that Keychain item. No key is
+written to the plist or repository. The agent logs sanitized status to the checkout's ignored
+`runs/launchd.log`; inspect it and `launchctl print gui/$(id -u)/com.ncoprod.closing-line-lab`.
+A locked Keychain, sleeping/offline Mac or dirty runner checkout can prevent a run. A crash
+leaves the remote lease in place: confirm both runners have stopped before manually clearing
+only `runner_lease` by a blob-SHA compare-and-swap. Never clear a pending credit reservation
+without provider reconciliation. Leases do not expire automatically. Missed windows are not
+backfilled. Unload while idle with `launchctl bootout gui/$(id -u)/com.ncoprod.closing-line-lab`.
+
+Free fixture
 discovery triggers league-wide EU/h2h requests only around decisions (23–25 hours before
 kickoff) or closing snapshots (15–75 minutes). **The closing line means the last observed
 pre-kickoff snapshot**, with bookmaker, source age and actual gap retained. Betfair EU is

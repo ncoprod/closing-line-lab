@@ -322,10 +322,48 @@ def generate():
     text = readme.read_text()
     start, rest = text.split("<!-- RESULTS:START -->", 1)
     _, end = rest.split("<!-- RESULTS:END -->", 1)
-    readme.write_text(
-        start + "<!-- RESULTS:START -->\n" + "\n".join(lines) + "\n<!-- RESULTS:END -->" + end
-    )
+    text = start + "<!-- RESULTS:START -->\n" + "\n".join(lines) + "\n<!-- RESULTS:END -->" + end
+    evidence_path = ROOT / "results/actions_evidence.json"
+    if evidence_path.exists():
+        evidence = read_json(evidence_path)
+        operations = (
+            f"GitHub: **{evidence['successful_scheduled_runs']} successful scheduled runs**, "
+            f"checked {evidence['checked_at']}. "
+            "[Live evidence](results/actions_evidence.json) lists every schedule event, "
+            "separately from manual runs."
+        )
+        local_path = ROOT / "results/local_runner.json"
+        if local_path.exists():
+            local = read_json(local_path)
+            operations += (
+                f" Mac launchd: **{local['verified_runs']} verified real run**, "
+                f"exit code {local['exit_code']}, checked {local['checked_at']}. "
+                "[Installation/run evidence](results/local_runner.json)."
+            )
+        if test_path.exists():
+            tldr = (
+                f"**TL;DR:** Held-out blend log loss {test['model']['log_loss']:.6f}; "
+                f"closing benchmark {test['closing_baseline']['log_loss']:.6f}.\n"
+                f"{test['bets']} historical paper bets; mean log CLV {test['clv']['mean']:.6f}; "
+                "no demonstrated edge.\n"
+                f"Forward: {report['forecasts']} forecasts, {report['settled_bets']} settled bets; "
+                f"{evidence['successful_scheduled_runs']} successful GitHub schedule runs. "
+                "[Sources](results/review_corrections.json) · "
+                "[Forward](results/forward.json) · [Operations](results/actions_evidence.json)."
+            )
+            text = replace_block(text, "TLDR", tldr)
+        text = replace_block(text, "OPERATIONS", operations)
+    readme.write_text(text)
     return status
+
+
+def replace_block(text, marker, content):
+    begin, end = f"<!-- {marker}:START -->", f"<!-- {marker}:END -->"
+    if begin not in text:
+        return text
+    before, rest = text.split(begin, 1)
+    _, after = rest.split(end, 1)
+    return before + begin + "\n" + content + "\n" + end + after
 
 
 def actions_evidence():
@@ -348,14 +386,35 @@ def actions_evidence():
         text=True,
     )
     runs = json.loads(output)
+    pages = json.loads(
+        subprocess.check_output(
+            [
+                "gh",
+                "api",
+                "--paginate",
+                "--slurp",
+                f"repos/{REPO}/actions/workflows/paper.yml/runs?event=schedule&per_page=100",
+            ],
+            text=True,
+        )
+    )
+    scheduled = [
+        {
+            k: r[k]
+            for k in ("id", "event", "head_sha", "created_at", "status", "conclusion", "html_url")
+        }
+        for page in pages
+        for r in page["workflow_runs"]
+        if r["head_branch"] == "main"
+    ]
     evidence = {
         "checked_at": now_utc().isoformat(),
         "runs": runs,
-        "successful_scheduled_runs": sum(
-            r["event"] == "schedule" and r["conclusion"] == "success" for r in runs
-        ),
+        "scheduled_runs": scheduled,
+        "successful_scheduled_runs": sum(r["conclusion"] == "success" for r in scheduled),
         "note": (
-            "The latest 50 runs are shown. Run success alone is not proof of an on-time "
+            "All main-branch paper.yml schedule events are paginated separately from the "
+            "latest 50 general runs. Run success alone is not proof of an on-time "
             "forecast; see ledger verification and actual forecast counts."
         ),
     }

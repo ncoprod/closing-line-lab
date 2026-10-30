@@ -277,3 +277,26 @@ The rebuilt PDF still has nine pages; rendered-page comparison finds only the in
 source-commit text on page 8 changed, which was inspected again. All remaining pages are
 pixel-identical to the inspected version. `make check test` passes 59 tests. This completes
 the provenance correction without altering any original test/validation estimate or tag.
+
+## Final review: scheduling reliability and paper presentation
+
+1. Stale schedule evidence: fixed the evidence collector to paginate all main-branch
+   `paper.yml` schedule events independently of recent CI/manual runs. README TL;DR and
+   operations blocks read the result file; the paper macro already reads that same file.
+   The old schedule polling checkpoint is explicitly historical and superseded.
+2. Runner availability: add a macOS hourly LaunchAgent and a shared entry point with
+   a blob-SHA compare-and-swap whole-cycle lease and UTC-hour completion marker in the
+   existing `api-budget` journal. Both runners retain the original paid-call reservations,
+   cap, reserve, forecast deduplication and pre-kickoff publication/audit path. A killed
+   runner leaves a non-expiring lease for manual reconciliation. Keychain storage uses
+   Security.framework with an inherited environment value; no credential enters argv,
+   repository files or the LaunchAgent plist. Installation and live verification follow
+   the code milestone. No scientific experiment, parameter or registration tag changes.
+3. Readability: add the generated three-line README TL;DR. Trim the paper's correction
+   narrative while retaining failed inference results and relevant limitations in the
+   subsequent PDF milestone.
+
+Verification: `make check test` passes 67 tests; new tests cover competing runner CAS,
+completed-hour deduplication, preserved paid reservations after failure, failed publication,
+Keychain capture and a secret-free plist. This is an operational iteration, counted as
+such in the trial registry; it does not change historical trial counts or model selection.

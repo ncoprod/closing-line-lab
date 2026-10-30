@@ -14,8 +14,6 @@ env:
   OMP_NUM_THREADS: '1'
 jobs:
   forecast:
-    outputs:
-      score_due: ${{ steps.score_due.outputs.due }}
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
@@ -44,47 +42,4 @@ jobs:
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           GH_TOKEN: ${{ github.token }}
-        run: |
-          git pull --ff-only origin main
-          uv run cll forward
-          uv run cll report
-          uv run cll publish
-      - id: score_due
-        if: steps.ready.outputs.enabled == 'true'
-        run: |
-          python - <<'PYCODE'
-          import datetime, json, os, pathlib
-          now = datetime.datetime.now(datetime.UTC)
-          path = pathlib.Path('data/forward_state.json')
-          dates = json.loads(path.read_text()).get('score_dates', {}) if path.exists() else {}
-          rows = [json.loads(x) for x in pathlib.Path('data/ledger.jsonl').read_text().splitlines()]
-          settled = {r['match_id'] for r in rows if r['kind'] == 'settlement'}
-          due = now.hour >= 7 and any(
-              r['kind'] == 'forecast' and r['match_id'] not in settled
-              and dates.get(r['sport']) != now.date().isoformat()
-              and datetime.datetime.fromisoformat(r['kickoff_utc']) + datetime.timedelta(hours=3) < now
-              for r in rows)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
-              out.write(f'due={str(due).lower()}\n')
-          PYCODE
-  score:
-    needs: forecast
-    if: needs.forecast.outputs.score_due == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 4
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-        with:
-          enable-cache: true
-      - run: uv sync --frozen
-      - env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git pull --ff-only origin main
-          uv run cll score
-          uv run cll report
-          uv run cll publish --settlements-only
+        run: uv run python ops/run_cycle.py --runner github

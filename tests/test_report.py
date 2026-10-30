@@ -50,3 +50,32 @@ def test_forward_report_pairs_closing_scores_and_counts_missing_closes(tmp_path,
     assert result["clv"]["observations"] == result["fair_log_clv"]["observations"] == 1
     assert result["same_book_log_clv"]["observations"] == 0
     assert result["profit_units"] == pytest.approx(2.4)
+
+
+def test_schedule_evidence_paginates_independently_of_recent_ci(tmp_path, monkeypatch):
+    import subprocess
+
+    (tmp_path / "results").mkdir()
+    monkeypatch.setattr(report, "ROOT", tmp_path)
+    schedule = {
+        "id": 123,
+        "event": "schedule",
+        "head_sha": "sha",
+        "created_at": "time",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "url",
+        "head_branch": "main",
+    }
+
+    def output(args, **kwargs):
+        if "list" in args:
+            return json.dumps([{"event": "push", "conclusion": "success"}])
+        assert "--paginate" in args and "--slurp" in args
+        return json.dumps([{"workflow_runs": [schedule]}, {"workflow_runs": [schedule]}])
+
+    monkeypatch.setattr(subprocess, "check_output", output)
+    evidence = report.actions_evidence()
+    assert evidence["successful_scheduled_runs"] == 2
+    assert len(evidence["scheduled_runs"]) == 2
+    assert all(r["event"] == "schedule" for r in evidence["scheduled_runs"])

@@ -29,5 +29,7 @@
   },
   "re_enable_attempt": "gh workflow enable paper.yml -R ncoprod/closing-line-lab; unchanged hourly cron",
   "manual_live_api_run": "https://github.com/ncoprod/closing-line-lab/actions/runs/40881307193",
-  "limitation": "Observation checkpoint, not proof that a future run cannot occur. No configuration cause identified. Manual success is not a scheduled-run or pre-kickoff forecast receipt."
+  "limitation": "Observation checkpoint, not proof that a future run cannot occur. No configuration cause identified. Manual success is not a scheduled-run or pre-kickoff forecast receipt.",
+  "historical_checkpoint": true,
+  "superseded_by": "results/actions_evidence.json"
 }
