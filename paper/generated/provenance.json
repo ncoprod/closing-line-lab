@@ -1,20 +1,20 @@
 {
-  "input_commit": "a66736cf5fd4f49e3699cc0b10a9dd0dc5c4f22b",
+  "input_commit": "ceb08de8027cd6a12039bfb18ec70670eb99ebb5",
   "sha256": {
     "results/review_corrections.json": "fdc02a197ba3fc2c6b3cd3b46a622137e133395486cd74fd2c5baea45ea8612d",
     "results/historical_analysis.json": "fe95d923577905301674447550bee6a43bfcf840c6d0562dcc711b976a114ae2",
     "results/data_quality.json": "190e33d811e2ba1cc7fbd8d339cb04bc9b64b7fa8da42449aacbcb85cdb3b73c",
-    "results/forward.json": "e0ee98645b4481e82592fc442be8759575b93e91386e38d1a57b4c5e684456b9",
+    "results/forward.json": "94ea42d16aa3de812706988c58fc1f8379a7ff46f997fb381298935d229dd1c8",
     "results/null_calibration_candidate1.json": "25202f4239ca40431f40cc91c15e93b935eff6afcc595070ded155427ea2f3c5",
     "results/null_calibration.json": "f6ef3b366833270fcad216a28ef2d891c67b92628537f1d57ef03c33c78c0d00",
     "results/power_analysis.json": "366d824ae920277937fa1ddcf14744e494107379e3c47c5c525a91fd35c2104d",
     "config/strategy.json": "87506a1d50d21263088307bb5d0c18cc6469f2a6b431e49924d804cd96a9275f",
     "config/forward.json": "f4f7617f7d1c19af5e77659583395a4d1af5b7e1c5c3171eb7654b5ab548cf78",
-    "results/actions_evidence.json": "b04caf8e36070e4cf91b254563767b3b0efbed163d2af9eeed2ea650ec9ad36d",
-    "results/engineering.json": "81d0efd0358fb8cf1e8a20eaf17864ee5a6c9f8c5b44c54a69eb7c18d4c1ffa6",
-    "results/local_runner.json": "614feca49086d82116650c330c69a41a41d15bc3e1acad85e1b6be76843dae17",
+    "results/actions_evidence.json": "5ec6a800d175f5f9accf116945031ee33409d83eac74da7c72bc1624ee483c58",
+    "results/engineering.json": "ddd2d320845891f4d640ef463bb6ac63292818e6df15bbbb9d38a1276773ee5f",
+    "results/forward_health.json": "83bb6ff472a7ff33cd79011f21a52ba73d680e14ac32c0a052fe2a32f1215cbf",
     "data/manifest.jsonl": "c8f3e318767051c966f1915d092d71191ee23440cd05d57ddc1172f66c117ef6"
   },
-  "generator_sha256": "87a8398a1b6d749fb52e32f13ad1400cae033bc8aaecdcfdd0bf693911184170",
+  "generator_sha256": "631dc7294c68b9b0b2745537b67f91bcba8c6a0bba41a84fda284785d03e6da3",
   "display": "Round to nearest, six decimals unless units require otherwise"
 }

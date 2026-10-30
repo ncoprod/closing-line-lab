@@ -59,7 +59,7 @@ def main():
     forward_cfg = read("config/forward.json")
     evidence = read("results/actions_evidence.json")
     engineering = read("results/engineering.json")
-    local = read("results/local_runner.json")
+    local = read("results/forward_health.json")
     manifest = git("show", "HEAD:data/manifest.jsonl")
     SOURCES["data/manifest.jsonl"] = hashlib.sha256(manifest).hexdigest()
     macros = {
@@ -79,7 +79,11 @@ def main():
         "forwardBets": str(forward["paper_bets"]),
         "settledForwardBets": str(forward["settled_bets"]),
         "scheduledRuns": str(evidence["successful_scheduled_runs"]),
-        "localRuns": str(local["verified_runs"]),
+        "localRuns": str(local["launchd"]["completed_cycles"]),
+        "receiptedForecasts": str(local["publication"]["receipted_forecasts"]),
+        "forwardClvN": str(forward["clv"]["observations"]),
+        "creditsCharged": str(local["budget"]["charged"]),
+        "creditsRemaining": str(local["budget"]["remaining"]),
         "testNonzeroDays": str(test["deflated_sharpe"]["nonzero_days"]),
         "testCalendarDays": str(test["deflated_sharpe"]["days"]),
         "powerTen": str(power["selected_validation"]["required_bets"]["10"]),

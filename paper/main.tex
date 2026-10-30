@@ -303,11 +303,14 @@ Ineligible sample sizes never reject. Every scenario must satisfy the dashed thr
 
 At the committed reporting snapshot there are \forwardForecasts{} forward forecasts,
 \forwardBets{} selected paper bets and \settledForwardBets{} settled forward bets.
-The live GitHub query records \scheduledRuns{} successful scheduled executions; the Mac
-installation has \localRuns{} verified real cycle. These operational checks do not establish
-an on-time forecast, close or settlement. Hosted jobs are currently blocked by a GitHub
-account billing restriction; the Mac runner remains installed. Backtest versus forward
-performance is not yet comparable.
+The Mac log records \localRuns{} completed hourly cycles; all \receiptedForecasts{} forecasts
+have GitHub server receipts before kickoff. The settled-bet CLV denominator is
+\forwardClvN{}; no forward CLV estimate is available. The shared journal records
+\creditsCharged{} credits charged against the \creditCap{} cap, with \creditsRemaining{}
+remaining and a \creditReserve{}-credit reserve. The live query also records
+\scheduledRuns{} successful GitHub schedule events. Hosted CI/audits are currently unavailable;
+local CI passes and the Mac continues collection. Closing and settlement acceptance remain
+pending. Backtest versus forward performance is not yet comparable.
 \FloatBarrier
 
 \section{Limitations}

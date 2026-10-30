@@ -1,23 +1,23 @@
 {
-  "checked_at": "2026-10-30T05:13:22.838250+00:00",
-  "source_revision_before_paper": "a66736cf5fd4f49e3699cc0b10a9dd0dc5c4f22b",
-  "input_artifact_commit": "a66736cf5fd4f49e3699cc0b10a9dd0dc5c4f22b",
+  "checked_at": "2026-10-30T13:30:54.893254+00:00",
+  "source_revision_before_paper": "ceb08de8027cd6a12039bfb18ec70670eb99ebb5",
+  "input_artifact_commit": "ceb08de8027cd6a12039bfb18ec70670eb99ebb5",
   "command": "tectonic -X compile paper/main.tex",
   "exit_code": 0,
   "tectonic_version": "0.15.0",
   "pages": 9,
-  "paper_sha256": "c52204a0fcb322fab8a39b9481eb3819b37a517c4549d1a07aee5741a48e36f8",
+  "paper_sha256": "e763a75432cff9d74df6853c02ca9b0653d9cc32280d53ad1918f9becea12e64",
   "source_sha256": {
-    "paper/main.tex": "993dc251e80cca825b8020716efb85c10341047584c49ae6b3ebb1862ea2e88b",
+    "paper/main.tex": "a23e8d9f04762da9c4a5125d0266b8fa66eb0feb91867ea2c9640d5e3dc4c0c5",
     "paper/refs.bib": "ff6125a71f25fb2b63dabe5858ab7416e5b3644e9a6c67b303ce829a483fa9ce",
-    "paper/make_tables.py": "87a8398a1b6d749fb52e32f13ad1400cae033bc8aaecdcfdd0bf693911184170"
+    "paper/make_tables.py": "631dc7294c68b9b0b2745537b67f91bcba8c6a0bba41a84fda284785d03e6da3"
   },
   "verified_references": 5,
   "undefined_citations": 0,
   "undefined_references": 0,
-  "visual_check": "All final pages rendered; contact sheet inspected, tables/status/references inspected at page resolution; no clipped content",
+  "visual_check": "All nine pages rendered and contact sheet inspected; updated abstract and forward-status page inspected at page resolution; no clipping",
   "warning": "Tectonic emits main.bbl consistency/rerun warnings and stops after six passes; all citations resolved and no LaTeX layout warnings observed",
   "upstream_warning_reference": "https://github.com/tectonic-typesetting/tectonic/discussions/1186",
-  "logs": "Ignored runs/paper_build.log; runs/paper.txt; runs/paper-final-*.png",
-  "revision_note": "Refresh live schedule and launchd evidence, trim process narrative; historical estimates and figures unchanged"
+  "logs": "Ignored runs/paper_round3_build.log; runs/paper_round3.txt; runs/paper-round3-*.png",
+  "revision_note": "Round 3: four receipted forecasts, zero betting/CLV sample; nine observed launchd cycles; local CI 72 tests. No historical results changed."
 }

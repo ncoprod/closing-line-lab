@@ -392,3 +392,13 @@ files unchanged; its receipt is results/ci_local/ff27fd1.json. No provider call 
 by this round, so balance remains 496. The model and historical metrics are unchanged.
 The updated paper will distinguish four recorded forecasts from the zero settled-bet
 CLV denominator. Further work now depends on prospective observations, not another tune.
+
+Round-3 paper build uses committed inputs `ceb08de`: four receipted forecasts, no selected
+paper bet, CLV not estimable with n=0, nine observed completed Mac cycles and the unchanged
+400-credit cap / 100-credit reserve. The paper and README agree on denominators; the PDF
+retains the negative historical results. Nine rendered pages inspected, including updated
+abstract/status pages at page resolution; no undefined references or layout warnings.
+Known Tectonic bibliography rerun warning persists and is recorded in paper/build.json.
+The README dashboard was inspected at native and 900-pixel display width. All counts and
+credit values come from committed result fields. Stop: operational targets are met; only
+new prospective observations can change the performance conclusion.
