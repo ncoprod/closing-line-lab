@@ -343,3 +343,12 @@ undefined citations/references or layout warnings. The known Tectonic bibliograp
 warning remains documented in paper/build.json. `make check test` passes 67 tests; `make
 verify` reports NO_FORECASTS rather than claiming on-time receipt acceptance. Frozen
 scientific sources and original validation/test/selection/parameter bytes are unchanged.
+
+Final-review delivery commits: item 1 (paginated live schedule evidence) `d64fc9e` and
+`c1a294e`; item 2 (Mac scheduling, durable shared lease, actual provider discovery/push,
+and deduplication) `47771f8` and `c1a294e`; item 3 (generated TL;DR and shorter rebuilt
+paper) `d64fc9e` and `e5bf5cb`. The installed checkout was fast-forwarded to `e5bf5cb`.
+`results/final_review_verification.json` records final source/PDF checks, agent exit 0,
+498 remaining credits and the live hosted rejection annotations at that release. No new
+scientific experiment was run. Hosted CI/audits remain BLOCKED_ACCOUNT_BILLING; owner
+billing/spending resolution is required for hosted execution. This is not reported green.

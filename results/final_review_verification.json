@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-10-30T05:14:45.697587+00:00",
+  "reviewed_commit": "e5bf5cbd3d3d7fa0863337540afbbb7ed743c258",
+  "installed_checkout_commit": "e5bf5cbd3d3d7fa0863337540afbbb7ed743c258",
+  "launchd_loaded": true,
+  "launchd_last_exit_code": 0,
+  "budget": {
+    "months": {
+      "2026-10": 2
+    },
+    "remaining": 498,
+    "provider_used": 2,
+    "pending": null,
+    "runner_lease": null,
+    "completed_hour": "2026-10-30T05"
+  },
+  "secret_value_comparison": "CLEAN: all tracked index blobs and installed plist; value never emitted",
+  "scientific_sources": "UNCHANGED against forward-v1.3; original reports/artifact unchanged against forward-v1.1",
+  "paper_hash_verified": true,
+  "hosted_runs": [
+    {
+      "conclusion": "failure",
+      "databaseId": 41007229522,
+      "event": "push",
+      "headSha": "e5bf5cbd3d3d7fa0863337540afbbb7ed743c258",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41007229522",
+      "workflowName": "CI"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 41007229584,
+      "event": "push",
+      "headSha": "e5bf5cbd3d3d7fa0863337540afbbb7ed743c258",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41007229584",
+      "workflowName": "Ledger audit"
+    }
+  ],
+  "hosted_annotations": {
+    "CI": [
+      "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+    ],
+    "Ledger audit": [
+      "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+    ]
+  },
+  "hosted_status": "BLOCKED_ACCOUNT_BILLING",
+  "experiments_started": 0
+}
