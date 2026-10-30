@@ -1,9 +1,220 @@
 {
-  "status": "NO_FORECASTS",
-  "events": 0,
-  "forecasts": 0,
+  "status": "VERIFIED",
+  "events": 4,
+  "forecasts": 4,
   "settlements": 0,
-  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
-  "checked_at": "2026-10-30T05:12:56.921828+00:00",
-  "receipt_runs": []
+  "chain_head": "defd1d708381182a69fdc902740a356415a24bfcce5eda45f9bc0e343aacdc6d",
+  "checked_at": "2026-10-30T13:05:16.860476+00:00",
+  "receipt_runs": [
+    {
+      "run_id": 41052799189,
+      "created_at": "2026-10-30T12:05:50Z",
+      "head_sha": "138ad4a838a0b15b7059dc2adcb63ed461480649",
+      "event": "workflow_dispatch",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41052799189"
+    },
+    {
+      "run_id": 41052798454,
+      "created_at": "2026-10-30T12:05:49Z",
+      "head_sha": "138ad4a838a0b15b7059dc2adcb63ed461480649",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41052798454"
+    },
+    {
+      "run_id": 41045534618,
+      "created_at": "2026-10-30T11:05:31Z",
+      "head_sha": "012cfa0480ccd51947950e69728f6ce5693b7dfe",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41045534618"
+    },
+    {
+      "run_id": 41038204595,
+      "created_at": "2026-10-30T10:05:47Z",
+      "head_sha": "52f3af742ff69b13a56a4146d914e661bf59b6ad",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41038204595"
+    },
+    {
+      "run_id": 41032972866,
+      "created_at": "2026-10-30T09:22:39Z",
+      "head_sha": "d017cefa1cb280f896fd450edf8bfa886bb5b0df",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41032972866"
+    },
+    {
+      "run_id": 41030880713,
+      "created_at": "2026-10-30T09:05:28Z",
+      "head_sha": "361d2447cacc82d7ee38602912274098dc1f3d49",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41030880713"
+    },
+    {
+      "run_id": 41024126299,
+      "created_at": "2026-10-30T08:05:29Z",
+      "head_sha": "fc24758de87deedad85faaa0ee7bd6d5b3cac509",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41024126299"
+    },
+    {
+      "run_id": 41017934517,
+      "created_at": "2026-10-30T07:05:29Z",
+      "head_sha": "3765e3bd8a11e1feb8b08ef043df4ceff709ab90",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41017934517"
+    },
+    {
+      "run_id": 41012045806,
+      "created_at": "2026-10-30T06:05:28Z",
+      "head_sha": "b837ef7f04f9e799064340686588a32713daee25",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41012045806"
+    },
+    {
+      "run_id": 41007421954,
+      "created_at": "2026-10-30T05:15:34Z",
+      "head_sha": "53bd66373562d582098c1bde427d4e2e2897f298",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41007421954"
+    },
+    {
+      "run_id": 41007229584,
+      "created_at": "2026-10-30T05:13:34Z",
+      "head_sha": "e5bf5cbd3d3d7fa0863337540afbbb7ed743c258",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41007229584"
+    },
+    {
+      "run_id": 41006868612,
+      "created_at": "2026-10-30T05:09:48Z",
+      "head_sha": "a66736cf5fd4f49e3699cc0b10a9dd0dc5c4f22b",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006868612"
+    },
+    {
+      "run_id": 41006757384,
+      "created_at": "2026-10-30T05:08:34Z",
+      "head_sha": "c1a294e8ebb3c176c9fbeecf160077cf17c0f785",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006757384"
+    },
+    {
+      "run_id": 41006390880,
+      "created_at": "2026-10-30T05:04:42Z",
+      "head_sha": "039b2bef34654b711670d5a93c2701ca4f28e0ed",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006390880"
+    },
+    {
+      "run_id": 41006339458,
+      "created_at": "2026-10-30T05:04:10Z",
+      "head_sha": "47771f821f48e9e8112cde6a3425ff5ebbc2d878",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006339458"
+    },
+    {
+      "run_id": 41006096654,
+      "created_at": "2026-10-30T05:01:31Z",
+      "head_sha": "d64fc9e95dad66253cbd1d2bef689bb1877dc450",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006096654"
+    },
+    {
+      "run_id": 40904008421,
+      "created_at": "2026-10-29T15:40:50Z",
+      "head_sha": "161387a3366f22ef0cf38ed7999b453fe0cc6cd4",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40904008421"
+    },
+    {
+      "run_id": 40903646486,
+      "created_at": "2026-10-29T15:38:38Z",
+      "head_sha": "9298f83dcbdf27f51b7057a4f0825a402a333a96",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40903646486"
+    },
+    {
+      "run_id": 40903185410,
+      "created_at": "2026-10-29T15:35:53Z",
+      "head_sha": "968bb7ddc9165cd28977f4c5c42e3e7da6f1633c",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40903185410"
+    },
+    {
+      "run_id": 40901014102,
+      "created_at": "2026-10-29T15:23:11Z",
+      "head_sha": "1e5fd9d421686734018d1a4cefb88373051f32a3",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40901014102"
+    },
+    {
+      "run_id": 40900469115,
+      "created_at": "2026-10-29T15:20:00Z",
+      "head_sha": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40900469115"
+    },
+    {
+      "run_id": 40897185726,
+      "created_at": "2026-10-29T15:00:38Z",
+      "head_sha": "d4a115962222ce58fdb0233ef252cb0e10591303",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40897185726"
+    },
+    {
+      "run_id": 40893174970,
+      "created_at": "2026-10-29T14:36:29Z",
+      "head_sha": "45bcca3fa9c37a694cefb4156277966c3e248eee",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40893174970"
+    },
+    {
+      "run_id": 40882437217,
+      "created_at": "2026-10-29T13:29:44Z",
+      "head_sha": "eb5e4abe0e8abb59ea949051134c697838591031",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40882437217"
+    },
+    {
+      "run_id": 40882026069,
+      "created_at": "2026-10-29T13:27:00Z",
+      "head_sha": "786965347046a2218bdb12086334bf28ea65739c",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40882026069"
+    },
+    {
+      "run_id": 40881305442,
+      "created_at": "2026-10-29T13:22:18Z",
+      "head_sha": "519a77c12bbb056adf60968075ba21df1ce9e1f9",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40881305442"
+    },
+    {
+      "run_id": 40879948703,
+      "created_at": "2026-10-29T13:13:21Z",
+      "head_sha": "56ee1c6d790a369cb4bb80d59d587b29cf671dd5",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40879948703"
+    },
+    {
+      "run_id": 40879313345,
+      "created_at": "2026-10-29T13:09:07Z",
+      "head_sha": "f4f3791a504f13fc5c4809c358ba874031dff013",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40879313345"
+    },
+    {
+      "run_id": 40878971963,
+      "created_at": "2026-10-29T13:06:47Z",
+      "head_sha": "022a5ccd20a05e6837fb70221049039ed6233d21",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40878971963"
+    },
+    {
+      "run_id": 40878474247,
+      "created_at": "2026-10-29T13:03:26Z",
+      "head_sha": "214b8b87cdadcfc3f8cdee18c6fc6bcba649dc9c",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40878474247"
+    }
+  ]
 }

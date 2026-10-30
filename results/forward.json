@@ -1,5 +1,5 @@
 {
-  "source_commit": "012cfa0480ccd51947950e69728f6ce5693b7dfe",
+  "source_commit": "138ad4a838a0b15b7059dc2adcb63ed461480649",
   "forecasts": 4,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -74,9 +74,9 @@
     }
   },
   "latest_capture": {
-    "checked_at": "2026-10-30T12:05:30.030148+00:00",
+    "checked_at": "2026-10-30T13:05:17.187619+00:00",
     "status": "CAPTURED",
-    "new_forecasts": 4,
+    "new_forecasts": 0,
     "new_closing_snapshots": 0,
     "unknown_teams": 0
   },
