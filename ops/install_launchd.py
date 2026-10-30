@@ -15,15 +15,7 @@ PLIST = Path.home() / "Library/LaunchAgents" / f"{LABEL}.plist"
 def configuration(checkout, uv):
     return {
         "Label": LABEL,
-        "ProgramArguments": [
-            uv,
-            "run",
-            "--frozen",
-            "python",
-            "ops/run_cycle.py",
-            "--runner",
-            "launchd",
-        ],
+        "ProgramArguments": ["/bin/zsh", str(checkout / "ops/launchd.zsh"), uv],
         "WorkingDirectory": str(checkout),
         "StartCalendarInterval": {"Minute": 5},
         "RunAtLoad": True,
@@ -41,8 +33,6 @@ def main():
     uv = shutil.which("uv")
     if not uv:
         raise RuntimeError("uv is required")
-    if os.environ.get("ODDS_API_KEY"):
-        subprocess.run(["/usr/bin/swift", str(ROOT / "ops/store_keychain.swift")], check=True)
     if not CHECKOUT.exists():
         CHECKOUT.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(

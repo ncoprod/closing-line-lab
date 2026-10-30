@@ -288,8 +288,8 @@ the provenance correction without altering any original test/validation estimate
    a blob-SHA compare-and-swap whole-cycle lease and UTC-hour completion marker in the
    existing `api-budget` journal. Both runners retain the original paid-call reservations,
    cap, reserve, forecast deduplication and pre-kickoff publication/audit path. A killed
-   runner leaves a non-expiring lease for manual reconciliation. Keychain storage uses
-   Security.framework with an inherited environment value; no credential enters argv,
+   runner leaves a non-expiring lease for manual reconciliation. The final launcher sources
+   the owner's existing .zshrc with startup output suppressed; no credential enters argv,
    repository files or the LaunchAgent plist. Installation and live verification follow
    the code milestone. No scientific experiment, parameter or registration tag changes.
 3. Readability: add the generated three-line README TL;DR. Trim the paper's correction
@@ -300,3 +300,15 @@ Verification: `make check test` passes 67 tests; new tests cover competing runne
 completed-hour deduplication, preserved paid reservations after failure, failed publication,
 Keychain capture and a secret-free plist. This is an operational iteration, counted as
 such in the trial registry; it does not change historical trial counts or model selection.
+
+The first live installation (`d64fc9e`) stalled on a macOS Keychain authorization prompt,
+before lease acquisition or any provider request. It was stopped and its newly created
+Keychain item removed. The simpler final launcher uses the owner's already exported key
+from the existing .zshrc; that file is never modified. Optional Keychain retrieval has a
+bounded timeout. No credit was consumed by the failed installation attempt.
+
+GitHub CI/audit at `d64fc9e` did not start any steps. The check annotation states:
+“The job was not started because recent account payments have failed or your spending
+limit needs to be increased.” This is an external account restriction, not a failing
+code check. No spending setting is changed. Local checks continue; keep hosted fallback
+configured but disclose that hosted execution currently requires owner billing resolution.

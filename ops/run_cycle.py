@@ -48,6 +48,7 @@ def credentials():
             ["/usr/bin/security", "find-generic-password", "-s", SERVICE, "-w"],
             capture_output=True,
             text=True,
+            timeout=10,
         )
         if found.returncode == 0 and found.stdout.strip():
             env["ODDS_API_KEY"] = found.stdout.strip()

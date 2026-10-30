@@ -143,9 +143,11 @@ before settlement processing using the existing deadline checks, secret scans an
 
 Install on this Mac with `uv run python ops/install_launchd.py`. It creates a separate checkout
 under `~/Library/Application Support/closing-line-lab/checkout`, preserving the development
-working tree. The installer stores the inherited `ODDS_API_KEY` in the login Keychain through
-Security.framework. Runtime uses the environment first, then that Keychain item. No key is
-written to the plist or repository. The agent logs sanitized status to the checkout's ignored
+working tree. The launch script sources the owner's existing `~/.zshrc` (startup output
+suppressed), loading the exported `ODDS_API_KEY` into the environment. It does not modify that
+file or copy the key. An existing login Keychain item named
+`com.ncoprod.closing-line-lab.ODDS_API_KEY` is an optional fallback with a bounded read timeout.
+No key is written to the plist or repository. The agent logs sanitized status to the checkout's ignored
 `runs/launchd.log`; inspect it and `launchctl print gui/$(id -u)/com.ncoprod.closing-line-lab`.
 A locked Keychain, sleeping/offline Mac or dirty runner checkout can prevent a run. A crash
 leaves the remote lease in place: confirm both runners have stopped before manually clearing
