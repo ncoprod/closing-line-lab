@@ -1,5 +1,5 @@
 {
-  "source_commit": "0c0497e8d7f478eac8d63b1c6152b5ef75404dab",
+  "source_commit": "47771f821f48e9e8112cde6a3425ff5ebbc2d878",
   "forecasts": 0,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -60,14 +60,14 @@
     "provider_used": 2
   },
   "latest_capture": {
-    "checked_at": "2026-10-30T01:07:47.717429+00:00",
+    "checked_at": "2026-10-30T05:04:19.709138+00:00",
     "status": "CAPTURED",
     "new_forecasts": 0,
     "new_closing_snapshots": 0,
     "unknown_teams": 0
   },
   "deflated_sharpe": {
-    "trials": 22,
+    "trials": 24,
     "days": 0,
     "nonzero_days": 0,
     "probability": null,
