@@ -5,6 +5,10 @@
   "remaining": 498,
   "provider_used": 2,
   "pending": null,
-  "runner_lease": null,
+  "runner_lease": {
+    "id": "4fd3c5f69dc14dc7910de326ac315a22",
+    "runner": "launchd",
+    "slot": "2026-10-30T11"
+  },
   "completed_hour": "2026-10-30T10"
 }
