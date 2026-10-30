@@ -352,3 +352,36 @@ paper) `d64fc9e` and `e5bf5cb`. The installed checkout was fast-forwarded to `e5
 498 remaining credits and the live hosted rejection annotations at that release. No new
 scientific experiment was run. Hosted CI/audits remain BLOCKED_ACCOUNT_BILLING; owner
 billing/spending resolution is required for hosted execution. This is not reported green.
+
+## Improvement round 3 — accumulation, visible denominators and local CI
+
+Targets: independently replay all live pre-kickoff forecast receipts; distinguish forecast,
+bet and settled-with-close counts in the README figure; expose live credit headroom without
+a provider request; ensure local CI leaves tracked files untouched. Keep the active model,
+threshold, staking, test artifacts and registration tags fixed. No new fitting or historical
+experiment is warranted: the active blend already anchors to market probabilities and uses
+time-decayed Dixon–Coles features; there are no settled forward bets on which to assess it.
+
+Iteration 1: `make health` checks the remote api-budget journal and audit-run creation
+receipts, plus observed launchd log slots. It finds four receipted forecasts, all abstentions,
+nine completed hourly cycles and no missing slots between the first and last observed
+completion. These are observed log checks, not an uptime SLA or successful hosted audit.
+The minimum server-receipt lead is 1464.1833333333334 minutes and maximum publication
+latency 27.152447 seconds. Source values are in results/forward_health.json. The check
+makes zero provider calls. Credits are 4/400 charged, balance 496, reserve 100; 396 remain
+usable under both guards. Existing forecast/closing/scoring logic is unchanged.
+
+The new automatic dashboard presents forecast count, paper-bet count, settled CLV sample,
+cumulative CLV and paper P&L with capture time and budget. Missing closes are excluded only
+from the CLV series. With no settled bets, neither performance plot draws an artificial
+zero-return line. README TL;DR and operational evidence use explicit denominators and dates.
+Report budget fields omit old runner-lease copies from cached usage; the health command
+reads current lock/reservation state directly from the durable remote journal.
+
+A third focused improvement fixes local CI's tracked-file mutation: the audit calls the
+same verifier without writing results/verification.json. Per-push CI receipts stay in the
+ignored receipt directory; selected receipts can be published explicitly. This prevents
+CI itself from making a clean runner checkout dirty. The original owner's d017cef receipt
+is preserved and explicitly committed. Tests cover missing cycles, unknown freshness,
+receipt timing, empty dashboard and differing P&L/CLV denominators. Stop after verification:
+further model selection or new tuning would fragment the ongoing registered pilot.

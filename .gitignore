@@ -20,3 +20,6 @@ paper/*.bbl
 paper/*.blg
 paper/*.log
 paper/*.out
+
+# Local CI runs on every push; publish selected receipts explicitly.
+results/ci_local/*.json

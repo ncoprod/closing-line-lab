@@ -1,0 +1,34 @@
+{
+  "commit": "d017cefa1cb280f896fd450edf8bfa886bb5b0df",
+  "timestamp": "2026-10-30T09:22:15.827882+00:00",
+  "platform": "Darwin 27.0.0 arm64",
+  "working_tree_dirty": false,
+  "steps": [
+    {
+      "name": "sync",
+      "exit_code": 0,
+      "duration_seconds": 0.121
+    },
+    {
+      "name": "lint",
+      "exit_code": 0,
+      "duration_seconds": 0.13
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "duration_seconds": 0.105
+    },
+    {
+      "name": "tests",
+      "exit_code": 0,
+      "duration_seconds": 12.501
+    },
+    {
+      "name": "ledger audit",
+      "exit_code": 0,
+      "duration_seconds": 2.217
+    }
+  ],
+  "overall": "PASS"
+}

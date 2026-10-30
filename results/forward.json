@@ -1,5 +1,6 @@
 {
-  "source_commit": "138ad4a838a0b15b7059dc2adcb63ed461480649",
+  "source_commit": "4b7e28cbc90f006fd9a62c45cd45c79afffdc707",
+  "checked_at": "2026-10-30T13:27:30.821426+00:00",
   "forecasts": 4,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -57,21 +58,11 @@
       "2026-10": 4
     },
     "remaining": 496,
-    "provider_used": 4,
-    "pending": null,
-    "runner_lease": {
-      "id": "5dc76578ee7549cd9d51e4dbb7e5e11c",
-      "runner": "launchd",
-      "slot": "2026-10-30T12"
-    },
-    "completed_hour": "2026-10-30T11",
-    "last_reservation": {
-      "id": "7f4dde198f7c4547a8304f21c2e6fa39",
-      "month": "2026-10",
-      "cost": 1,
-      "endpoint": "odds",
-      "reserved_at": "2026-10-30T12:05:22.610040+00:00"
-    }
+    "provider_used": 4
+  },
+  "api_budget_limits": {
+    "monthly_credit_cap": 400,
+    "provider_reserve": 100
   },
   "latest_capture": {
     "checked_at": "2026-10-30T13:05:17.187619+00:00",
@@ -81,7 +72,7 @@
     "unknown_teams": 0
   },
   "deflated_sharpe": {
-    "trials": 24,
+    "trials": 25,
     "days": 0,
     "nonzero_days": 0,
     "probability": null,

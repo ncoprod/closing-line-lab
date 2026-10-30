@@ -112,6 +112,92 @@ def figures(bets, resolved):
     plt.close(fig)
 
 
+def dashboard(bets, summary):
+    from matplotlib.dates import AutoDateLocator, ConciseDateFormatter
+
+    fig = plt.figure(figsize=(11, 6.6), layout="constrained")
+    grid = fig.add_gridspec(3, 2, height_ratios=[0.7, 2.5, 0.65])
+    header = fig.add_subplot(grid[0, :])
+    header.set_axis_off()
+    mean = summary["clv"]["mean"]
+    metrics = [
+        ("Forecasts", str(summary["forecasts"])),
+        ("Paper bets", str(summary["paper_bets"])),
+        ("CLV sample (settled + close)", str(summary["clv"]["observations"])),
+        ("Mean log CLV", "Not estimable" if mean is None else f"{mean:.5f}"),
+    ]
+    for x, (label, value) in zip([0.02, 0.26, 0.50, 0.77], metrics, strict=True):
+        header.text(x, 0.82, label, fontsize=11, transform=header.transAxes)
+        header.text(x, 0.20, value, fontsize=19, weight="bold", transform=header.transAxes)
+    axes = [fig.add_subplot(grid[1, i]) for i in range(2)]
+    for axis, field, title, color in zip(
+        axes,
+        ["log_clv", "profit_units"],
+        ["Cumulative log CLV", "Cumulative paper profit (units)"],
+        ["#235789", "#975D17"],
+        strict=True,
+    ):
+        frame = bets.loc[bets[field].notna()].copy() if not bets.empty else bets
+        axis.set_title(title, loc="left", fontsize=12, pad=15)
+        if frame.empty:
+            axis.text(
+                0.5,
+                0.52,
+                "No eligible settled bets",
+                transform=axis.transAxes,
+                ha="center",
+                va="center",
+                fontsize=13,
+            )
+            axis.text(
+                0.5,
+                0.38,
+                "No performance estimate yet",
+                transform=axis.transAxes,
+                ha="center",
+                va="center",
+                fontsize=11,
+                color="#555555",
+            )
+            axis.set_xticks([])
+            axis.set_yticks([])
+        else:
+            frame = frame.sort_values(["recorded_at", "match_id"])
+            axis.plot(
+                pd.to_datetime(frame.recorded_at, utc=True),
+                frame[field].cumsum(),
+                color=color,
+                marker="o",
+                linewidth=1.6,
+            )
+            axis.axhline(0, color="#555555", linewidth=0.8, linestyle="--")
+            locator = AutoDateLocator(minticks=2, maxticks=4)
+            axis.xaxis.set_major_locator(locator)
+            axis.xaxis.set_major_formatter(ConciseDateFormatter(locator))
+            axis.set_xlabel("Settlement recorded (UTC)")
+    footer = fig.add_subplot(grid[2, :])
+    footer.set_axis_off()
+    captured = (summary.get("latest_capture") or {}).get("checked_at", "not recorded")
+    note = (
+        f"Capture: {captured}\n"
+        f"Pending forecasts: {summary['pending_forecasts']} | "
+        f"Settled bets: {summary['settled_bets']} | "
+        f"Settled bets missing a close: {summary['clv_missing']}"
+    )
+    usage, limits = summary.get("api_budget"), summary.get("api_budget_limits")
+    if usage and limits:
+        month = summary["checked_at"][:7]
+        note += (
+            f"\nCredits {month}: {usage['months'].get(month, 0)}/"
+            f"{limits['monthly_credit_cap']} charged | "
+            f"{usage['remaining']} provider balance | {limits['provider_reserve']} reserved"
+        )
+    footer.text(0.01, 0.95, note, va="top", fontsize=10, linespacing=1.6)
+    fig.suptitle("Forward paper test | registered strategy", fontsize=15, weight="bold")
+    fig.savefig(ROOT / "results/forward_dashboard.png", dpi=160)
+    plt.close(fig)
+
+
 def generate():
     records, cfg = read_ledger(), strategy()
     bets, resolved = forward_tables(records)
@@ -119,6 +205,7 @@ def generate():
     settlements = [r for r in records if r["kind"] == "settlement"]
     report = {
         "source_commit": git("rev-parse", "HEAD"),
+        "checked_at": now_utc().isoformat(),
         "forecasts": len(forecasts),
         "paper_bets": sum(r["bet"] is not None for r in forecasts),
         "settled_bets": len(bets),
@@ -171,7 +258,17 @@ def generate():
         else None
     )
     usage = ROOT / "data/api_usage.json"
-    report["api_budget"] = read_json(usage) if usage.exists() else None
+    report["api_budget"] = (
+        {k: read_json(usage)[k] for k in ("months", "remaining", "provider_used")}
+        if usage.exists()
+        else None
+    )
+    limits = ROOT / "config/forward.json"
+    report["api_budget_limits"] = (
+        {k: read_json(limits)[k] for k in ("monthly_credit_cap", "provider_reserve")}
+        if limits.exists()
+        else None
+    )
     capture = ROOT / "results/latest_forward_run.json"
     report["latest_capture"] = read_json(capture) if capture.exists() else None
     if resolved:
@@ -207,6 +304,7 @@ def generate():
     report["deflated_sharpe"] = deflated_sharpe(returns, trial_sharpes, trial_count)
     write_json(ROOT / "results/forward.json", report)
     figures(bets, resolved)
+    dashboard(bets, report)
     enabled = (ROOT / "config/fitted_model.json").exists() and bool(
         git("tag", "-l", REGISTRATION_TAG)
     )
@@ -265,6 +363,7 @@ def generate():
         "|---|---:|",
         "| Mean log CLV | "
         f"{report['clv']['mean'] if report['clv']['mean'] is not None else 'NOT_ESTIMABLE'} |",
+        f"| CLV denominator (settled bets with closing prices) | {report['clv']['observations']} |",
         f"| Descriptive date-bootstrap quantiles | {report['clv']['ci95'] or 'NOT_ESTIMABLE'} |",
         f"| CLV inference (disabled for this pilot) | {report['primary_inference']['status']} |",
         f"| Paper profit (initial account 100 units) | {report['profit_units']} |",
@@ -315,7 +414,8 @@ def generate():
         "Sources: [status](results/status.json), [validation](results/validation.json), "
         "[original test](results/test.json), "
         "[corrected replay](results/review_corrections.json), [forward](results/forward.json).",
-        "![Cumulative forward CLV and paper profit](results/forward.png)",
+        "![Forward-test dashboard: counts, CLV denominator, paper profit and credit budget]"
+        "(results/forward_dashboard.png)",
         "![Forward calibration](results/calibration.png)",
     ]
     readme = ROOT / "README.md"
@@ -333,7 +433,19 @@ def generate():
             "separately from manual runs."
         )
         local_path = ROOT / "results/local_runner.json"
-        if local_path.exists():
+        health_path = ROOT / "results/forward_health.json"
+        if health_path.exists():
+            health = read_json(health_path)
+            launchd, publication, budget = (health[k] for k in ("launchd", "publication", "budget"))
+            operations += (
+                f" Mac log: **{launchd['completed_cycles']} completed hourly cycles**; "
+                f"{publication['receipted_forecasts']}/{publication['forecasts']} forecasts "
+                f"have pre-kickoff receipts. Credits charged: {budget['charged']}/{budget['cap']}; "
+                f"provider balance {budget['remaining']}, reserve {budget['reserve']}. "
+                f"Health checked {health['checked_at']}. "
+                "[Health evidence](results/forward_health.json); refresh with `make health`."
+            )
+        elif local_path.exists():
             local = read_json(local_path)
             operations += (
                 f" Mac launchd: **{local['verified_runs']} verified real run**, "
@@ -346,8 +458,9 @@ def generate():
                 f"closing benchmark {test['closing_baseline']['log_loss']:.6f}.\n"
                 f"{test['bets']} historical paper bets; mean log CLV {test['clv']['mean']:.6f}; "
                 "no demonstrated edge.\n"
-                f"Forward: {report['forecasts']} forecasts, {report['settled_bets']} settled bets; "
-                f"{evidence['successful_scheduled_runs']} successful GitHub schedule runs. "
+                f"Forward: {report['forecasts']} forecasts, {report['paper_bets']} paper bets; "
+                f"CLV n={report['clv']['observations']} "
+                f"({'not estimable' if report['clv']['mean'] is None else report['clv']['mean']}). "
                 "[Sources](results/review_corrections.json) · "
                 "[Forward](results/forward.json) · [Operations](results/actions_evidence.json)."
             )

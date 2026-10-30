@@ -22,3 +22,7 @@ forward:
 	uv run cll forward
 score:
 	uv run cll score
+
+.PHONY: health
+health:
+	uv run python ops/check_forward.py

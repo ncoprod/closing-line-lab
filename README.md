@@ -1,11 +1,11 @@
 # closing-line-lab
 
-CI: GitHub Actions; local fallback `scripts/ci_local.sh` (receipts in results/ci_local/) while hosted minutes are unavailable.
+CI: GitHub Actions; local fallback `scripts/ci_local.sh` (ignored receipts in results/ci_local/; selected receipts are committed explicitly) while hosted minutes are unavailable.
 
 <!-- TLDR:START -->
 **TL;DR:** Held-out blend log loss 1.007961; closing benchmark 1.006958.
 2 historical paper bets; mean log CLV -0.026073; no demonstrated edge.
-Forward: 4 forecasts, 0 settled bets; 2 successful GitHub schedule runs. [Sources](results/review_corrections.json) · [Forward](results/forward.json) · [Operations](results/actions_evidence.json).
+Forward: 4 forecasts, 0 paper bets; CLV n=0 (not estimable). [Sources](results/review_corrections.json) · [Forward](results/forward.json) · [Operations](results/actions_evidence.json).
 <!-- TLDR:END -->
 
 [Read the paper (PDF)](paper/main.pdf) · [LaTeX source](paper/main.tex)
@@ -19,6 +19,7 @@ Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EV
 | Forward metric | Observed value |
 |---|---:|
 | Mean log CLV | NOT_ESTIMABLE |
+| CLV denominator (settled bets with closing prices) | 0 |
 | Descriptive date-bootstrap quantiles | NOT_ESTIMABLE |
 | CLV inference (disabled for this pilot) | INSUFFICIENT_INFORMATION |
 | Paper profit (initial account 100 units) | 0.0 |
@@ -42,7 +43,7 @@ Held-out test: 3754 scored matches; log-loss gap to closing 0.001003387376032227
 Test DSR: NOT_ESTIMABLE (2 nonzero return days). Power planning (one-sided 5%, 80%): NOT_ESTIMABLE bets by log-CLV basis-point effect; sparse-sample estimates are unstable.
 
 Sources: [status](results/status.json), [validation](results/validation.json), [original test](results/test.json), [corrected replay](results/review_corrections.json), [forward](results/forward.json).
-![Cumulative forward CLV and paper profit](results/forward.png)
+![Forward-test dashboard: counts, CLV denominator, paper profit and credit budget](results/forward_dashboard.png)
 ![Forward calibration](results/calibration.png)
 <!-- RESULTS:END -->
 
@@ -59,7 +60,9 @@ flowchart LR
   C --> D[Validation only: select and freeze]
   D --> E[Held-out test with declared exclusions]
   D --> J[Frozen parameter export]
-  K[The Odds API + credit guards] --> F[Pre-kickoff paper forecasts]
+  L[Mac launchd primary + GitHub fallback] --> K[Shared journal + durable credit guards]
+  K --> O[The Odds API]
+  O --> F[Pre-kickoff paper forecasts]
   J --> F
   F --> G[Hash-chain ledger + GitHub receipt]
   G --> H[Closing prices + results]
@@ -79,8 +82,8 @@ candidates and the frozen held-out result are reported above.
 
 ## Paper
 
-The paper reports the negative historical comparison and the prospective protocol; forward
-performance remains unobserved. Its tables, numerical macros and figures are generated
+The paper reports the negative historical comparison and the prospective protocol. Forward
+forecasts are accumulating; settled betting performance remains unobserved. Its tables, numerical macros and figures are generated
 from committed aggregate artifacts with `uv run python paper/make_tables.py`, then built
 with `tectonic -X compile paper/main.tex`. Sources and SHA-256 hashes are recorded in
 [paper provenance](paper/generated/provenance.json). The bibliography has verified
@@ -132,7 +135,7 @@ cannot estimate power. The planned window is unlikely to establish a small edge 
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 <!-- OPERATIONS:START -->
-GitHub: **2 successful scheduled runs**, checked 2026-10-30T13:05:21.282240+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T13:05:21.282240+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac log: **9 completed hourly cycles**; 4/4 forecasts have pre-kickoff receipts. Credits charged: 4/400; provider balance 496, reserve 100. Health checked 2026-10-30T13:24:05.602446+00:00. [Health evidence](results/forward_health.json); refresh with `make health`.
 <!-- OPERATIONS:END -->
 
 The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
@@ -173,6 +176,16 @@ restriction; see [engineering evidence](results/engineering.json). The
 [GitHub Free allowance](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
 is shared across the owner’s private repositories; it is not a separate allowance per repo.
 
+`make health` audits the live GitHub receipts, local launchd log and remote budget journal
+without calling The Odds API. The timestamped [health snapshot](results/forward_health.json)
+reports only observed log coverage, not an uptime guarantee. The dashboard refreshes with
+each `cll report`: forecast count, paper-bet count and settled CLV sample are distinct.
+An empty performance panel means no eligible observations. Current model development is
+closed for this registered pilot: the market-anchored blend already includes time-decayed
+Dixon–Coles features. A new variant requires a separate protocol and validation-only
+selection; the evaluated historical test and growing forward ledger cannot guide tuning.
+Local CI audits are read-only; per-push receipts are ignored to avoid dirtying runner checkouts.
+
 ## Provenance
 
 | Number / claim | Result file | Command | Commit |
@@ -188,6 +201,7 @@ is shared across the owner’s private repositories; it is not a separate allowa
 | API availability / credits | [api_smoke.json](results/api_smoke.json), [usage](data/api_usage.json) | Client `/events` and `/odds` smoke checks | `c297fa0`; response hashes in API manifest |
 | Forward counts, CLV, P&L, gap/benchmark mix | [forward.json](results/forward.json) | `cll report` | `source_commit` in each result; ledger links runtime/registration SHAs |
 | Backtest vs forward | [comparison.json](results/comparison.json) | `cll report` | `source_commit` in result |
+| Live forward receipt coverage, launchd cadence and credit headroom | [forward_health.json](results/forward_health.json) | `make health` (no provider calls) | Source commit and ledger digest in result |
 | Mac installation, real provider calls, push and same-hour deduplication | [local_runner.json](results/local_runner.json) | `python ops/install_launchd.py`; launchd cycle; local fallback probe | Runtime and publication SHAs in receipt |
 | CI, audits, genuine schedule events | [actions_evidence.json](results/actions_evidence.json), [schedule check](results/schedule_check.json) | `cll actions-evidence`; `make verify` | Each run's `headSha`, server time and URL |
 | Required tests / code checks | [engineering.json](results/engineering.json) | `make check test` | Source revision and environment in result |

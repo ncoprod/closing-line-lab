@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-30T13:24:05.602446+00:00",
+  "source_commit": "4b7e28cbc90f006fd9a62c45cd45c79afffdc707",
+  "ledger_digest": "93db6de708174e61adf618bb07ea885191d67bf8a27ddb416ab231b0cba03594",
+  "publication": {
+    "status": "VERIFIED",
+    "events": 4,
+    "forecasts": 4,
+    "settlements": 0,
+    "chain_head": "defd1d708381182a69fdc902740a356415a24bfcce5eda45f9bc0e343aacdc6d",
+    "receipted_forecasts": 4,
+    "minimum_receipt_lead_minutes": 1464.1833333333334,
+    "maximum_publication_delay_seconds": 27.152447
+  },
+  "launchd": {
+    "completed_cycles": 9,
+    "first_completed_slot": "2026-10-30T05",
+    "last_completed_at": "2026-10-30T13:05:30.461130+00:00",
+    "minutes_since_completion": 18.5856886,
+    "missing_between_completed_slots": [],
+    "failed_log_entries": 0,
+    "skipped_log_entries": 1,
+    "fresh_within_90_minutes": true,
+    "loaded": true,
+    "last_exit_code": 0
+  },
+  "budget": {
+    "month": "2026-10",
+    "charged": 4,
+    "cap": 400,
+    "remaining": 496,
+    "reserve": 100,
+    "usable_credits": 396,
+    "pending_reservation": null,
+    "runner_lease": null,
+    "journal_blob_revision": "bedf33dade9ccd6bdc76d5c006a72bc660f56792"
+  },
+  "paper_bets": 0,
+  "scope": "Observed log coverage since first completed cycle; not an uptime SLA. GitHub creation receipts prove content timing, not hosted audit success.",
+  "provider_requests_made_by_check": 0
+}

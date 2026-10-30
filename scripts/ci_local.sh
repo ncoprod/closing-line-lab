@@ -23,7 +23,9 @@ steps = [
     ("lint", "uv run --no-sync ruff check ."),
     ("format", "uv run --no-sync ruff format --check ."),
     ("tests", "uv run --no-sync pytest -q"),
-    ("ledger audit", "uv run --no-sync cll verify"),
+    ("ledger audit", "uv run --no-sync python -c "
+        "\"from closing_line_lab.ledger import read_ledger, github_receipts, verify_records; "
+        "rows=read_ledger(); print(verify_records(rows, github_receipts() if rows else []))\""),
 ]
 receipt = {
     "commit": commit,

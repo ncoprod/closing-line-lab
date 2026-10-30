@@ -1,0 +1,73 @@
+{
+  "checked_at": "2026-10-30T13:27:16.048791+00:00",
+  "baseline_commit": "4b7e28cbc90f006fd9a62c45cd45c79afffdc707",
+  "chosen_improvements": [
+    "Live receipt/launchd/budget health check",
+    "Automatic forward dashboard with explicit CLV denominator",
+    "Read-only local CI and ignored per-push receipts"
+  ],
+  "before": {
+    "forward_forecasts": 4,
+    "paper_bets": 0,
+    "clv_n": 0,
+    "mean_log_clv": null,
+    "provider_remaining": 496,
+    "tests": 67,
+    "paper_forecasts": 0
+  },
+  "after": {
+    "forward_forecasts": 4,
+    "paper_bets": 0,
+    "clv_n": 0,
+    "mean_log_clv": null,
+    "provider_remaining": 496,
+    "tests": 72,
+    "receipted_forecasts": 4,
+    "completed_launchd_cycles": 9,
+    "usable_credits": 396
+  },
+  "ci_receipt": {
+    "commit": "4b7e28cbc90f006fd9a62c45cd45c79afffdc707",
+    "timestamp": "2026-10-30T13:26:00.996091+00:00",
+    "platform": "Darwin 27.0.0 arm64",
+    "working_tree_dirty": true,
+    "steps": [
+      {
+        "name": "sync",
+        "exit_code": 0,
+        "duration_seconds": 0.328
+      },
+      {
+        "name": "lint",
+        "exit_code": 0,
+        "duration_seconds": 0.188
+      },
+      {
+        "name": "format",
+        "exit_code": 0,
+        "duration_seconds": 0.242
+      },
+      {
+        "name": "tests",
+        "exit_code": 0,
+        "duration_seconds": 25.074
+      },
+      {
+        "name": "ledger audit",
+        "exit_code": 0,
+        "duration_seconds": 9.101
+      }
+    ],
+    "overall": "PASS"
+  },
+  "new_provider_requests": 0,
+  "new_model_candidates": 0,
+  "stop_reason": "No settled forward bets; further model tuning would fragment the active registered pilot. Operational and reporting targets pass.",
+  "frozen_inputs": {
+    "config/fitted_model.json": "8fe7b5095d28c982ffd6792bb2fbbbbd2b96b952ecf243067c2dd7f07c90818e",
+    "config/strategy.json": "87506a1d50d21263088307bb5d0c18cc6469f2a6b431e49924d804cd96a9275f",
+    "results/test.json": "c13d9e2396bac48bc5ee78e41aa4b37fa14f9df0eba1df2dd5ca08244f30c402",
+    "results/validation.json": "7f4aa7ee66ffd231d1a8bc24956b227478fb5c08fbd051feb8c9f86e74d33b3d",
+    "results/selection.json": "39444c8beb0c224e9766e0054d91ba9eb8a1e863a00c8206e141865828d5c5ca"
+  }
+}
