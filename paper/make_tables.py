@@ -59,6 +59,7 @@ def main():
     forward_cfg = read("config/forward.json")
     evidence = read("results/actions_evidence.json")
     engineering = read("results/engineering.json")
+    local = read("results/local_runner.json")
     manifest = git("show", "HEAD:data/manifest.jsonl")
     SOURCES["data/manifest.jsonl"] = hashlib.sha256(manifest).hexdigest()
     macros = {
@@ -78,6 +79,7 @@ def main():
         "forwardBets": str(forward["paper_bets"]),
         "settledForwardBets": str(forward["settled_bets"]),
         "scheduledRuns": str(evidence["successful_scheduled_runs"]),
+        "localRuns": str(local["verified_runs"]),
         "testNonzeroDays": str(test["deflated_sharpe"]["nonzero_days"]),
         "testCalendarDays": str(test["deflated_sharpe"]["days"]),
         "powerTen": str(power["selected_validation"]["required_bets"]["10"]),
@@ -86,7 +88,6 @@ def main():
         "sourceCommit": git("rev-parse", "HEAD").decode().strip(),
         "registrationCommit": git("rev-parse", "forward-v1.3^{}").decode().strip(),
         "originalCommit": git("rev-parse", "forward-v1^{}").decode().strip(),
-        "replayCommit": corrected["source_commit"],
         "effectThreshold": number(selected["candidate"]["min_edge"], 2),
         "creditCap": str(forward_cfg["monthly_credit_cap"]),
         "creditReserve": str(forward_cfg["provider_reserve"]),

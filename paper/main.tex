@@ -12,7 +12,7 @@
 \input{generated/macros}
 \title{Closing-Line Lab: A Registered Football Forecasting Pipeline\\with Negative Historical Results and Sparse Betting Evidence}
 \author{Nicolas Coquelet\\CentraleSup\'elec \& ESSEC Business School}
-\date{29 October 2026}
+\date{30 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -23,15 +23,13 @@ value (CLV) is \testClv{} and profit is \testProfit{} fictional units. Neither f
 accuracy nor these sparse bets establish an edge. We compare Dixon--Coles, Elo and market
 features using chronological fits over a privately cached dataset of \researchRows{}
 rows. Selection is registered before the final-season evaluation, with two prospectively
-excluded schema-previewed fixtures. A full feature replay preserves the estimates within
-floating-point precision. Independent review identifies an invalid sparse-bootstrap
-significance rule; two synthetic-only replacements fail their calibration screen and
-confirmatory CLV inference is withdrawn before forward observations. A prospective
+excluded schema-previewed fixtures. Sparse date-bootstrap quantiles do not support significance testing; two synthetic-only
+inference candidates fail their calibration screen. The pilot therefore reports descriptive
+CLV without a confirmatory rejection rule. A prospective
 pipeline records forecasts and near-kickoff quotes using hash chains and GitHub server
 receipts, with durable API-credit reservations. At the reporting snapshot there are
 \forwardForecasts{} forward forecasts and \settledForwardBets{} settled forward bets.
-This paper reports a negative historical comparison and an auditable prospective design,
-not completed forward evidence or executable trading performance.
+The historical comparison is negative; prospective performance remains unobserved.
 \end{abstract}
 
 \section{Introduction}
@@ -51,9 +49,8 @@ The contributions are: (i) a chronological comparison of a time-decayed Dixon--C
 model, Elo, and a market-anchored logistic blend, including every declared validation
 candidate and the negative held-out result; (ii) an auditable prospective protocol that
 binds quotes to pre-kickoff server receipts and reserves data credits remotely before
-transmission; and (iii) a documented withdrawal of unsupported inference after null
-simulation, with original registration tags and estimates preserved. The last contribution
-is a correction to the research procedure, not evidence that the forecasting model improved.
+transmission; and (iii) synthetic calibration checks that show why the sparse betting sample
+cannot support the proposed CLV significance tests.
 
 \section{Related work}
 \citet{dixon1997} model football scores with dynamic team strengths and a correction for
@@ -67,9 +64,8 @@ Bootstrap resampling originates in \citet{efron1979}. Resampling match dates pre
 within-date groups, but percentile endpoints from very few dates do not automatically
 have their nominal coverage. We demonstrate the failure for the original two-date rule
 and retain its endpoints as descriptive quantities. \citet{bailey2014} develop a Deflated
-Sharpe Ratio (DSR) correction for selection and non-normal returns. The repository's
-conservative trial accounting and variance floor are additional conventions; the resulting
-arithmetic cannot support precise inference from two nonzero return days.
+Sharpe Ratio (DSR) correction for selection and non-normal returns. Our trial accounting and variance floor are additional conventions. We withhold DSR
+inference from the sparse test sample.
 
 \section{Data}
 \subsection{Historical source and access}
@@ -98,16 +94,15 @@ records after 36 hours. These assumptions do not reconstruct executable historic
 Pinnacle historical fields are excluded because of the provider's feed-staleness warning.
 
 Outcome scores use identical complete closing-price and known-result masks for model
-and benchmark. A corrected companion distinguishes zero missing closing triples from one
-missing result among the selected test predictions; the original result file mislabeled
-the combined exclusion. The frozen rule abstains on the unresolved match. The reusable
-simulator now keeps any selected unresolved stake as pending exposure rather than a loss.
+and benchmark. The selected test predictions contain zero missing closing triples and one missing result.
+The frozen rule abstains on that unresolved match; any selected unresolved stake remains
+pending exposure rather than a realized loss.
 
 \subsection{Prospective source}
 The Odds API v4 supplies official programmatic event discovery, EU head-to-head quotes and
 scores \citep{oddsdocs}. The forward population is EPL and Championship, chosen for
-coverage and budget before examining strategy returns. A scheduled workflow is configured
-hourly at minute 17 UTC. It attempts the first complete fresh decision quote 23--25 hours
+coverage and budget before examining strategy returns. A macOS LaunchAgent runs hourly at minute 05, with GitHub Actions at minute 17 UTC as
+fallback. Both use the same collection and publication entry point. It attempts the first complete fresh decision quote 23--25 hours
 before kickoff and later a snapshot 15--75 minutes before kickoff. Quotes older than
 30 minutes are rejected. Decisions prefer Pinnacle then Betfair Exchange EU; closes prefer
 Betfair Exchange EU then Pinnacle. No best-price search is performed.
@@ -179,25 +174,19 @@ profit. All candidates are retained. No league, side or lead-time search is used
 Two test fixtures had been displayed for schema inspection before fitting and were
 prospectively excluded from primary test metrics. Thus the full season was not fully
 blinded. Earlier test results may enter later test features under the fixed as-of rule;
-aggregate test metrics cannot guide model or threshold changes. The registered blend and
-parameter file are unchanged by review corrections.
+aggregate test metrics cannot guide model or threshold changes. The blend and parameter file remain fixed.
 
-Every strategy candidate and documented iteration, including failures, is appended to a
-trial registry. The original validation and test DSR diagnostics retain their evaluation-time
-counts rather than acquiring later attempts retrospectively. Subsequent forward reports
-use the growing registry. Counting operational attempts is conservative bookkeeping, not
-an estimate of independent strategy searches or formal familywise-error control. No
-confirmatory family of model-comparison tests, Holm correction or superiority claim is made.
+All candidates and iterations, including failures, enter the trial registry. Historical
+DSR diagnostics retain evaluation-time counts; forward reports use the growing registry.
+This conservative bookkeeping does not estimate independent searches or control familywise
+error. No confirmatory model-comparison test or superiority claim is made.
 
-The original tag and subsequent prospective tags remain in history. The active
-\texttt{forward-v1.3} amendment repairs closing evidence, end-window capture, pending
-settlements and durable credit accounting, and explicitly withdraws the original
-significance rule before any forward forecast. Original validation/test artifacts are
-preserved; corrected results are a separately labeled replay companion.
+The active \texttt{forward-v1.3} protocol withdraws confirmatory CLV inference before any
+forward forecast. Original tags and result artifacts remain archived.
 
-\subsection{Sparse inference correction}
-The original protocol treated a positive lower 95\% date-bootstrap percentile endpoint as
-evidence of positive CLV. With two independent symmetric continuous zero-mean observations,
+\subsection{Sparse inference and calibration}
+A positive lower 95\% date-bootstrap percentile endpoint is not a valid positive-CLV
+test in this sparse setting. With two independent symmetric continuous zero-mean observations,
 the resampled support lies between those two observations. The lower percentile is positive
 when both are positive, which occurs with probability \oldNullRate. Coverage of zero is
 only one half. Nominal percentile labels therefore gave misleading inference.
@@ -211,14 +200,10 @@ Each scenario uses 10,000 replications with seed 20261029 and a burn-in. Accepta
 every scenario's Wilson 95\% upper false-positive bound to be at most 0.05. This empirical
 screen would not establish universal validity even if passed.
 
-Both candidates fail (Table~\ref{tab:nulls}). After two attempts we stop inferential tuning.
-For this pilot, below 100 bets or 60 populated weeks CLV inference returns
-\texttt{INSUFFICIENT\_INFORMATION}; otherwise it returns
-\texttt{INFERENCE\_NOT\_VALIDATED}. It always supplies no inferential interval and no
-positive-evidence decision. The primary estimand remains mean CLV, but a future
-confirmatory study requires a separately validated preregistration. Secondary DSR is
-\texttt{NOT\_ESTIMABLE} below 30 nonzero return days or 60 calendar days. Its old arithmetic
-remains in artifacts, with assumptions and bespoke conventions disclosed.
+Both candidates fail (Table~\ref{tab:nulls}). This pilot therefore reports no inferential
+CLV interval or positive-evidence decision, regardless of sample size. A future confirmatory
+study needs a validated preregistration. DSR is withheld below 30 nonzero return days or
+60 calendar days; its original sparse-sample arithmetic remains archived.
 
 \subsection{Forward inclusion and publication}
 The planned decision window is 29 October 2026 through 29 January 2027 exclusive (UTC).
@@ -232,8 +217,10 @@ author timestamps are insufficient. Settlement must reference the latest receipt
 and replay its prices, bookmaker, gap and raw/secondary CLV. Without such evidence every
 close-derived field is null, although a known outcome may settle P\&L.
 
-A separate remote branch records a compare-and-swap credit reservation before each paid
-HTTP call. Ambiguous failure leaves a pending reservation and blocks paid requests even
+A shared remote branch serializes runners with a compare-and-swap lease and records
+completed UTC hours, preventing duplicate work across Mac and GitHub executions. The same
+branch records a credit reservation before each paid HTTP call. A killed runner leaves its
+lease locked for manual reconciliation; leases never expire automatically. Ambiguous failure leaves a pending reservation and blocks paid requests even
 on a new runner or after a provider reset. Manual reconciliation retains ambiguous charges;
 paid calls are not retried. The \creditCap{}-credit calendar-month cap and
 \creditReserve{}-credit provider reserve leave headroom on the intended free plan. Free
@@ -271,6 +258,7 @@ predicted probability against observed frequency, without inferential error bars
 \label{fig:calibration}
 \end{figure}
 
+\FloatBarrier
 \subsection{Selected bets, replay and power}
 The \testBets{} selected test bets both lose. Their mean log CLV is \testClv{} and paper
 profit is \testProfit{} units (Table~\ref{tab:bets}). ROI is on staked capital, not the
@@ -285,11 +273,8 @@ from date resampling, not reliable confidence limits. Fictional units have no ca
 \label{tab:bets}
 \end{table}
 
-Full feature regeneration and isolated replay preserve every original headline value
-across all eight validation rules and the selected test rule. The maximum saved-prediction
-probability deviation is \replayError. Frozen reports, selection and parameter bytes remain
-unchanged. The correction companion separates price/result missingness and adds pending
-exposure and sparse-inference statuses.
+An isolated full-feature replay reproduces all declared validation and selected test
+estimates, with maximum prediction deviation \replayError.
 
 A normal-approximation planning calculation based on only \valBets{} validation bets
 suggests \powerTen{} bets for 10 log-CLV basis points at one-sided 5\% size and 80\% power.
@@ -298,10 +283,9 @@ validated test design. Two test bets cannot estimate planning power. The propose
 three-month window is unlikely to identify a small edge for such a sparse rule.
 
 \subsection{Null checks and prospective status}
-Table~\ref{tab:nulls} and Figure~\ref{fig:nulls} retain both failed inference candidates.
-The larger critical parameter reduces rejection, but its worst upper bound remains
-\candidateTwoUpper{}, above the prespecified screen. Neither setting is a validated
-confidence level. No further outcome-driven or synthetic inferential tuning is performed.
+Both inference candidates fail (Table~\ref{tab:nulls}, Figure~\ref{fig:nulls}). The larger
+critical parameter reduces rejection, but its worst upper bound, \candidateTwoUpper{}, still
+exceeds the screen. Neither nominal setting is a validated confidence level.
 \begin{table}[htbp]
 \centering\scriptsize
 \input{generated/nulls}
@@ -319,10 +303,11 @@ Ineligible sample sizes never reject. Every scenario must satisfy the dashed thr
 
 At the committed reporting snapshot there are \forwardForecasts{} forward forecasts,
 \forwardBets{} selected paper bets and \settledForwardBets{} settled forward bets.
-Successful scheduled executions observed: \scheduledRuns. Manual workflow success and an
-empty-ledger audit verify deployment paths, not an on-time live forecast, close or
-settlement. Backtest versus forward performance is therefore not yet comparable. There is
-no claim of demonstrated prospective alpha or a completed forward experiment.
+The live GitHub query records \scheduledRuns{} successful scheduled executions; the Mac
+installation has \localRuns{} verified real cycle. These operational checks do not establish
+an on-time forecast, close or settlement. Hosted jobs are currently blocked by a GitHub
+account billing restriction; the Mac runner remains installed. Backtest versus forward
+performance is not yet comparable.
 \FloatBarrier
 
 \section{Limitations}
@@ -333,7 +318,9 @@ features is intentional, but does not create independent match observations. Abs
 leaves the selected strategy with too few bets for confirmatory inference.
 
 Forward parameters remain fixed while historical DC/Elo updated; source and cadence shifts
-may dominate a future comparison. Hourly workflows can be delayed or dropped. The observed
+may dominate a future comparison. Hosted schedules can be delayed or dropped; the Mac runner also depends on wakefulness,
+network access and an available shell credential. Either runner can be blocked by an
+unreconciled remote lease or reservation. The observed
 close can precede the literal final line substantially; source update gaps are reported
 separately. API quotas, quote completeness, name mappings and outages affect inclusion.
 The scores endpoint's limited lookback can leave outages unresolved. Missingness may be
@@ -349,9 +336,8 @@ heavy tails or dependence; disabling confirmation is the supported decision here
 
 \section{Reproducibility}
 The original pre-test registration is commit
-\texttt{\originalCommit}; active prospective correction v1.3 is
-\texttt{\registrationCommit}. The full-feature correction replay uses source
-\texttt{\replayCommit}. Tables, numerical macros and figures are generated by
+\texttt{\originalCommit}; active prospective protocol v1.3 is
+\texttt{\registrationCommit}. Tables, numerical macros and figures are generated by
 \texttt{paper/make\_tables.py} from Git-committed aggregate artifacts at
 \texttt{\sourceCommit}. Their SHA-256 digests and the generator hash are saved in
 \texttt{paper/generated/provenance.json}. Displayed decimals use a consistent rounding-to-nearest
@@ -382,9 +368,8 @@ official documentation and retained in \texttt{paper/reference\_verification.jso
 \section{Conclusion}
 The selected market-anchored blend does not beat the closing benchmark at held-out point
 estimates. Its sparse selected bets show negative CLV and losses but cannot support precise
-inference. Review corrections preserve those estimates while repairing settlement,
-publication evidence and durable budget accounting. Two attempted null-calibrated inference
-replacements fail; the pilot accordingly remains descriptive. The prospective infrastructure
+inference. Two synthetic inference candidates fail their calibration screen; the pilot remains
+descriptive. The prospective infrastructure
 and retained provenance support a future evaluation, but no operating forward edge has yet
 been demonstrated.
 

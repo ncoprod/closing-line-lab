@@ -332,3 +332,14 @@ Final-review code/live-evidence milestone: `c1a294e`. Both runners retain a fail
 lease; unit checks pass 67 tests. Hosted evidence records the exact account rejection and
 zero started steps in results/engineering.json. The historical estimates and inferential
 status are unchanged. The final PDF will use committed live schedule and Mac-run evidence.
+
+Final-review paper refresh uses committed aggregate inputs at `a66736c`: the schedule macro
+reads the paginated live evidence and the Mac-run macro reads results/local_runner.json.
+The three-line README TL;DR is also generated from committed-result fields. Process and
+review-history prose is shortened; all historical estimates, failed inference candidates,
+source limitations and reproducibility commands remain. `tectonic -X compile paper/main.tex`
+succeeds; nine pages rendered, tables/status/references inspected at page resolution, no
+undefined citations/references or layout warnings. The known Tectonic bibliography rerun
+warning remains documented in paper/build.json. `make check test` passes 67 tests; `make
+verify` reports NO_FORECASTS rather than claiming on-time receipt acceptance. Frozen
+scientific sources and original validation/test/selection/parameter bytes are unchanged.
