@@ -135,7 +135,7 @@ cannot estimate power. The planned window is unlikely to establish a small edge 
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 <!-- OPERATIONS:START -->
-GitHub: **2 successful scheduled runs**, checked 2026-10-30T21:05:21.349125+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac log: **9 completed hourly cycles**; 4/4 forecasts have pre-kickoff receipts. Credits charged: 4/400; provider balance 496, reserve 100. Health checked 2026-10-30T13:24:05.602446+00:00. [Health evidence](results/forward_health.json); refresh with `make health`.
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T22:05:19.542359+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac log: **9 completed hourly cycles**; 4/4 forecasts have pre-kickoff receipts. Credits charged: 4/400; provider balance 496, reserve 100. Health checked 2026-10-30T13:24:05.602446+00:00. [Health evidence](results/forward_health.json); refresh with `make health`.
 <!-- OPERATIONS:END -->
 
 The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
