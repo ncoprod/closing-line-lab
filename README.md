@@ -186,6 +186,7 @@ is shared across the owner’s private repositories; it is not a separate allowa
 | API availability / credits | [api_smoke.json](results/api_smoke.json), [usage](data/api_usage.json) | Client `/events` and `/odds` smoke checks | `c297fa0`; response hashes in API manifest |
 | Forward counts, CLV, P&L, gap/benchmark mix | [forward.json](results/forward.json) | `cll report` | `source_commit` in each result; ledger links runtime/registration SHAs |
 | Backtest vs forward | [comparison.json](results/comparison.json) | `cll report` | `source_commit` in result |
+| Mac installation, real provider calls, push and same-hour deduplication | [local_runner.json](results/local_runner.json) | `python ops/install_launchd.py`; launchd cycle; local fallback probe | Runtime and publication SHAs in receipt |
 | CI, audits, genuine schedule events | [actions_evidence.json](results/actions_evidence.json), [schedule check](results/schedule_check.json) | `cll actions-evidence`; `make verify` | Each run's `headSha`, server time and URL |
 | Required tests / code checks | [engineering.json](results/engineering.json) | `make check test` | Source revision and environment in result |
 

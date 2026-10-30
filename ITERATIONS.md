@@ -327,3 +327,8 @@ decisions from another runner. Only a confirmed manual reconciliation may releas
 The runbook and dated scheduling note document the single shared cycle. Frozen strategy,
 source features and original registration tags remain unchanged. The latest local check
 passes 67 tests. No scientific experiment was started for these final review items.
+
+Final-review code/live-evidence milestone: `c1a294e`. Both runners retain a failed-cycle
+lease; unit checks pass 67 tests. Hosted evidence records the exact account rejection and
+zero started steps in results/engineering.json. The historical estimates and inferential
+status are unchanged. The final PDF will use committed live schedule and Mac-run evidence.

@@ -1,23 +1,37 @@
 {
-  "source_commit": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
+  "source_commit": "c1a294e8ebb3c176c9fbeecf160077cf17c0f785",
   "checks": [
     {
       "command": "make check test",
       "exit_code": 0,
       "environment": "macOS arm64 / Python 3.12",
-      "evidence_log": "runs/review_all_tests.log"
+      "evidence_log": "runs/final_review_tests.log"
     }
   ],
-  "tests": 59,
+  "tests": 67,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "checked_at": "2026-10-29T15:22:57.700806+00:00",
-  "data": "Synthetic transport/failure cases and local unit properties; no market inference from tests",
+  "checked_at": "2026-10-30T05:09:36.937887+00:00",
+  "data": "Synthetic engineering tests; no new market experiment",
   "ci": {
-    "run_id": 40900469164,
-    "conclusion": "success",
-    "head_sha": "8b59f2a755a99fc3bc8399c3ef944002a0681cb8",
-    "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40900469164"
+    "conclusion": "failure",
+    "databaseId": 41006757344,
+    "headSha": "c1a294e8ebb3c176c9fbeecf160077cf17c0f785",
+    "status": "completed",
+    "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41006757344"
+  },
+  "hosted_status": "BLOCKED_ACCOUNT_BILLING",
+  "github_annotations": [
+    "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+    "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+  ],
+  "ci_jobs_started_steps": 0,
+  "tested_source_sha256": {
+    "ops/run_cycle.py": "a1b1db51a497599b176b7d5008c34303b45270e55981333b8bfba42a21f34ce3",
+    "ops/install_launchd.py": "9a7ebb41d9cc3486a55d6e873829b7042463b6da14f5ce3e7f53fb8069020757",
+    "ops/launchd.zsh": "b1019dcac415a5a431e86fd404a08bb31901047f9df17a67dd2c01ccbbd85a81",
+    "src/closing_line_lab/report.py": "1db0e7afbdfc457480099d4a948a862214611a8b653d35a491d089acca23ef8a",
+    "tests/test_runner.py": "272b351db60f371fb134736e6e924dbe9fd92ded858d1dfcebca7d1fb90dffd1"
   }
 }
