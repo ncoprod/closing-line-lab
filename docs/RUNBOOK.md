@@ -39,10 +39,14 @@ and tags are preserved; row-level replay files stay ignored. Without the cache, 
 ledger verification and aggregate paper regeneration remain available, but exact historical
 feature replay does not. Never delete tags or bypass the holdout guards to reproduce a run.
 
-## Hosted collection
+## Forward collection
 
 The owner supplies ODDS_API_KEY as a GitHub Actions secret. Never print it or put it in
-command arguments. The hourly `:17` UTC job first checks key, active v1.3 runtime tag and model availability.
+command arguments. The Mac `:05` primary and GitHub `:17` UTC fallback use `ops/run_cycle.py`.
+Install with `uv run python ops/install_launchd.py`; see README for credentials, logs and recovery.
+The shared api-budget lease serializes runners; the completed UTC hour suppresses duplicate cycles.
+Any failed cycle retains its lease until manual reconciliation to prevent re-spending on unpublished data.
+The pipeline checks the key, active v1.3 runtime tag and model availability.
 It never downloads, restores or trains on football-data rows. Complete API responses are
 not committed. API hashes, sanitized endpoint parameters and quota headers are retained.
 
@@ -79,12 +83,13 @@ that request. Commit the reconciled state on api-budget with the same SHA-based 
 update. Run both staged and full-history secret scans before publication. Never publish
 failed/late forecast working files as accounting recovery; restart from fresh main afterward.
 
-At 24 short jobs/day the 31-day baseline is 744 one-minute runner jobs. Dependency caches
-keep the forecast job short; a separate scoring job starts only when scores are due,
-at most once per league/day. With normally completed requests that adds at most 62 short
-scoring jobs in a 31-day month; failed/budget-blocked attempts can start additional jobs,
-before audit and CI minutes. This is a planning estimate, not a measured billing guarantee. Review actual
-durations and remaining minutes. Schedules can be delayed or dropped. No lateness is hidden.
+GitHub remains configured hourly, but skips an already completed UTC hour. Scoring runs
+within the same lease only when due, after forecast publication, at most once per league/day.
+The Mac must be logged in, awake and online. Both runners share the original credit cap and
+provider reserve; the added scheduler does not grant extra credits. Review hosted minutes
+and account availability. CI and audit jobs were refused by an account billing/spending
+restriction at the recorded check; see results/engineering.json. Schedules can be delayed
+or dropped. No lateness is hidden.
 
 ## Publication and audit
 

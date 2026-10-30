@@ -312,3 +312,18 @@ GitHub CI/audit at `d64fc9e` did not start any steps. The check annotation state
 limit needs to be increased.” This is an external account restriction, not a failing
 code check. No spending setting is changed. Local checks continue; keep hosted fallback
 configured but disclose that hosted execution currently requires owner billing resolution.
+
+Code milestones: shared scheduling/evidence `d64fc9e`; unattended environment loading
+`47771f8`. The real launchd cycle completed at 2026-10-30T05:04:35Z and pushed `039b2be`.
+Its two new /events manifest entries carry zero credits; the durable journal remains at
+2 consumed, 498 remaining, no pending reservation. The scheduled :05 launch then skipped
+the same completed hour; a local invocation with the GitHub runner flag also skips.
+`results/local_runner.json` stores sanitized receipts, plist hash and before/after journal
+states. These checks do not substitute for a live forecast/close/settlement receipt.
+
+Failure handling is tightened: any failed cycle retains the whole-cycle lease, including
+publication failure after a successful capture. This avoids spending again on unpublished
+decisions from another runner. Only a confirmed manual reconciliation may release it.
+The runbook and dated scheduling note document the single shared cycle. Frozen strategy,
+source features and original registration tags remain unchanged. The latest local check
+passes 67 tests. No scientific experiment was started for these final review items.

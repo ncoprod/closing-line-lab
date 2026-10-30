@@ -130,7 +130,7 @@ cannot estimate power. The planned window is unlikely to establish a small edge 
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 <!-- OPERATIONS:START -->
-GitHub: **2 successful scheduled runs**, checked 2026-10-30T05:04:27.174059+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs.
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T05:07:26.295015+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
 <!-- OPERATIONS:END -->
 
 The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
@@ -149,7 +149,7 @@ file or copy the key. An existing login Keychain item named
 `com.ncoprod.closing-line-lab.ODDS_API_KEY` is an optional fallback with a bounded read timeout.
 No key is written to the plist or repository. The agent logs sanitized status to the checkout's ignored
 `runs/launchd.log`; inspect it and `launchctl print gui/$(id -u)/com.ncoprod.closing-line-lab`.
-A locked Keychain, sleeping/offline Mac or dirty runner checkout can prevent a run. A crash
+A locked Keychain, sleeping/offline Mac or dirty runner checkout can prevent a run. A crash or failed cycle
 leaves the remote lease in place: confirm both runners have stopped before manually clearing
 only `runner_lease` by a blob-SHA compare-and-swap. Never clear a pending credit reservation
 without provider reconciliation. Leases do not expire automatically. Missed windows are not
@@ -166,7 +166,8 @@ reconciliation; a failed runner cannot erase reservations. Paid requests are not
 Recent results cost two credits per league; at most one request per league/day when needed.
 Forward parameters are exported locally after freezing and stay fixed for v1. No hosted
 football-data download, historical row cache or retraining occurs. See the protocol for
-source shifts, model drift, commission and the Actions-minute planning assumptions. The
+source shifts, model drift, commission and the Actions-minute planning assumptions. Hosted CI, audits and fallback execution are currently refused by an account billing/spending
+restriction; see [engineering evidence](results/engineering.json). The
 [GitHub Free allowance](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
 is shared across the owner’s private repositories; it is not a separate allowance per repo.
 

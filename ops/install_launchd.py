@@ -7,7 +7,6 @@ import subprocess
 from pathlib import Path
 
 LABEL = "com.ncoprod.closing-line-lab"
-ROOT = Path(__file__).resolve().parents[1]
 CHECKOUT = Path.home() / "Library/Application Support/closing-line-lab/checkout"
 PLIST = Path.home() / "Library/LaunchAgents" / f"{LABEL}.plist"
 

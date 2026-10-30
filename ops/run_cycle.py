@@ -117,8 +117,10 @@ def run(runner):
             "head": command(["git", "rev-parse", "HEAD"], env).strip(),
         }
     finally:
-        # A killed process leaves the lease in place. Never expire it while it could still run.
-        lease.release(completed)
+        # A failure after capture may precede publication. Retain ownership so another
+        # runner cannot spend again for those unpublished decisions without reconciliation.
+        if completed:
+            lease.release(completed=True)
 
 
 def main():

@@ -241,3 +241,15 @@ so its point estimates are unchanged. Full DC/Elo feature regeneration verifies 
 The primary scientific question remains mean raw CLV > 0, but this pilot estimates it
 without a validated rejection decision. Report negative, positive or inconclusive point
 estimates and missingness plainly; no success claim follows from bootstrap quantiles.
+
+
+## Scheduling availability note — 30 October 2026
+
+Before any forward forecast, add the Mac LaunchAgent `com.ncoprod.closing-line-lab` as an
+hourly minute-05 primary, retaining GitHub minute-17 UTC as fallback. Both call the same
+entry point and serialize whole cycles with a compare-and-swap lease in the existing
+api-budget journal; a completed UTC hour and existing forecast IDs deduplicate work.
+Failed or killed cycles retain their lease until manual reconciliation. This supersedes
+the earlier separate-job layout: settlement runs under the same lease only when due,
+after forecast publication. No quote window, league, model, threshold, stake, credit cap,
+reserve or planned scientific analysis changes. Existing registration tags remain fixed.

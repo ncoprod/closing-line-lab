@@ -60,7 +60,7 @@ def test_racing_compare_and_swap_loser_cannot_start():
     assert journal.state["runner_lease"] == github.owner
 
 
-def test_failed_cycle_preserves_credit_reservation_and_retries_same_hour():
+def test_manual_release_preserves_credit_reservation_and_retries_same_hour():
     journal = Journal()
     mac = runner.CycleLease(journal, "launchd", "hour")
     assert mac.acquire()
@@ -86,7 +86,8 @@ def test_failed_publication_does_not_mark_hour_completed(monkeypatch):
     monkeypatch.setattr(runner, "publication", fail)
     with pytest.raises(RuntimeError, match="push failed"):
         runner.run("launchd")
-    assert journal.state["runner_lease"] is None
+    assert journal.state["runner_lease"]["runner"] == "launchd"
+    assert not runner.CycleLease(journal, "github", "another-hour").acquire()
     assert "completed_hour" not in journal.state
 
 
