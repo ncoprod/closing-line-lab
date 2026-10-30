@@ -1,11 +1,25 @@
 {
   "status": "VERIFIED",
-  "events": 17,
-  "forecasts": 17,
+  "events": 18,
+  "forecasts": 18,
   "settlements": 0,
-  "chain_head": "ca9544eb6b7f26ed601e695cb6b5ab2a7f7f7c0611f8dce6dad32a7f3eb11f10",
-  "checked_at": "2026-10-30T17:05:13.585825+00:00",
+  "chain_head": "43f1645776fb47f868d00d181c19c0f42adef43d5796e77524fafa24823e2a47",
+  "checked_at": "2026-10-30T18:05:16.139664+00:00",
   "receipt_runs": [
+    {
+      "run_id": 41095786642,
+      "created_at": "2026-10-30T17:05:46Z",
+      "head_sha": "7b5ad37caf6c0374b6e059809a24d71ab69fd804",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41095786642"
+    },
+    {
+      "run_id": 41095785540,
+      "created_at": "2026-10-30T17:05:46Z",
+      "head_sha": "7b5ad37caf6c0374b6e059809a24d71ab69fd804",
+      "event": "workflow_dispatch",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41095785540"
+    },
     {
       "run_id": 41086721255,
       "created_at": "2026-10-30T16:05:37Z",
