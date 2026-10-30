@@ -1,5 +1,7 @@
 # closing-line-lab
 
+CI: GitHub Actions; local fallback `scripts/ci_local.sh` (receipts in results/ci_local/) while hosted minutes are unavailable.
+
 <!-- TLDR:START -->
 **TL;DR:** Held-out blend log loss 1.007961; closing benchmark 1.006958.
 2 historical paper bets; mean log CLV -0.026073; no demonstrated edge.
