@@ -1,13 +1,13 @@
 {
-  "source_commit": "d2aa8b6f5fd46a4bc3e67c76661cfbfb5ddf013a",
-  "checked_at": "2026-10-30T16:05:23.216985+00:00",
-  "forecasts": 17,
+  "source_commit": "a835d1ab9ad2d4b6371d4999929b9370e8ddbc41",
+  "checked_at": "2026-10-30T17:05:30.582455+00:00",
+  "forecasts": 18,
   "paper_bets": 0,
   "settled_bets": 0,
   "settled_forecasts": 0,
   "scored_forecasts": 0,
   "void_forecasts": 0,
-  "pending_forecasts": 17,
+  "pending_forecasts": 18,
   "clv_missing": 0,
   "clv": {
     "mean": null,
@@ -55,19 +55,19 @@
   "closing_gap_minutes": null,
   "api_budget": {
     "months": {
-      "2026-10": 6
+      "2026-10": 7
     },
-    "remaining": 494,
-    "provider_used": 6
+    "remaining": 493,
+    "provider_used": 7
   },
   "api_budget_limits": {
     "monthly_credit_cap": 400,
     "provider_reserve": 100
   },
   "latest_capture": {
-    "checked_at": "2026-10-30T16:05:17.507544+00:00",
+    "checked_at": "2026-10-30T17:05:23.697560+00:00",
     "status": "CAPTURED",
-    "new_forecasts": 0,
+    "new_forecasts": 1,
     "new_closing_snapshots": 0,
     "unknown_teams": 0
   },
