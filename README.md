@@ -5,7 +5,7 @@ CI: GitHub Actions; local fallback `scripts/ci_local.sh` (receipts in results/ci
 <!-- TLDR:START -->
 **TL;DR:** Held-out blend log loss 1.007961; closing benchmark 1.006958.
 2 historical paper bets; mean log CLV -0.026073; no demonstrated edge.
-Forward: 0 forecasts, 0 settled bets; 2 successful GitHub schedule runs. [Sources](results/review_corrections.json) · [Forward](results/forward.json) · [Operations](results/actions_evidence.json).
+Forward: 4 forecasts, 0 settled bets; 2 successful GitHub schedule runs. [Sources](results/review_corrections.json) · [Forward](results/forward.json) · [Operations](results/actions_evidence.json).
 <!-- TLDR:END -->
 
 [Read the paper (PDF)](paper/main.pdf) · [LaTeX source](paper/main.tex)
@@ -13,7 +13,7 @@ Forward: 0 forecasts, 0 settled bets; 2 successful GitHub schedule runs. [Source
 **Paper-only research.** No bookmaker account, bet placement or money handling.
 
 <!-- RESULTS:START -->
-**55476 research dataset rows; 0 forward forecasts; 0 paper bets; 0 settled bets.**
+**55476 research dataset rows; 4 forward forecasts; 0 paper bets; 0 settled bets.**
 Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EVALUATED_ONCE**.
 
 | Forward metric | Observed value |
@@ -22,7 +22,7 @@ Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EV
 | Descriptive date-bootstrap quantiles | NOT_ESTIMABLE |
 | CLV inference (disabled for this pilot) | INSUFFICIENT_INFORMATION |
 | Paper profit (initial account 100 units) | 0.0 |
-| Pending / void forecasts | 0 / 0 |
+| Pending / void forecasts | 4 / 0 |
 
 Validation selected **blend / 0.05 minimum edge**: 11486 scored matches, log loss 1.0057639497705855 versus closing 1.002834479064554 (gap 0.002929470706031445).
 Only 4 paper bets; mean log CLV -0.0398891288028935, descriptive date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617]. These are not calibrated confidence limits. The selected rule's sparse bets severely limit forward power.
@@ -132,7 +132,7 @@ cannot estimate power. The planned window is unlikely to establish a small edge 
 sparse rule. The hypothesis remains prospective; insufficient evidence will be reported.
 
 <!-- OPERATIONS:START -->
-GitHub: **2 successful scheduled runs**, checked 2026-10-30T11:05:16.826005+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
+GitHub: **2 successful scheduled runs**, checked 2026-10-30T12:05:34.669616+00:00. [Live evidence](results/actions_evidence.json) lists every schedule event, separately from manual runs. Mac launchd: **1 verified real run**, exit code 0, checked 2026-10-30T05:07:20.273745+00:00. [Installation/run evidence](results/local_runner.json).
 <!-- OPERATIONS:END -->
 
 The Mac LaunchAgent `com.ncoprod.closing-line-lab` runs hourly at minute 05 while Nico is
