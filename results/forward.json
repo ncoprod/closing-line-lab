@@ -1,6 +1,6 @@
 {
-  "source_commit": "cad385c529a1dc58c1edf4898c70f02c7371e7e1",
-  "checked_at": "2026-10-31T13:05:26.176871+00:00",
+  "source_commit": "4f86464e3ab48fd5558479648076a81db420cea3",
+  "checked_at": "2026-10-31T14:05:36.781500+00:00",
   "forecasts": 19,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -50,31 +50,31 @@
     "blocks": 0,
     "observations": 0
   },
-  "closing_snapshots": 4,
+  "closing_snapshots": 17,
   "closing_benchmark_counts": {
-    "betfair_ex_eu": 4
+    "betfair_ex_eu": 17
   },
   "closing_gap_minutes": {
     "min": 24.4810261,
-    "max": 24.605640583333333,
-    "mean": 24.512179720833338
+    "max": 54.606459699999995,
+    "mean": 47.46464008137255
   },
   "api_budget": {
     "months": {
-      "2026-10": 10
+      "2026-10": 12
     },
-    "remaining": 490,
-    "provider_used": 10
+    "remaining": 488,
+    "provider_used": 12
   },
   "api_budget_limits": {
     "monthly_credit_cap": 400,
     "provider_reserve": 100
   },
   "latest_capture": {
-    "checked_at": "2026-10-31T13:05:19.969451+00:00",
+    "checked_at": "2026-10-31T14:05:31.378959+00:00",
     "status": "CAPTURED",
     "new_forecasts": 0,
-    "new_closing_snapshots": 0,
+    "new_closing_snapshots": 13,
     "unknown_teams": 0
   },
   "deflated_sharpe": {
