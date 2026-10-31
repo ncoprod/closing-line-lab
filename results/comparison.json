@@ -1,5 +1,5 @@
 {
-  "source_commit": "330b51fbf6fa5509a05a5403c0c24f574961553b",
+  "source_commit": "7acd481f2c155a95cd2b5bda09b478ed55f1ad4e",
   "test": {
     "forecast_rows": 3755,
     "missing_closing_triples": 0,
