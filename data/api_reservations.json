@@ -1,10 +1,16 @@
 {
   "months": {
-    "2026-10": 10
+    "2026-10": 11
   },
-  "remaining": 490,
+  "remaining": 489,
   "provider_used": 10,
-  "pending": null,
+  "pending": {
+    "id": "3878a490d67341889df2519c167c8565",
+    "month": "2026-10",
+    "cost": 1,
+    "endpoint": "odds",
+    "reserved_at": "2026-10-31T14:05:16.555912+00:00"
+  },
   "runner_lease": {
     "id": "35e5e346e4d640d49d4ddcd92cd0e3d5",
     "runner": "launchd",
