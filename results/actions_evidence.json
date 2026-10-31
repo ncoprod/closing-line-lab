@@ -1,6 +1,26 @@
 {
-  "checked_at": "2026-10-31T01:05:22.757769+00:00",
+  "checked_at": "2026-10-31T02:05:17.016326+00:00",
   "runs": [
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-10-31T01:05:38Z",
+      "databaseId": 41153613887,
+      "event": "push",
+      "headSha": "7bf926e79cec4221c8dbeba0cbe2610447d6feab",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41153613887",
+      "workflowName": "CI"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-10-31T01:05:38Z",
+      "databaseId": 41153613883,
+      "event": "push",
+      "headSha": "7bf926e79cec4221c8dbeba0cbe2610447d6feab",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41153613883",
+      "workflowName": "Ledger audit"
+    },
     {
       "conclusion": "failure",
       "createdAt": "2026-10-31T00:05:39Z",
@@ -480,26 +500,6 @@
       "status": "completed",
       "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41018920755",
       "workflowName": "Paper research"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-30T07:05:29Z",
-      "databaseId": 41017934517,
-      "event": "push",
-      "headSha": "3765e3bd8a11e1feb8b08ef043df4ceff709ab90",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41017934517",
-      "workflowName": "Ledger audit"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-30T07:05:29Z",
-      "databaseId": 41017934508,
-      "event": "push",
-      "headSha": "3765e3bd8a11e1feb8b08ef043df4ceff709ab90",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41017934508",
-      "workflowName": "CI"
     }
   ],
   "scheduled_runs": [
