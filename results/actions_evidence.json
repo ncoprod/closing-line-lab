@@ -1,6 +1,46 @@
 {
-  "checked_at": "2026-11-01T19:06:03.920810+00:00",
+  "checked_at": "2026-11-01T20:06:34.880054+00:00",
   "runs": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-01T19:48:17Z",
+      "databaseId": 41343577142,
+      "event": "schedule",
+      "headSha": "ecd23c8250ee0e45d099eb0d500e7e3d67a23352",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41343577142",
+      "workflowName": "Paper research"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-01T19:06:23Z",
+      "databaseId": 41340012832,
+      "event": "workflow_dispatch",
+      "headSha": "ecd23c8250ee0e45d099eb0d500e7e3d67a23352",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41340012832",
+      "workflowName": "Ledger audit"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-01T19:06:23Z",
+      "databaseId": 41340012627,
+      "event": "push",
+      "headSha": "ecd23c8250ee0e45d099eb0d500e7e3d67a23352",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41340012627",
+      "workflowName": "CI"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-01T19:06:23Z",
+      "databaseId": 41340012609,
+      "event": "push",
+      "headSha": "ecd23c8250ee0e45d099eb0d500e7e3d67a23352",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41340012609",
+      "workflowName": "Ledger audit"
+    },
     {
       "conclusion": "success",
       "createdAt": "2026-11-01T18:08:26Z",
@@ -460,49 +500,18 @@
       "status": "completed",
       "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41251044554",
       "workflowName": "Ledger audit"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-31T22:05:37Z",
-      "databaseId": 41246592085,
-      "event": "push",
-      "headSha": "f6bc0c48694df22a200f7242c89e2a371294f3d5",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41246592085",
-      "workflowName": "CI"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-31T22:05:37Z",
-      "databaseId": 41246591944,
-      "event": "push",
-      "headSha": "f6bc0c48694df22a200f7242c89e2a371294f3d5",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41246591944",
-      "workflowName": "Ledger audit"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-31T21:41:26Z",
-      "databaseId": 41244756416,
-      "event": "schedule",
-      "headSha": "d0b5a2bc916ee1e23fede147b2eeafc38bf815d0",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41244756416",
-      "workflowName": "Paper research"
-    },
-    {
-      "conclusion": "failure",
-      "createdAt": "2026-10-31T21:05:39Z",
-      "databaseId": 41241949735,
-      "event": "push",
-      "headSha": "d0b5a2bc916ee1e23fede147b2eeafc38bf815d0",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41241949735",
-      "workflowName": "CI"
     }
   ],
   "scheduled_runs": [
+    {
+      "id": 41343577142,
+      "event": "schedule",
+      "head_sha": "ecd23c8250ee0e45d099eb0d500e7e3d67a23352",
+      "created_at": "2026-11-01T19:48:17Z",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41343577142"
+    },
     {
       "id": 41320354727,
       "event": "schedule",
@@ -621,6 +630,6 @@
       "html_url": "https://github.com/ncoprod/closing-line-lab/actions/runs/40955813220"
     }
   ],
-  "successful_scheduled_runs": 5,
+  "successful_scheduled_runs": 6,
   "note": "All main-branch paper.yml schedule events are paginated separately from the latest 50 general runs. Run success alone is not proof of an on-time forecast; see ledger verification and actual forecast counts."
 }
