@@ -1,6 +1,6 @@
 {
-  "source_commit": "1be906a48496f71598b293561f8988bb8183ec54",
-  "checked_at": "2026-11-01T10:05:25.786798+00:00",
+  "source_commit": "48965c2e75c804f5cdfa1d39ab2fdb3edcc6e68d",
+  "checked_at": "2026-11-01T11:05:28.409300+00:00",
   "forecasts": 20,
   "paper_bets": 0,
   "settled_bets": 0,
@@ -72,7 +72,7 @@
     "provider_reserve": 100
   },
   "latest_capture": {
-    "checked_at": "2026-11-01T10:05:20.262565+00:00",
+    "checked_at": "2026-11-01T11:05:22.918570+00:00",
     "status": "CAPTURED",
     "new_forecasts": 0,
     "new_closing_snapshots": 0,
