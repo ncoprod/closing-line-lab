@@ -23,7 +23,7 @@ Data status: **FROZEN_MODEL_READY**. Validation: **COMPLETE**. Test season: **EV
 | Descriptive date-bootstrap quantiles | NOT_ESTIMABLE |
 | CLV inference (disabled for this pilot) | INSUFFICIENT_INFORMATION |
 | Paper profit (initial account 100 units) | 0.0 |
-| Pending / void forecasts | 16 / 0 |
+| Pending / void forecasts | 1 / 3 |
 
 Validation selected **blend / 0.05 minimum edge**: 11486 scored matches, log loss 1.0057639497705855 versus closing 1.002834479064554 (gap 0.002929470706031445).
 Only 4 paper bets; mean log CLV -0.0398891288028935, descriptive date-bootstrap quantiles [-0.08678290542845579, 0.016520650702510617]. These are not calibrated confidence limits. The selected rule's sparse bets severely limit forward power.
