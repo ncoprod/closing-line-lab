@@ -1,5 +1,5 @@
 {
-  "source_commit": "2cbd53a6b6e6e2f93498390ac18acd304f16a4ed",
+  "source_commit": "a28ac618468a964b8849c0db1b35f8554456815a",
   "test": {
     "forecast_rows": 3755,
     "missing_closing_triples": 0,
@@ -155,7 +155,7 @@
     }
   },
   "forward": {
-    "forecasts": 20,
+    "forecasts": 21,
     "paper_bets": 0,
     "settled_bets": 0,
     "clv": {

@@ -1,22 +1,22 @@
 {
   "months": {
     "2026-10": 19,
-    "2026-11": 5
+    "2026-11": 6
   },
-  "remaining": 495,
-  "provider_used": 5,
+  "remaining": 494,
+  "provider_used": 6,
   "pending": null,
   "runner_lease": {
-    "id": "868b0d5434144f3d81ebaf5e8ea4c934",
+    "id": "3a6fa041215b4cdf9d042de4b5393d93",
     "runner": "launchd",
-    "slot": "2026-11-01T16"
+    "slot": "2026-11-01T19"
   },
-  "completed_hour": "2026-11-01T15",
+  "completed_hour": "2026-11-01T18",
   "last_reservation": {
-    "id": "2128d0b4480b42eeb4516cffb2b2c9b0",
+    "id": "6fee48202a0e4e3da488b851b0d5da6c",
     "month": "2026-11",
     "cost": 1,
     "endpoint": "odds",
-    "reserved_at": "2026-11-01T16:05:25.483417+00:00"
+    "reserved_at": "2026-11-01T19:05:34.061230+00:00"
   }
 }
