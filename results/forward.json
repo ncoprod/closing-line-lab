@@ -1,13 +1,13 @@
 {
-  "source_commit": "b9dd7c2d72d61c4004adcf2da9613cb046624f5e",
-  "checked_at": "2026-11-03T23:05:28.708058+00:00",
+  "source_commit": "80774b79460b45c0d2ec4fd53182ce79ff7243c7",
+  "checked_at": "2026-11-03T23:05:55.198904+00:00",
   "forecasts": 33,
   "paper_bets": 0,
   "settled_bets": 0,
-  "settled_forecasts": 18,
-  "scored_forecasts": 18,
+  "settled_forecasts": 27,
+  "scored_forecasts": 27,
   "void_forecasts": 3,
-  "pending_forecasts": 12,
+  "pending_forecasts": 3,
   "clv_missing": 0,
   "clv": {
     "mean": null,
@@ -62,10 +62,10 @@
   "api_budget": {
     "months": {
       "2026-10": 19,
-      "2026-11": 13
+      "2026-11": 15
     },
-    "remaining": 487,
-    "provider_used": 13
+    "remaining": 485,
+    "provider_used": 15
   },
   "api_budget_limits": {
     "monthly_credit_cap": 400,
@@ -79,20 +79,20 @@
     "unknown_teams": 0
   },
   "scores": {
-    "matches": 18,
-    "log_loss": 0.9175449151348539,
-    "brier": 0.5350221356861579,
-    "closing_cross_entropy": 1.0182527279241667,
-    "closing_probability_mse": 0.002578218919764565
+    "matches": 27,
+    "log_loss": 0.9510154717681195,
+    "brier": 0.5600665229235481,
+    "closing_cross_entropy": 1.035665467502163,
+    "closing_probability_mse": 0.0020356469254237224
   },
   "closing_baseline": {
-    "matches": 18,
-    "log_loss": 0.9245248965442947,
-    "brier": 0.541930848192449,
-    "closing_cross_entropy": 1.0144831807325287,
+    "matches": 27,
+    "log_loss": 0.9492667118161884,
+    "brier": 0.5599406430665059,
+    "closing_cross_entropy": 1.0326860830214852,
     "closing_probability_mse": 0.0
   },
-  "log_loss_gap": -0.006979981409440783,
+  "log_loss_gap": 0.0017487599519311336,
   "deflated_sharpe": {
     "trials": 25,
     "days": 0,
