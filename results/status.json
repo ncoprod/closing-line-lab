@@ -1,7 +1,7 @@
 {
   "status": "FROZEN_MODEL_READY",
   "real_data_matches": 55476,
-  "forecasts": 30,
+  "forecasts": 33,
   "paper_bets": 0,
   "settled_bets": 0,
   "backtest": "COMPLETE",
