@@ -6,7 +6,11 @@
   "remaining": 490,
   "provider_used": 10,
   "pending": null,
-  "runner_lease": null,
+  "runner_lease": {
+    "id": "47ca94045fa24e7796cd89947635beed",
+    "runner": "launchd",
+    "slot": "2026-11-03T00"
+  },
   "completed_hour": "2026-11-02T23",
   "last_reservation": {
     "id": "09026bf9b84c4eb0807989da9400cefb",
