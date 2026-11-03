@@ -4,8 +4,15 @@
   "forecasts": 30,
   "settlements": 20,
   "chain_head": "0f82fa1561b494d1084cd83dbd311ac44307efb57b8da9d194e29e5f37ae1a0d",
-  "checked_at": "2026-11-02T23:05:24.084361+00:00",
+  "checked_at": "2026-11-03T00:05:26.799516+00:00",
   "receipt_runs": [
+    {
+      "run_id": 41542669999,
+      "created_at": "2026-11-02T23:05:47Z",
+      "head_sha": "027e584aaebf53750f7bd8e36e692dd0faad2455",
+      "event": "push",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41542669999"
+    },
     {
       "run_id": 41534243881,
       "created_at": "2026-11-02T22:05:49Z",
