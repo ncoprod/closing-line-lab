@@ -1,6 +1,26 @@
 {
-  "checked_at": "2026-11-04T00:05:50.683730+00:00",
+  "checked_at": "2026-11-04T01:05:40.055536+00:00",
   "runs": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-04T00:06:11Z",
+      "databaseId": 41744271823,
+      "event": "push",
+      "headSha": "86ed46b54e9973496a75eeddab2168484af2a1c6",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41744271823",
+      "workflowName": "CI"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-11-04T00:06:11Z",
+      "databaseId": 41744271812,
+      "event": "push",
+      "headSha": "86ed46b54e9973496a75eeddab2168484af2a1c6",
+      "status": "completed",
+      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41744271812",
+      "workflowName": "Ledger audit"
+    },
     {
       "conclusion": "success",
       "createdAt": "2026-11-03T23:06:12Z",
@@ -480,26 +500,6 @@
       "status": "completed",
       "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41576057533",
       "workflowName": "Ledger audit"
-    },
-    {
-      "conclusion": "success",
-      "createdAt": "2026-11-03T03:05:48Z",
-      "databaseId": 41570109213,
-      "event": "push",
-      "headSha": "9cb22748da28f4b9061aef354f91581efb9f2d16",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41570109213",
-      "workflowName": "Ledger audit"
-    },
-    {
-      "conclusion": "success",
-      "createdAt": "2026-11-03T03:05:48Z",
-      "databaseId": 41570109184,
-      "event": "push",
-      "headSha": "9cb22748da28f4b9061aef354f91581efb9f2d16",
-      "status": "completed",
-      "url": "https://github.com/ncoprod/closing-line-lab/actions/runs/41570109184",
-      "workflowName": "CI"
     }
   ],
   "scheduled_runs": [
